@@ -8,7 +8,9 @@ In this regard, the CGM provided more realistic and precise contribution analysi
 
 \section{Awareness Requirements}
 
+Souza et al.~[AwaReq] proposed the Awareness Requirements (AwReq) as a meta-requirement in a goal model, i.e., AwReq specify the success/failure rate and temporal constraints for other requirements in the model, including goals, softgoals, tasks and other AwReqs (*-meta-requirement). The purpose is to enrich the original goal model and provide clear-cut criteria for self-adaptation, as runtime AwReq violations should be addressed by corrective actions. AwReq are formalized by a temporal logic formula, namely the Object Constraints Logic with Temporal Message (OCLtm).
 
+Despite its contribution to the specification of meta-requirements in the goal models, AwReq do not provide an approach to analyse and validate its meta-requirements before system implementation and monitoring. Original GORE contribution analysis could be used to define the impact of a given alternative to some attribute or value composing the AwReq. However, the paper focuses only on attributes that can be monitored by the system at runtime. In contrast, our approach relies on the improved contribution analysis, i.e., the model based verification of attributes through PMC technique that can be performed at design time and provide alternative design decision criteria. Moreover, a similar meta-requirement is used by our approach to define PCTL properties that must be checked by the PMC. These properties are also associated to system goals.
 
 \section{Runtime Goal Model}
 
