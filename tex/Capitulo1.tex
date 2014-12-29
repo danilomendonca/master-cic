@@ -1,0 +1,55 @@
+\chapter{Introduction}\label{ch_introduction}%
+
+\section{Problem definition}
+
+%praise
+According to Lamsweerde, a poor requirements engineering (RE) is the major source of system failures [citation]. Goal-oriented requirements engineering (GORE) has gained the attention of both academic and industrial practitioners due to its ability to model the intentionality behind system requirements. More than just presenting the `what' and the `how' of a system, goal models also express the `why' of different requirements to exist. Also, its simple graphical notation allows non-technical stakeholders to take part in the modelling and analysis process or at least to have a clear view of the proposed system-to-be and its social dependencies, both strategically through higher level goals and operationally through lower level goals and tasks. 
+
+The contextualization of an information means that its validity is not absolute in respect to the state of the world it relates to. Mobile and pervasive computing, among others, are examples of new computer paradigms for which the operation environment is not static, but dynamic. Battery, signals strength, component's availability and the quality of resources and relevant information such as the user geographic location may vary through time, posing a new sort of challenge to the development of socio-technical systems based on these paradigms. The contextualization of the informations gathered at RE phase becomes imperative once its validity may be threatened by changing environment conditions~[Finkelstein, CGM]. 
+
+In traditional GORE methodologies [GORE CA comparison], contribution  analysis are based on domain knowledge about the positive, neutral (implicit) or negative impact of a given system alternative to one or more system soft-goals. By  comparing the overall contribution of two or more alternatives, a decision is made about which one should be adopted for the system-to-be. The problem with this approach is threefold. First, it is based on domain knowledge information that may not exist or may not be precise and reliable enough. As a consequence, the decision of which alternative to use, both at design time and at runtime, may be biased and lead to unacceptable system failures. Second, it is limited to a static representation of the system goals and activities without any temporal/behaviour information that could be used to verify the bigger picture of the system behaviour for dynamic properties such as its availability, performance, reliability, power consumption, etc. Finally, contribution assertions are deterministic and do not allow a probabilistic verification, i.e., if non-determinism is present either in the model, in its technical or social components or in its environment.
+
+\section{Proposed solution}
+
+In order to provide a more solid and precise approach for the non-functional verification of different system alternatives and to improve the GORE contribution analysis, we propose the extension of the TROPOS goal-oriented software development methodology with a probabilistic model checking (PMC) approach that has already been explored and is supported by tools such as PRISM model checker[genaína PMC, PRISM]. The resulting verification model should represent activities of the system-to-be, including its elicited alternatives with particular metrics that, combined to the context effects and the properties defined using the Probabilistic Computation Tree Logic (PCTL), will provide estimations for the local or global values of attributes required as constraints associated to the system, e.g., its global reliability or power consumption.
+
+The PMC technique requires a probabilistic model representing system activities. As the goal model proposed in TROPOS is static, no information regarding the temporality, cardinality and priorization of activities is provided. This problem was tackled by Dalpiaz et al.~[RTGORE] with the specification of a regular expression language that may be associated to goals in a goal model and express its behaviour information such as how many times the same goal should be achieved and the parallel or sequential achievement order. We have used this proposal to fill the gap between a static representation of a system and its dynamic representation that specifies its behaviour. With this information, an activity view of the system may be converted to a probabilistic representation with the PRISM model checker language.
+
+In the generated model, context variables and adoptable alternatives should be parametrized to produce a formula that can check the system and its alternatives for different contexts of operation. This verification, performed as part of the Validation \& Verification (VV) phase in RE, should anticipate any violations to the constraints required for the system. Treating a detected violation at design time may correspond to actions such as making a different choice for underlying technical components used by tasks, the optimization of these components behaviour specification or even the disposal of this alternative as a means to satisfy its goal. PMC technique also allows the identification of system parts with the most influence on each metric through sensitive analysis.
+
+%This space variability problem becomes more complex with the contextualization of goals, means and metrics. According to Bosh et al.[cite Bosh 2004], a high degree of variability allow the use of software in a broader range of contexts. Traditional GORE approaches are mostly used to the selection of which single alternative would exist in the system-to-be for some static context. A dynamic environment can result in contextual violations that can not be resolved just by configuration management. In these cases, a space variability may be required to keep the system properly running in different contexts.
+
+
+%to a specific kind of goal called \textit{softgoal}. Softgoals are goals for which there is no clear-cut criteria. Often, they represent qualitative intentions of stakeholders, in contrast to the 
+
+\section{Evaluation}
+
+The proposal was evaluated with the application of the extended TROPOS methodology to the development of a Mobile Personal Emergency Response System (MPERS). This system may be seen as a body area network (BAD) with extended functionalities related to emergency response and mobile computing [BAD]. Instead of a home or hospital static environment, the MPERS is conceived to allow patients with different health risk degrees to maintain mobility while they are monitored and assisted. If a medical emergency is detected, a geolocation feature should identify where the emergency response team should be addressed to. The MPERS features were based on real emergency response systems available at the industry and also at the BAD proposed by Fernandes[Fernandes].
+
+The evaluation process has pointed out the major benefits and limitations of the extended TROPOS proposal. Time to market is an important aspect for any software development methodology, therefore an automated generation of the PRISM probabilistic model was implemented based on an existing open source tool for TROPOS named TAOM4E[citation] in order to optimize the verification step. Also, the soundness and precision of the probabilistic verification results are crucial aspects to be evaluated as they should try to eliminate any violation that could lead to a system failure, specially failures considered severe or catastrophic.
+
+%TAOM4E provides a graphical environment for goal modelling with TROPOS methodology based on the well known Eclipse Modelling Framework (EMF) and Graphical Editing Framework (GEF). The GORE to PRISM generator was implemented as a Eclipse plugin, therefore integrated to the TAOM4E environment. 
+
+\section{Summary of Contributions}
+
+This section summarizes the contributions of this proposal.
+
+%A seguir um resumo das con
+
+\begin{enumerate}
+
+\item A new contribution analysis approach for the TROPOS Goal-oriented software development methodology.
+
+\item Conversion rules among different decomposition and runtime constraints in a runtime goal model to a PRISM probabilistic model.
+
+\item Inclusion of context effects over goals, means and metrics in the PRISM model using appropriate constructs and parameters for each case.
+
+\item A parser implementation for the regular expression (regex) language used in runtime goal-models to specify temporality, cardinality and goals priority. 
+
+\item An automatic generation of the PRISM model representing activities from a TROPOS goal-model annotated with the runtime regex and graphically modelled using the TAOM4E tool that supports TROPOS methodology.
+
+\end{enumerate}
+
+\section{Document organization}
+
+This dissertation is organized as follows. Chapter~\ref{ch_baseline} presents the base concepts of this work and the most important related works. Chapter~\ref{ch_problem} details the problem tackled by this proposal. Chapter~\ref{ch_proposal} presents the new extended TROPOS methodology, the rules for the translation between the contextual goal model and the probabilistic verification model, the parser for the runtime regex and finally the implementation approach for the automatic generation of the probabilistic model in PRISM language. Chapter~\ref{ch_evaluation} evaluates the proposal and describes its benefits and limitations. Finally, Chapter~\ref{ch_conclusion} concludes this work with final considerations about the current proposal, related proposals and our future work.

@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Classe do documento
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Nós usamos a classe "unb-cic".  Deixe apenas uma das linhas
+% abaixo não-comentada, dependendo se você for do bacharelado ou
+% da licenciatura.
+
+% Para tirar os comentários, é só mudar o comando para fazer nada.
+\newcommand{\com}[1]{\textcolor{red}{#1}}%
+
+\documentclass[mestrado]{unb-cic}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pacotes importados
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[brazil,american]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{indentfirst}
+\usepackage{natbib}
+\usepackage{xcolor,graphicx,url}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{footnote}
+%\usepackage{minipage}
+\usepackage{tablefootnote} 
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cores dos links
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Veja o arquivos cores.tex se quiser ver que outras cores estão
+% pré-definidas.  Utilizando o comando \hypersetup abaixo nós
+% evitamos aquelas caixas vermelhas feias em volta dos links.
+
+\input{cores}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=DarkScarletRed,
+  citecolor=DarkScarletRed,
+  filecolor=DarkScarletRed,
+  urlcolor= DarkScarletRed
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Informações sobre a monografia
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{An Extended Goal-oriented Development Methodology with Contextual Dependability Analysis}%
+
+\orientador[a]{\prof \dr[a] Genaína Nunes Rodrigues}{CIC/UnB}
+%\coorientador[a]{\prof[a] \dr[a] Coorientadora}{MAT/UnB}
+\coordenador[a]{\prof[a] \dr[a] Alba Cristina Magalhaes Alves de Melo}{CIC/UnB}
+\diamesano{30}{janeiro}{2015}%
+
+\membrobanca{\prof[a] \dr[a] Vander Alves}{CIC/UnB}
+\membrobanca{\prof \dr Luciano Baresi}{Politecnico di Milano}
+
+\autor{Danilo F.}{Mendonça}
+\CDU{004.4}
+
+\palavraschave{\LaTeX, metodologia científica}
+\keywords{\LaTeX, scientific method}
+
+
+
+\graphicspath{{.}{img/}}%
+\newcommand{\unbcic}{\texttt{UnB-CIC}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Texto
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+  \maketitle
+
+  \begin{dedicatoria}
+
+  \end{dedicatoria}
+
+  \begin{agradecimentos}
+
+  \end{agradecimentos}
+
+\hyphenation{au-xi-li-ar}
+
+  \begin{resumo}
+  A static and stable operation environment is not a reality for many systems nowadays. Context variations impose many threats to systems safety, including the activation of context specific failures. Goal-oriented software-development methodologies (SDM) adds the `why' to system requirements, i.e., the intentionality behind system goals and the means to meet then. Contexts may affect what requirements are needed, which alternatives are available and the quality of these alternatives, including dependability attributes. In order to allow a formal and probabilistic analysis of systems affected by context variation and elicited with Goal-Oriented Requirements Engineering (GORE) approach, we have proposed an extension to the TROPOS goal-oriented methodology to include dependability constraints to goals and to provide a more precise and formal requirements verification by translating a contextual goal-model annotated with a behavioural regular expression into a PRISM probabilistic model to be checked against properties defined with the Probabilistic Computation Tree Logic (PCTL). We evaluated the proposal with a case study of a Mobile Personal Emergency Response System (MPERS).
+  \end{resumo}
+
+  \selectlanguage{american}
+  \begin{abstract}
+  	
+  \end{abstract}
+  \selectlanguage{brazil}
+\hyphenation{a-tri-bu-tos}
+  \tableofcontents
+  \listoffigures
+  \listoftables
+
+\renewcommand{\appendixname}{Anexo}
+
+
+  \textual
+  
+  \input{tex/Capitulo1}
+  \input{tex/Capitulo2}
+  % inserir demais capítulos
+  
+
+  \postextual
+  \bibliographystyle{plain}
+  \bibliography{bibliografia}
+
+\appendix
+  %\input{tex/Anexo1}
+
+\end{document}

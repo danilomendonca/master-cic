@@ -1,0 +1,129 @@
+\chapter{Baseline}\label{ch_baseline}%
+
+\section{Goal-oriented Requirements Engineering}
+
+Goal-oriented requirements engineering brings forward the intentionality behind system requirements. More than just presenting the \textit{what} and the \textit{how} of a system-to-be, it provides the justification for each requirement, that is, they also present the \textit{why}. Through a directed graph tree that begins with a root goal, goals are connected trough decomposition links. Higher level goals are related to strategical concerns, while lower level and specially leaf-goals are related to technical and operational features of the system. 
+
+The purpose of a goal model is to structure the process of RE, including the elicitation of social needs and requirements, the actors involved in delivering functionality and resources, the decomposition of higher-level requirements into more granular and detailed requirements, the operationalization through means-end plan/task decomposition and finally the comparison between different alternatives for the system-to-be. A goal model is said to be valid and complete if it follows all its syntactic rules and if all system goals are either decomposed, delegated to other actors or fulfilled by operational system tasks. 
+
+Three frameworks/methodologies, namely KAOS, i* and TROPOS, represent the foundations for the goal model analysis used by a variety of other proposals [KAOS, i*, TROPOS]. Despite some differences among their syntax, they all share a set of core concepts:
+\medskip
+
+\large{\underline{Entities}}
+
+\begin{itemize}
+
+\item \textbf{Actor:} an entity that has goals and can decide autonomously how to achieve them. They represent a physical, social or software agent.
+\medskip
+
+\item \textbf{Goal:} are actors' strategic interests. A goal with a clear-cut criteria for its satisfaction is called a hard goal. In opposition, softgoals has no clear-cut criteria for deciding whether they are satisfied or not and are usually associated to non-functional requirements of an actor.
+\medskip
+
+\item \textbf{Task:} an operational means to satisfy actors' goals.
+
+\end{itemize}
+\medskip
+
+\large{\underline{Relations}}
+
+\begin{itemize}
+
+\item \textbf{AND/OR Decomposition:} a link that decomposes a goal/task into sub-goals/sub-tasks, meaning that all (at least one) decomposed goal(s)/task(s) must be satisfied/executed in order to satisfy its parent entity. 
+\medskip
+
+\item \textbf{Means-end:} a means to fulfil an actor's goal through the execution of an operational task by the same actor.
+\medskip
+
+\item \textbf{Contribution link:} a positive or negative contribution between a given goal/task to a softgoal. Contribution links are used for deciding between alternative goals/tasks at design time (contribution analysis).
+
+\end{itemize}
+
+\section{Contexts}
+
+Context may be defined as the reification of the environment that surrounds the system operation~[FINKElSTEIN]. Contexts, as already stated, may not be static, but dynamic. An actor, that may be a system, has no control over its context of operation. Accordingly, an actor must be able to support different contexts of operation without violating its goals. Moreover, actors should be able to monitor the state of its surrounding environment and decide which alternative means will be used to fulfil its goals, as some may only be valid or optimized in specific contexts.
+
+In GORE, dynamic contexts may affect what goals a system have to reach, the means available to meet them and also the quality achieved by each alternative[CGM]. Root goal and higher level strategical goals are not contextualized as they represent the main purpose of a system [Finkelstein]. As these goals are decomposed in more granular sub-goals, a context condition may dictate if the goal is required for that context, limiting `what' a system should do, or if it is adoptable, limiting the option of `how' to fulfil a required goal. Finally, a context may also dictate the positive, neutral or negative contribution of using some goal or task to another goal, usually a qualitative softgoal. This last effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to contribute to.
+ 
+
+\section{Dependability Analysis}
+
+The concept of dependability is related to dependence and trust as well as the ability of a system to avoid failures that are more frequent and more severe than certain threshold. According to Avizienis et al., dependability encompasses the following attributes~[AVIZIENIS]: 
+
+\begin{itemize}
+
+\item Availability: readiness for correct service.
+\medskip
+
+\item Reliability: continuity of correct service.
+
+\item Integrity: absence of improper system alterations.
+\medskip
+
+\item Safety: absence of catastrophic consequences on the user(s) and the environment.
+\medskip
+
+\item Maintainability: ability to undergo modifications and repairs.
+\medskip
+
+\end{itemize}
+
+%A holistic dependability specification has to include not only the software operation, but also the requirements for which that operation is meant. Requirements are an important factor to decide the acceptable frequency and severity of a software failure. Similarly, context is another factor in that decision. The frequency and the likelihood of failures are related to the dependability attributes of reliability, availability and integrity. Both likelihood and severity of failures are related to safety. 
+%
+%At early project phases, hazard resolution may involve simply getting more information about hazards or generating alternative design solutions~\cite{Leveson:1995}. In our work, we have used a qualitative means to analyse the dependability to be delivered by goals of a certain system taking into account contextual effects. Our approach improves the understanding of systems fault-causality effect and the identification of best approaches to reduce risk or even determine rates for safety or system level functional failure. Moreover, dependability requirement analysis cannot be accurately fulfilled without taking into account the context under which the system will operate.
+%
+%
+%Avizienis et al \cite{Laprie2004} proposed a failure classification taxonomy with four viewpoints characterizing failures. In our approach, we use two categories: domain and consequence. We use the domain category to distinguish \textit{content} failures from \textit{timing} failures:
+%
+%\begin{itemize}
+%
+%\item{\textbf{Content failure}: When the content of the information delivered by a system task deviates from its specification}
+%
+%\item{\textbf{Timing failure}: When the time of arrival or the duration of the information delivered by some system task deviates from its specification}
+%
+%\end{itemize}
+%
+%The consequence of failures enables the definition of failures' severity. Two limiting levels are predefined and other intermediary levels could be defined for each case:
+%
+%\begin{itemize}
+%
+%\item{\textbf{Minor failure}: The harmful consequences of failures are limited or at most similar to the benefits provided by the correct operation of the system}
+%
+%\item{\textbf{Catastrophic failure}: The harmful consequences of failures are incommensurably higher than the benefits provided by correct operation of the system}
+%
+%\end{itemize}
+%
+%More details on the complete failure classification can be found in \cite{Laprie2004}. In our approach, a part of this taxonomy is used to guide the definition of the classes of failures severities and therefore the required level of dependability for different system goals. It also takes part in the identification of which dependability attribute is related to each contextual failure occurrence.  
+
+\section{PRISM Probabilistic Model Checker}
+
+The state based, probabilistic model checking technique used in this approach is supported by the PRISM model checker tool~[PRISM]. PRISM allows the modelling and analysis of systems which exhibit random or probabilistic behaviour. The decision of using PRISM as the probabilistic state based model checker was due to the number of successful case studies that have used this tool, indicating its maturity [PRISM CS], and also due to its rich environment that is able to represent different kinds of probabilistic models and their evaluations.
+
+PRISM may be used for many different kinds of model evaluations depending on the abstraction level, the type of probabilistic model and the PCTL properties to be analysed. PRISM language offers a rich set of constructs that may represent system modules and components, among others architectural and design configurations. 
+
+To evaluate the current proposal with the MPERS case study, we have used the a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of properties related to dependability, i.e., the reachability of the final success state of a set of goal model activities that represents: 
+
+\begin{itemize}
+
+\item if the set is composed of the minimum set of activities that satisfies the root goal: its global reliability;  
+
+\item if the set is composed of the minimum set of activities that satisfies any lower-level goal: its local reliability.
+
+\end{itemize}
+
+It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for users or for the environment.
+
+
+\chapter{Related Work}\label{ch_related_work}
+
+\section{Contextual Goal Model}
+
+The Contextual Goal Model (CGM)~[CGM] proposed the contextualization of required goals, adoptable means (goals/tasks) and contribution links values. The main benefit of this work is to provide proper syntax to the contextualization of goal model entities and relations affected by context variations and to provide a rationale for context analysis. The main problem tackled by the current work is the verification of system non-functional attributes that requires a more precise and formal approach instead of the existing contribution analysis that is based on analysts direct evaluation of the forward impact between goals/tasks and softgoals. In this regard, the CGM provided more realistic and precise contribution analysis contextualized by environment conditions, but did not extended the basis of the contribution analysis process. Our work also aims to provide a formal verification of non-functional attributes also in a context-dependent fashion, i.e., including the context effects in the probabilistic model used to estimate the value of a given alternative selection of the contextual goal model. 
+
+\section{Runtime Goal Model}
+
+Despite the use of goal models to support the monitoring and adaptation functions at runtime, Dalpiaz et al. argued that these works are `using design artefacts for purposes they are not meant to, i.e., for reasoning about runtime system behaviour'. As such, they proposed a conceptual distinction between the static goal model, named Design Goal Models (DGM), and the Runtime Goal Model (RGM) that extend DGM with `additional state, behavioural and historical information about the fulfilment of goals'.
+
+
+\chapter{Proposal}\label{ch_proposal}
+
+In the PMC technique adopted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. As a goal model goes from strategical to operational leaf-goals, and each leaf-goal describes a desired state reachable by either a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may be seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.
