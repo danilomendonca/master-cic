@@ -1,0 +1,21 @@
+\chapter{Related Work}\label{ch_related_work}
+
+\section{Contextual Goal Model}
+
+The Contextual Goal Model (CGM)~[CGM] proposed the contextualization of required goals, adoptable means (goals/tasks) and contribution links values. The main benefit of this work is to enrich the original goal model with the contextualization of entities and relations affected by context variations and to provide a rationale for context analysis. In contrast, the main problem tackled by the current work is the verification of non-functional attributes that requires a more precise and formal approach instead of the existing contribution analysis that is based on analysts direct evaluation of the forward impact between goals/tasks and softgoals. 
+
+In this regard, the CGM provided more realistic and precise contribution analysis contextualized by environment conditions, but did not change the nature of the contribution analysis process. Our work has benefited from the CGM conceptual model and has extended the non-functional GORE analysis with a context-dependent formal verification, i.e., that includes different context effects in the probabilistic model used by the PMC to estimate the values of required non-functional attributes of the system and provide a reliable decision criteria for the selection of concurring alternatives in the goal model before it is implemented.
+
+\section{Awareness Requirements}
+
+
+
+\section{Runtime Goal Model}
+
+Despite the use of goal models to support the monitoring and adaptation functions at runtime, Dalpiaz et al. argued that these works are `using design artefacts for purposes they are not meant to, i.e., for reasoning about runtime system behaviour'. As such, they proposed a conceptual distinction between the static goal model, named Design Goal Models (DGM), and the Runtime Goal Model (RGM) that extend DGM with `additional state, behavioural and historical information about the fulfilment of goals'~[RGM].
+
+The main purpose of the RGM approach is to provide the proper specification of behaviour information among system goals. RGM defines a class model, while the Instance Goal Model (IGM) provides the instance model that must conform to its class specification. IGM are useful to have an instance representation of the RGM provided by the monitoring of the activities involved in fulfilling system goals. If the monitored IGM violates the RGM, then a corrective action would have to take place. Again, our work has benefited from the conceptual contribution, this time by using the runtime regex language to have a behaviour specification for system goals and use it to generate the probabilistic model. In contrast, our work does not cover instance and monitoring aspects and focuses on the \&V phase of RE to anticipate any violation and for the selection of the most appropriate concurrent alternative elicited for the system.
+
+\chapter{Proposal}\label{ch_proposal}
+
+In the PMC technique adopted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. As a goal model goes from strategical to operational leaf-goals, and each leaf-goal describes a desired state reachable by either a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may be seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.

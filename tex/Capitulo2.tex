@@ -110,20 +110,4 @@ To evaluate the current proposal with the MPERS case study, we have used the a d
 
 \end{itemize}
 
-It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for users or for the environment.
-
-
-\chapter{Related Work}\label{ch_related_work}
-
-\section{Contextual Goal Model}
-
-The Contextual Goal Model (CGM)~[CGM] proposed the contextualization of required goals, adoptable means (goals/tasks) and contribution links values. The main benefit of this work is to provide proper syntax to the contextualization of goal model entities and relations affected by context variations and to provide a rationale for context analysis. The main problem tackled by the current work is the verification of system non-functional attributes that requires a more precise and formal approach instead of the existing contribution analysis that is based on analysts direct evaluation of the forward impact between goals/tasks and softgoals. In this regard, the CGM provided more realistic and precise contribution analysis contextualized by environment conditions, but did not extended the basis of the contribution analysis process. Our work also aims to provide a formal verification of non-functional attributes also in a context-dependent fashion, i.e., including the context effects in the probabilistic model used to estimate the value of a given alternative selection of the contextual goal model. 
-
-\section{Runtime Goal Model}
-
-Despite the use of goal models to support the monitoring and adaptation functions at runtime, Dalpiaz et al. argued that these works are `using design artefacts for purposes they are not meant to, i.e., for reasoning about runtime system behaviour'. As such, they proposed a conceptual distinction between the static goal model, named Design Goal Models (DGM), and the Runtime Goal Model (RGM) that extend DGM with `additional state, behavioural and historical information about the fulfilment of goals'.
-
-
-\chapter{Proposal}\label{ch_proposal}
-
-In the PMC technique adopted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. As a goal model goes from strategical to operational leaf-goals, and each leaf-goal describes a desired state reachable by either a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may be seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.
+It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for the user(s) and for the environment.
