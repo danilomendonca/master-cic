@@ -12,12 +12,44 @@ Souza et al.~[AwaReq] proposed the Awareness Requirements (AwReq) as a meta-requ
 
 Despite its contribution to the specification of meta-requirements in the goal models, AwReq do not provide an approach to analyse and validate its meta-requirements before system implementation and monitoring. Original GORE contribution analysis could be used to define the impact of a given alternative to some attribute or value composing the AwReq. However, the paper focuses only on attributes that can be monitored by the system at runtime. In contrast, our approach relies on the improved contribution analysis, i.e., the model based verification of attributes through PMC technique that can be performed at design time and provide alternative design decision criteria. Moreover, a similar meta-requirement is used by our approach to define PCTL properties that must be checked by the PMC. These properties are also associated to system goals.
 
+\section{Dependability Contextual Goal Model}
+
+This work has been preceded by another proposal concerning goal-oriented requirements engineering, dependability analysis and dynamic contexts, namely the Dependability Contextual Goal Model (DCGM)~[DCGM]. The contribution was focused on both dependability requirements and estimations based on declarative rules and a variable context of operation.
+
+In DCGM, a failure classification scheme was used to classify the consequence level and domain of failures in achieving system goals. This process lead to the definition of dependability constraints that must be achieved by the means-end tasks used to fulfil leaf-goals in specific contexts of operation, i.e., to the specification of contextual dependability requirements. These requirements inherited the same concept of the AwReq, but instead of being static, they could be associated to a context condition. Another facet of the DCGM is the contextual failure implication, which consisted of a dependability specific GORE contribution analysis supported by Fuzzy Logic to define IF-THEN rules between context conditions and the level of a dependability attribute, e.g., availability and reliability.
+
+The main drawback of this proposal was the lack of scalability, as declarative rules must be provided for different goals, attributes and contexts, proving to be a time consuming task for the analysts. A second problem was the subjectivity of the rules, as they were based in domain knowledge. This problem, as much as in GORE contribution analysis, lead to the idea of coupling a more precise and reliable verification of non-functional requirements of a goal model based on the PMC technique. Still, the idea of a failure classification and the specification of contextual dependability requirements were kept, with the difference that now other  attributes besides dependability ones may be specified.
+
 \section{Runtime Goal Model}
 
 Despite the use of goal models to support the monitoring and adaptation functions at runtime, Dalpiaz et al. argued that these works are `using design artefacts for purposes they are not meant to, i.e., for reasoning about runtime system behaviour'. As such, they proposed a conceptual distinction between the static goal model, named Design Goal Models (DGM), and the Runtime Goal Model (RGM) that extend DGM with `additional state, behavioural and historical information about the fulfilment of goals'~[RGM].
 
 The main purpose of the RGM approach is to provide the proper specification of behaviour information among system goals. RGM defines a class model, while the Instance Goal Model (IGM) provides the instance model that must conform to its class specification. IGM are useful to have an instance representation of the RGM provided by the monitoring of the activities involved in fulfilling system goals. If the monitored IGM violates the RGM, then a corrective action would have to take place. Again, our work has benefited from the conceptual contribution, this time by using the runtime regex language to have a behaviour specification for system goals and use it to generate the probabilistic model. In contrast, our work does not cover instance and monitoring aspects and focuses on the \&V phase of RE to anticipate any violation and for the selection of the most appropriate concurrent alternative elicited for the system.
 
+\section{Formal TROPOS}
+
+The idea behind the formalization of a goal model, as proposed by Formal TROPOS~[FTROPOS], is to provide a verifiable specification of sufficient and/or necessary conditions to create and achieve intentional elements and dependencies in the model and invariants for each element. In addition to these conditions, new \textit{prior-to} links describe the temporal order of intentional elements and cardinality constraints may be added to any link in the model. Finally, Formal TROPOS uses a first-order linear-time temporal logic as a specification language.
+
+The nature of the verification of a goal model with Formal TROPOS specification is different from the PMC used by our work. Formal TROPOS aims to provide the information required for a consistency verification of the model. The verification is not only for the abstract TROPOS syntax, but also to domain specific information of how intentional elements are created and fulfilled in time. Once the model starts to have more elements and relations, its consistency checking becomes non-trivial, justifying the use of a formal specification that can be verified by a model checker tool. 
+
+In our work, PMC technique is used to build a probabilistic model representation of the goal model enriched by dynamic specification (RGM) and enable the verification of properties that depend on how activities in the model are organized in terms of time, cardinality and priority and how each activity contributes to the property being verified. For instance, if power consumption is to be checked, each activity has to be associated to a power consumption unit and the global consumption value is evaluated considering any non-determinism specified in the execution workflow. Thus, even if the Formal TROPOS language allows the specification of dynamic aspects of a goal model, it is tailored for a consistency checking and not for the verification of non-functional requirements of the model, for instance dependability requirements.
+
 \chapter{Proposal}\label{ch_proposal}
 
-In the PMC technique adopted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. As a goal model goes from strategical to operational leaf-goals, and each leaf-goal describes a desired state reachable by either a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may be seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.
+In the PMC technique adopted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. As a goal model goes from strategical root goal to operational leaf-goals, and each leaf-goal describes a desired state reachable by either a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may be seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.
+
+
+\begin{itemize}
+
+\item Making a different choice for underlying components: In some cases the replacement of a technical component for another of the same class can improve the quality of how they achieve their goal. For instance,
+\medskip
+
+\item Behaviour optimization: The quality may also depend on the pattern used for the activities execution. The specification of a different pattern may eliminate the non-functional violation. 
+\medskip
+
+\item Contextualizing the alternative: An alternative may only violate a NFR in specific contexts. In this case, different valid alternatives may be used according to the context of operation.
+\medskip
+
+\item Alternative disposal: If the alternative is in absolute violation or if its validity is restricted to contexts that have at least on other valid alternative, this branch can be eliminated from the model.
+
+\end{itemize}
