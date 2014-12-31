@@ -50,6 +50,16 @@ In the PMC technique adopted by this proposal, a behavioural specification, usua
 \item Contextualizing the alternative: An alternative may only violate a NFR in specific contexts. In this case, different valid alternatives may be used according to the context of operation.
 \medskip
 
-\item Alternative disposal: If the alternative is in absolute violation or if its validity is restricted to contexts that have at least on other valid alternative, this branch can be eliminated from the model.
+\item Alternative disposal: If the alternative is in absolute violation or if its validity is restricted to contexts that have at least one other valid alternative, this branch can be eliminated from the model.
+
+\end{itemize}
+
+To evaluate the current proposal with the MPERS case study, we have used the a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of properties related to dependability, i.e., the reachability of the final success state of a set of goal model activities that represents: 
+
+\begin{itemize}
+
+\item if the set is composed of the minimum set of activities that satisfies the root goal: its global reliability;  
+
+\item if the set is composed of the minimum set of activities that satisfies any lower-level goal: its local reliability.
 
 \end{itemize}

@@ -2,9 +2,9 @@
 
 \section{Goal-oriented Requirements Engineering}
 
-Goal-oriented requirements engineering brings forward the intentionality behind system requirements. More than just presenting the \textit{what} and the \textit{how} of a system-to-be, it provides the justification for each requirement, that is, they also present the \textit{why}. Through a directed graph tree that begins with a root goal, goals are connected trough decomposition links. Higher level goals are related to strategical concerns, while lower level and specially leaf-goals are related to technical and operational features of the system. 
+Goal-oriented requirements engineering brings forward the intentionality behind system requirements. More than just presenting the \textit{what} and the \textit{how} of a system-to-be, it provides the justification for each requirement, that is, they also present the \textit{why}. Through a directed graph tree that begins with a root goal, goals are connected trough decomposition links. Root and higher level goals are related to strategical concerns, while lower level and leaf-goals are related to technical and operational features of the system. 
 
-The purpose of a goal model is to structure the process of RE, including the elicitation of social needs and requirements, the actors involved in delivering functionality and resources, the decomposition of higher-level requirements into more granular and detailed requirements, the operationalization through means-end plan/task decomposition and finally the comparison between different alternatives for the system-to-be. A goal model is said to be valid and complete if it follows all its syntactic rules and if all system goals are either decomposed, delegated to other actors or fulfilled by operational system tasks. 
+The main purpose of a goal model is to support the early process of RE, including the elicitation of social needs and dependencies, the actors involved in delivering functionality and resources, the decomposition of higher-level goals into more granular and detailed requirements chunks, the operationalization through means-end tasks and finally the comparison between different alternatives for the system-to-be. A goal model is said to be valid and complete if it follows all its syntactic rules and if all system goals are either decomposed, delegated to other actors or fulfilled by operational system tasks. 
 
 Three frameworks/methodologies, namely KAOS, i* and TROPOS, represent the foundations for the goal model analysis used by a variety of other proposals [KAOS, i*, TROPOS]. Despite some differences among their syntax, they all share a set of core concepts:
 \medskip
@@ -13,13 +13,13 @@ Three frameworks/methodologies, namely KAOS, i* and TROPOS, represent the founda
 
 \begin{itemize}
 
-\item \textbf{Actor:} an entity that has goals and can decide autonomously how to achieve them. They represent a physical, social or software agent.
+\item \textbf{Actor:} an entity that has goals and can decide autonomously how to achieve them. They represent a physical, social or software agent. E.g.: A patient, an emergency center, a doctor and a Mobile Personal Emergency System running in patient's smartphone.
 \medskip
 
-\item \textbf{Goal:} are actors' strategic interests. A goal with a clear-cut criteria for its satisfaction is called a hard goal. In opposition, softgoals has no clear-cut criteria for deciding whether they are satisfied or not and are usually associated to non-functional requirements of an actor.
+\item \textbf{Goal:} are actors' strategic interests. A goal with a clear-cut criteria for its satisfaction is called a hard goal. In opposition, softgoals has no clear-cut criteria for deciding whether they are satisfied or not and are usually associated to non-functional requirements of an actor. E.g.: vital signs are monitored, emergency is detected, emergency center is notified (hard goals) and system availability, detection precision, emergency awareness (softgoals).
 \medskip
 
-\item \textbf{Task:} an operational means to satisfy actors' goals.
+\item \textbf{Task:} an operational means to satisfy actors' goals. E.g.: monitor temperature sensor, persist vital signs data, request emergency assistance.
 
 \end{itemize}
 \medskip
@@ -42,7 +42,21 @@ Three frameworks/methodologies, namely KAOS, i* and TROPOS, represent the founda
 
 Context may be defined as the reification of the environment that surrounds the system operation~[FINKElSTEIN]. Contexts, as already stated, may not be static, but dynamic. An actor, that may be a system, has no control over its context of operation. Accordingly, an actor must be able to support different contexts of operation without violating its goals. Moreover, systems should be able to monitor the state of its surrounding environment and decide which alternative means will be used to fulfil its goals, as some may only be valid or optimized in specific contexts.
 
-In GORE, dynamic contexts may affect what goals a system have to reach, the means available to meet them and also the quality achieved by each alternative[CGM]. Root goal and higher level strategical goals are not contextualized as they represent the main purpose of a system [Finkelstein]. As these goals are decomposed in more granular sub-goals, a context condition may dictate if the goal is required for that context, limiting `what' a system should do, or if it is adoptable, limiting the option of `how' to fulfil a required goal. Finally, a context may also dictate the positive, neutral or negative contribution of using some goal or task to another goal, usually a qualitative softgoal. This last effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve.
+In GORE, dynamic contexts may affect what goals a system have to reach, the means available to meet them and also the quality achieved by each alternative[CGM]. Root goal and higher level strategical goals are not contextualized as they represent the main purpose of a system [Finkelstein]. As these goals are decomposed in more granular sub-goals, a context condition may dictate:
+
+\begin{itemize}
+
+\item If the goal is required for that context, limiting `what' a system should do;
+\medskip
+
+\item If a sub-goal or task is adoptable, limiting the `means' to fulfil a required goal;
+\medskip
+
+\item The positive, neutral or negative contribution of using some goal or task to another goal, usually a qualitative softgoal;
+
+\end{itemize}
+
+This last effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve.
  
 
 \section{Dependability Analysis}
@@ -55,6 +69,7 @@ The concept of dependability is related to dependence and trust as well as the a
 \medskip
 
 \item Reliability: continuity of correct service.
+\medskip
 
 \item Integrity: absence of improper system alterations.
 \medskip
@@ -67,7 +82,9 @@ The concept of dependability is related to dependence and trust as well as the a
 
 \end{itemize}
 
+Correctness is opposed to failure. A failure is a perceived deviation from system expected behaviour that may have variable degree of consequences on the user(s) and the environment. Failures are caused by a specification fault(s) or specification violation(s). In the first case, either the goals or the means to fulfil then are incorrect or incomplete. In the second case, system implementation did not followed its operational specification due to a faulty implementation or a deviation from normal behaviour took place in one or more components involved in the execution.
 
+The scope of this work is restricted to specification violations, i.e., we assume that a system specification is valid and has no false assumptions, incompleteness or inconsistencies. Failures are caused by anomalies in the technical components or social actors participating in the execution of system tasks. Dependability analysis is used to provide estimations about different attributes related to system failures. These metrics may be specified as non-functional requirements for isolated system functionalities or for the whole system. Instead of softgoals, we use meta-requirements over functional goals with clear-cut quantitative criteria such as `99.999\%' reliable - a probabilistic value to make it compatible with the PMC estimation results.
 
 %A holistic dependability specification has to include not only the software operation, but also the requirements for which that operation is meant. Requirements are an important factor to decide the acceptable frequency and severity of a software failure. Similarly, context is another factor in that decision. The frequency and the likelihood of failures are related to the dependability attributes of reliability, availability and integrity. Both likelihood and severity of failures are related to safety. 
 %
@@ -100,16 +117,24 @@ The concept of dependability is related to dependence and trust as well as the a
 
 The state based, probabilistic model checking technique used in this approach is supported by the PRISM model checker tool~[PRISM]. PRISM allows the modelling and analysis of systems which exhibit random or probabilistic behaviour. The decision of using PRISM as the probabilistic state based model checker was due to the number of successful case studies that have used this tool, indicating its maturity [PRISM CS], and also due to its rich environment that is able to represent different kinds of probabilistic models and their evaluations.
 
-PRISM may be used for many different kinds of model evaluations depending on the abstraction level, the type of probabilistic model and the PCTL properties to be analysed. PRISM language offers a rich set of constructs that may represent system modules and components, among others architectural and design configurations. 
-
-To evaluate the current proposal with the MPERS case study, we have used the a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of properties related to dependability, i.e., the reachability of the final success state of a set of goal model activities that represents: 
+A model checking is a formal method that may be used for quantitative and qualitative analysis of dependability attributes as long as: 
 
 \begin{itemize}
 
-\item if the set is composed of the minimum set of activities that satisfies the root goal: its global reliability;  
+\item A formal system model may be built;
+\medskip
 
-\item if the set is composed of the minimum set of activities that satisfies any lower-level goal: its local reliability.
+\item Properties representing dependability attributes may be defined;
+\medskip
+
+\item The analysis overhead is justified, e.g., by its criticality.
 
 \end{itemize}
+
+As it will be explained in later sections, goal models may be easily extended with the proper information required for the verification of some important dependability attributes. The objective is to anticipate non-functional dependability violations and to support the decision of which alternatives to use in the system-to-be.
+
+
+PRISM may be used for many different kinds of model evaluations depending on the abstraction level, the type of probabilistic model and the PCTL properties to be analysed. PRISM language offers a rich set of constructs that may represent system modules and components, among others architectural and design configurations. 
+
 
 It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for the user(s) and for the environment.
