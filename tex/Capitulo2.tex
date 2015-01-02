@@ -4,7 +4,7 @@
 
 Goal-oriented requirements engineering brings forward the intentionality behind system requirements. More than just presenting the \textit{what} and the \textit{how} of a system-to-be, it provides the justification for each requirement, that is, they also present the \textit{why}. Through a directed graph tree that begins with a root goal, goals are connected trough decomposition links. Root and higher level goals are related to strategical concerns, while lower level and leaf-goals are related to technical and operational features of the system. 
 
-The main purpose of a goal model is to support the early process of RE, including the elicitation of social needs and dependencies, the actors involved in delivering functionality and resources, the decomposition of higher-level goals into more granular and detailed requirements chunks, the operationalization through means-end tasks and finally the comparison between different alternatives for the system-to-be. A goal model is said to be valid and complete if it follows all its syntactic rules and if all system goals are either decomposed, delegated to other actors or fulfilled by operational system tasks. 
+The main purpose of a goal model is to support the early process of RE, including the elicitation of social needs and dependencies, the actors involved in delivering functionalities and resources, the decomposition of higher-level goals into more granular and detailed requirements chunks, the operationalization through means-end tasks and finally the comparison between different alternatives for the system-to-be. A goal model is said to be valid and complete if it follows all its syntactic rules and if all system goals are either decomposed, delegated to other actors or fulfilled by operational system tasks. 
 
 Three frameworks/methodologies, namely KAOS, i* and TROPOS, represent the foundations for the goal model analysis used by a variety of other proposals [KAOS, i*, TROPOS]. Despite some differences among their syntax, they all share a set of core concepts:
 \medskip
@@ -28,7 +28,7 @@ Three frameworks/methodologies, namely KAOS, i* and TROPOS, represent the founda
 
 \begin{itemize}
 
-\item \textbf{AND/OR Decomposition:} a link that decomposes a goal/task into sub-goals/sub-tasks, meaning that all (at least one) decomposed goal(s)/task(s) must be satisfied/executed in order to satisfy its parent entity. 
+\item \textbf{AND/OR Decomposition:} a link that decomposes a goal/task into sub-goals/sub-tasks, meaning that all (at least one) decomposed goal(s)/task(s) must be fulfilled/executed in order to satisfy its parent entity. 
 \medskip
 
 \item \textbf{Means-end:} a means to fulfil an actor's goal through the execution of an operational task by the same actor.
@@ -38,13 +38,31 @@ Three frameworks/methodologies, namely KAOS, i* and TROPOS, represent the founda
 
 \end{itemize}
 
+\section{TROPOS Goal-oriented Software Development Methodology}
+
+TROPOS is a GORE methodology based on the i* framework. Its main improvement is the addition of new phases of requirements engineering and system design, namely~[TROPOS]:
+
+\begin{itemize}
+
+\item Late requirements engineering: Beyond the social dependency modelling with actors diagrams representing stakeholders and their needs in early requirements phase, a late requirements phase focuses on the system actor analysis. In this phase, system goals are inherited from stakeholders needs and represent both functional and non-functional requirements. Each goal has to be further decomposed in more granular sub-goals, delegated to other actors or to be fulfilled by means-end tasks. 
+\medskip
+
+\item Architectural design: In this phase, new actors representing sub-systems are created to fulfil different system goals. The idea is to shape the solution using a multi-agent architecture style instead of a monolithic system approach. Data and control interconnections are represented as dependencies.
+\medskip
+
+\item Detailed design: The last phase is characterized by the specification of agent capabilities and interactions though UML activity and sequence diagrams. Also, the implementation platform and other specific implementation details are addressed in order to directly map the design to system code.
+
+\end{itemize}
+
+Implementation phase is also specified by TROPOS methodology, but it is out of the scope of this work as our objective is to improve the analysis and the solution that will be later implemented.
+
 \section{Contexts}
 
-Context may be defined as the reification of the environment that surrounds the system operation~[FINKElSTEIN]. Contexts, as already stated, may not be static, but dynamic. An actor, that may be a system, has no control over its context of operation. Accordingly, an actor must be able to support different contexts of operation without violating its goals. Moreover, systems should be able to monitor the state of its surrounding environment and decide which alternative means will be used to fulfil its goals, as some may only be valid or optimized in specific contexts.
+Context may be defined as the reification of the environment that surrounds the system operation~[FINKElSTEIN]. Contexts, as already stated, may not be static, but dynamic. A system has no control over its context of operation. Accordingly, a system must be able to support different contexts of operation without violating its goals. Moreover, systems should be able to monitor the state of its surrounding environment and decide which alternative will be used regarding both the availability of that alternative and the optimization of non-functional requirements.
 
 In GORE, dynamic contexts may affect what goals a system have to reach, the means available to meet them and also the quality achieved by each alternative[CGM]. Root goal and higher level strategical goals are not contextualized as they represent the main purpose of a system [Finkelstein]. As these goals are decomposed in more granular sub-goals, a context condition may dictate:
 
-\begin{itemize}
+\begin{enumerate}
 
 \item If the goal is required for that context, limiting `what' a system should do;
 \medskip
@@ -54,14 +72,14 @@ In GORE, dynamic contexts may affect what goals a system have to reach, the mean
 
 \item The positive, neutral or negative contribution of using some goal or task to another goal, usually a qualitative softgoal;
 
-\end{itemize}
+\end{enumerate}
 
-This last effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve.
+The third effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve.
  
 
 \section{Dependability Analysis}
 
-The concept of dependability is related to dependence and trust as well as the ability of a system to avoid failures that are more frequent and more severe than certain threshold. According to Avizienis et al., dependability encompasses the following attributes~[AVIZIENIS]: 
+The concept of dependability is related to dependence and trust as well as the ability of a system to avoid failures that are more frequent and more severe than certain threshold~[AVIZIENIS]. According to Avizienis et al., dependability encompasses the following attributes: 
 
 \begin{itemize}
 
@@ -82,9 +100,9 @@ The concept of dependability is related to dependence and trust as well as the a
 
 \end{itemize}
 
-Correctness is opposed to failure. A failure is a perceived deviation from system expected behaviour that may have variable degree of consequences on the user(s) and the environment. Failures are caused by a specification fault(s) or specification violation(s). In the first case, either the goals or the means to fulfil then are incorrect or incomplete. In the second case, system implementation did not followed its operational specification due to a faulty implementation or a deviation from normal behaviour took place in one or more components involved in the execution.
+Correctness is opposed to failures. A failure is a perceived deviation from system expected behaviour that may have variable degree of consequence on the user(s) and the environment. Failures are caused by a specification faults or specification violations. In the first case, either the goals or the means to fulfil then are incorrect or incomplete. In the second case, system implementation did not followed its operational specification due to a faulty implementation or a deviation from normal behaviour took place in one or more components involved in the execution.
 
-The scope of this work is restricted to specification violations, i.e., we assume that a system specification is valid and has no false assumptions, incompleteness or inconsistencies. Failures are caused by anomalies in the technical components or social actors participating in the execution of system tasks. Dependability analysis is used to provide estimations about different attributes related to system failures. These metrics may be specified as non-functional requirements for isolated system functionalities or for the whole system. Instead of softgoals, we use meta-requirements over functional goals with clear-cut quantitative criteria such as `99.999\%' reliable - a probabilistic value to make it compatible with the PMC estimation results.
+The scope of this work is restricted to specification violations, i.e., we assume that a system specification is valid and has no false assumptions, incompleteness or inconsistencies. Failures are restricted to anomalous behaviour of the technical components or social actors participating in the execution of system tasks. Accordingly, our approach is focused on dependability attributes that should be estimated and compared to their required constraint values and also to the sensitive analysis of how different system parts contribute to the overall value of those attributes. Sensitive analysis may be considered analogous to the original GORE contribution analysis.
 
 %A holistic dependability specification has to include not only the software operation, but also the requirements for which that operation is meant. Requirements are an important factor to decide the acceptable frequency and severity of a software failure. Similarly, context is another factor in that decision. The frequency and the likelihood of failures are related to the dependability attributes of reliability, availability and integrity. Both likelihood and severity of failures are related to safety. 
 %
@@ -115,9 +133,13 @@ The scope of this work is restricted to specification violations, i.e., we assum
 
 \section{PRISM Probabilistic Model Checker}
 
-The state based, probabilistic model checking technique used in this approach is supported by the PRISM model checker tool~[PRISM]. PRISM allows the modelling and analysis of systems which exhibit random or probabilistic behaviour. The decision of using PRISM as the probabilistic state based model checker was due to the number of successful case studies that have used this tool, indicating its maturity [PRISM CS], and also due to its rich environment that is able to represent different kinds of probabilistic models and their evaluations.
+A model checking is a formal method that aims to automatically verify if a system model meets its specification for defined properties. Probabilistic and state based model checking supports the verification of finite-state probabilistic models such as discrete-time Markov chain (DTMC), continuous-time Markov chain (CTMC) and Markov decision process (MDP), among others. Different types of properties may be defined to verify a system model and reveal meaningful information for systems audition and validation. 
 
-A model checking is a formal method that may be used for quantitative and qualitative analysis of dependability attributes as long as: 
+The PMC technique used in this approach is supported by the PRISM model checker tool~[PRISM]. PRISM allows the modelling and analysis of systems which exhibit random or probabilistic behaviour. The decision of using PRISM as the probabilistic state based model checker was due to the number of successful case studies that have used this tool, indicating its maturity [PRISM CS], and also due to its rich environment that is able to represent different kinds of probabilistic models and their evaluations. 
+
+PRISM is suitable for many different kinds of model evaluations depending on the abstraction level, the type of probabilistic model and the PCTL properties to be analysed. PRISM language offers a rich set of constructs that may represent system modules and components, among others architectural and design configurations. Both qualitative and sensitive analysis are available.
+
+As it will be explained in later sections, goal models may be easily extended with the proper information required for the verification of some important dependability attributes. The objective is to anticipate non-functional dependability violations and to support the decision of which alternatives to use in the system-to-be. A model checking technique should be used for dependability analysis as long as: 
 
 \begin{itemize}
 
@@ -128,13 +150,10 @@ A model checking is a formal method that may be used for quantitative and qualit
 \medskip
 
 \item The analysis overhead is justified, e.g., by its criticality.
+\bigskip
 
 \end{itemize}
 
-As it will be explained in later sections, goal models may be easily extended with the proper information required for the verification of some important dependability attributes. The objective is to anticipate non-functional dependability violations and to support the decision of which alternatives to use in the system-to-be.
+Finally, PRISM also supports a parametric model verification. That is, instead of providing the final evaluation for a given property, models may use parameters instead of initialized variables and the verification will output a parametric formula whose evaluation will check the model for any valid combination of parameters values.
 
-
-PRISM may be used for many different kinds of model evaluations depending on the abstraction level, the type of probabilistic model and the PCTL properties to be analysed. PRISM language offers a rich set of constructs that may represent system modules and components, among others architectural and design configurations. 
-
-
-It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for the user(s) and for the environment.
+%It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for the user(s) and for the environment.
