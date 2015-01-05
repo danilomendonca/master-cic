@@ -2,11 +2,13 @@
 
 \section{Motivation}
 
-Among the different causes that lead a system to fail, many of then can be tracked back to a design decision in early system development process. The systematization provided by requirements engineering has been used to improve the quality of the delivered system documents, models and specification. Nonetheless, in many cases the RE process do not further investigate or verify how the system-to-be will perform based on its model, relying only on later implementation testing.
+%According to Lamsweerde, a poor requirements engineering (RE) is the major source of system failures. Lack of user involvement, requirements incompleteness, changing requirements, unrealistic expectations and unclear objectives are common causes~[AXEL].
+
+Goal-oriented requirements engineering (GORE) has gained the attention of both academic and industrial practitioners due to its ability to systematically model the intentionality behind system requirements. More than just presenting the `what' and the `how', goal models also express the `why' of different requirements to exist. Its simple graphical notation allows non-technical stakeholders to take part in the analysis process and have a clear view of the system-to-be. Finally, automated model verification should avoid violations of the requirements specification.
 
 TROPOS is a GORE methodology that also includes architectural and  detailed design phases for the development of socio-technical systems. Socio-technical systems provide and control a wide range of daily used services. Often, these systems are responsible for important and even critical requirements whose failures would cause undesirable or intolerable consequences. This requires developers to take dependability into consideration as a first class requirement.
 
-TROPOS, as much as other GORE frameworks, is not coupled to any specific formal verification approach for dependability attributes and other non-functional requirements. Contribution analysis is used for the comparison and selection of alternative design solutions based on how each alternative contribute to one or more system goals, usually qualitative softgoals. This approach, however, is not tailored for metrics depending on system behaviour, i.e., on the dynamic coordination of activities and components interactions. 
+In TROPOS, as in other GORE frameworks, there is no coupling to any specific verification approach for dependability attributes and other non-functional requirements. Contribution analysis is used for the comparison and selection of alternative design solutions based on how each alternative contribute to one or more system goals, usually qualitative softgoals. This approach, however, is not tailored for metrics depending on system behaviour, i.e., on the dynamic coordination of activities and components interactions. 
 
 Probabilistic fault-forecasting aims to derive probabilistic estimates about measures related to the behaviour of a system in the presence of faults. Dependability benchmark enables the characterization of the dependability and security of a system and the comparison of alternative solutions according to one or several attributes~[AVIZIENIS~37]. This benchmark may be achieved by a probabilistic model checking technique coupled to the later phases of the TROPOS methodology, enabling the dependability benchmark of a goal model.
 
@@ -32,7 +34,7 @@ Based on the identified gap of a formal verification of non-functional requireme
 \item \textbf{Static syntax support:} The verification model should be coherent to the static goal model syntax for the AND/OR decomposition of goals/tasks and for the goal-task means-end relation.
 \medskip
 
-\item \textbf{Dynamic syntax support:} The verification model should be coherent to the runtime goal model regex including tasks sequential or interleaved execution order, as well as alternative, optional and conditional tasks execution.
+\item \textbf{Dynamic syntax support:} The verification model should be coherent to the runtime goal model regex including tasks sequential or interleaved execution order, cardinality as well as alternative, optional and conditional tasks execution.
 \medskip
 
 \item \textbf{Contextual syntax support:} The verification model should be coherent to the context effects over the activation of goals, the adoptability of sub-goals/tasks and over the individual quality metric of components. 

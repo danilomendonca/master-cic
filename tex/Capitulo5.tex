@@ -1,6 +1,68 @@
-\chapter{Proposal}\label{ch_proposal}
+\chapter{Extended TROPOS Goal-oriented Software Development Methodology}\label{ch_proposal}
 
-In the PMC technique adopted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. As a goal model goes from strategical root goal to operational leaf-goals, and each leaf-goal describes a desired state reachable by either a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may be seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.
+This section will describe our proposal with its application to the MPERS case study. Both TROPOS phases regarding requirements analysis will be fully presented, as long as the formal verification process that requires the runtime specification over the static system actor and also the additional contextual notation regarding context effects. The details about how a runtime goal model is translated to a probabilistic DTMC model in PRISM language will also be presented. Finally, the verification results of the selected dependability attributes will be discussed.
+
+Further details about the TROPOS methodology may be found in the reference literature~[TROPOS]. This section will focus on the description of the novel approach for non-functional requirements verification of a runtime goal model through PMC technique.
+
+\section{TROPOS Early Requirements Phase}
+
+In Early Requirements phase, stakeholders are modelled as actors and their needs as goals. Each actor may be the depender or the dependee of a goal, task or a physical or information resource. Only the main system actor and the application domain stakeholders are analysed, leaving sub-systems and detailed agents analysis to later development phases.
+
+The MPERS sytem and its social dependencies are presented by the actor model in Figure~\ref{fig:MPERS_ER}. System actors and social actors are displayed in different colors. Among the stakeholders, the Emergency Center represents a private or public organization that will provide the the emergency assistance service and product to patients. Patient and doctor respectively represent the assisted person and the medical responsible for defining new rules concerning the detection of emergency situations as part of an evolutionary and customized approach for emergency detection. Finally, sensors retailer should provide the vital signs sensors required by the system monitor.
+
+\begin{figure*}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imgs/MPERS_ER.png}
+\caption{MPERS at TROPOS early requirements phase}
+\label{fig:MPERS_ER}
+\end{figure*}
+
+From the diagram in Figure~\ref{fig:MPERS_ER} it is possible to have a first view of the MPERS system-to-be. Main goals are divided in detecting, notifying and cancelling an emergency. Also, the ability to update the emergency rules at runtime (RT) is the fourth and last mandatory goal (AND-decomposition) that fulfils the root `Patient is assisted' root goal. Functional system goals are strictly related to stakeholders functional and non-functional needs.
+
+The yellow circle indicates that MPERS is a system actor. MPERS goals are already notated with a regex indicating its dynamic behaviour as part of the runtime goal model specification required by the proposal. This notation is a reflex of the late requirements phase, as the TAOM4E tool supporting TROPOS methodology shares unique entities and relations among different development phases. The regex syntax is enclosed by brackets to differentiate then from goal name. In future work a specific modelling compartment should receive the values for the runtime regex.
+
+\section{TROPOS Late Requirements Phase}
+
+Later requirements phase concentrates the analysis in the system-to-be and its operational environment. The MPERS goal model occupies the most part of the diagram and each of its main goals are further decomposed through AND/OR decomposition. Also, means-end tasks defines how leaf-goals are fulfilled and the runtime regex across goals and tasks specifies dynamic properties of the system-to-be behaviour. Figure~\ref{fig:MPERS_LR} illustrates the late requirements for the MPERS.
+
+\begin{figure*}[h!]
+\centering
+\includegraphics[width=1\textwidth]{imgs/MPERS_LR.png}
+\caption{MPERS at TROPOS early requirements phase}
+\label{fig:MPERS_LR}
+\end{figure*}
+
+At this point of the methodology, the system is represented as a monolithic actor and its goal model may be extended with the runtime specification. This extended model merges multiple views in the same diagram: strategical goals and operational tasks represent the requirements view for the system-to-be as well as the intentionality behind then, while the runtime specification provides a dynamic view of system operation through task execution.
+
+A similar dynamic representation would be achieved by the direct correspondence between leaf-tasks of the model and the activities of an UML activity diagram. However, activity diagrams have an homogeneous granularity level and do not correlate activities to the requirements they are meant to satisfy. The cost-benefit of a goal-oriented approach for requirement engineering may be increased even further as activity diagrams could be replaced by goal models with behaviour specification. Figure~\ref{fig:RGMvsUML_AD} illustrates the similarity between the MPERS RGM and a corresponding UML activity diagram. 
+
+In our evaluation, we have first explored the use of the PMC technique for the verification of dependability attributes in the system model achieved in late requirements phase. The idea is to initially evaluate the approach in a monolithic representation of the system without the additional complexity of a multi-agent architecture. Further evaluation involving later TROPOS phases should take place in future work. The remaining of this section will focus on the extended verification phase and TROPOS proposed by this work.
+
+\section{TROPOS Extended Verification Phase}
+
+In the PMC technique that has been adapted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. As a goal model is traversed from strategical root goal to operational leaf-goals, and each leaf-goal describes a desired state reachable by either a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may be consumed as input for the generation of probabilistic models in PRISM language.
+
+
+
+Depending on the abstraction level and the nature of the verification, PRISM models may either very complex or may follow a clear pattern. For instance, modules can be used to represent leaf-tasks of a runtime goal model. Considering a DTMC model, a task workflow can be modelled as a sequence of probabilistic transitions of states in modules according to the execution order parsed from the RGM. The resulting model follows a pattern that was used to automatically generate PRISM models representing leaf-tasks execution from a runtime goal model.
+
+
+Figure~
+
+Deterministic or probabilistic selection of alternatives for the solution.  
+
+
+must define the sequence of probabilistic state transitions in the model. These transitions 
+
+
+each task has its own states, including the failure and the success states. Many factors may contribute to the correctness or the failure of system tasks, including internal and external events. The probability of a successful task execution defines its reliability. 
+
+In a complex workflow of tasks with different rel 
+
+
+ In order to be successful, tasks depend on the proper interaction among the components 
+
+seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.
 
 \begin{itemize}
 
