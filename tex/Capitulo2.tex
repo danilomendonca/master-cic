@@ -169,17 +169,6 @@ An emergency response system is a mission-critical system for which failures in 
 
 Other dependability attributes such as reliability and availability are metrics over the correctness of system behaviour. MPERS is expected to have a high availability - as it must be ready to respond to an emergency that may happen at any time - and a high reliability - as an incorrect emergency response may lead to death or to costly false-positives. Integrity is a less critical attribute in this case, but must also be addressed as patient privacy may not be violated by disclosing his personal health or geolocation info to unauthorized persons. Maintainability is addressed by the use of a software development methodology and by the ability to update emergency rules remotely at runtime.
 
-The estimation of attributes through PMC technique is limited to those that a probabilistic model may evaluate. Dependability attributes have an abstract definition that must be associated to a concrete and verifiable PCTL property. To demonstrate our approach, we verify the MPERS model for the following attributes:
-
-\begin{itemize}
-
-\item \textbf{Reliability}, represented by the probability of a successful execution of all the activities involved in fulfilling leaf-goals of a certain system alternative. It is also know as the \textit{reachability} as the describes the probability of reaching a final and successful system state. 
-\bigskip
-
-\item \textbf{Availability}, represented by the power consumption estimation to maximize the time that the system will remain operational depending only on its battery. This attribute is well related to mobile computing. 
-\medskip
-
-\end{itemize}
 
 Reliability verification of an Ambient Assisted Living System also based on body-area networks though PCM technique was explored by Fernandes~[Fernandes, 2012]. Reliability estimation demonstrates the non-determinism in the verification model that will result in an non-deterministic evaluation result. Moreover, PRISM cost/reward structure is illustrated by the power consumption verification. Analogue approaches could be used for other attributes with non-determinism and cost/reward structures in the model. The value obtained by this quantitative analysis of both attributes must comply with the corresponding non-functional constraint associated to the goal model.
 
