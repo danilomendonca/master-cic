@@ -1,14 +1,14 @@
-\chapter{Extended TROPOS Goal-oriented Software Development Methodology}\label{ch_proposal}
+\chapter{TROPOS Methodology with Probabilistic Requirements Verification}\label{ch_proposal}
 
-This section will describe our proposal with its application to the MPERS case study. Both TROPOS phases regarding requirements analysis will be fully presented, as long as the formal verification process that requires the runtime specification over the static system actor and also the additional contextual notation regarding context effects. The details about how a runtime goal model is translated to a probabilistic DTMC model in PRISM language will also be presented. Finally, the verification results of the selected dependability attributes will be discussed.
+This chapter will describe our proposal and apply it to the MPERS case study. Both TROPOS phases regarding requirements analysis will be fully presented, as long as the formal verification process that requires a behaviour specification and the additional contextual notation regarding context effects. Further details about the TROPOS methodology may be found in the reference literature~[TROPOS]. 
 
-Further details about the TROPOS methodology may be found in the reference literature~[TROPOS]. This section will focus on the description of the novel approach for non-functional requirements verification of a runtime goal model through PMC technique.
+\section{TROPOS Requirements Engineering Phases}
 
-\section{TROPOS Early Requirements Phase}
+\subsection{TROPOS Early Requirements Phase}
 
 In Early Requirements phase, stakeholders are modelled as actors and their needs as goals. Each actor may be the depender or the dependee of a goal, task or a physical or information resource. Only the main system actor and the application domain stakeholders are analysed, leaving sub-systems and detailed agents analysis to later development phases.
 
-The MPERS sytem and its social dependencies are presented by the actor model in Figure~\ref{fig:MPERS_ER}. System actors and social actors are displayed in different colors. Among the stakeholders, the Emergency Center represents a private or public organization that will provide the the emergency assistance service and product to patients. Patient and doctor respectively represent the assisted person and the medical responsible for defining new rules concerning the detection of emergency situations as part of an evolutionary and customized approach for emergency detection. Finally, sensors retailer should provide the vital signs sensors required by the system monitor.
+The MPERS sytem and its social dependencies are presented by the actor model in Figure~\ref{fig:MPERS_ER}. System actors and social actors are displayed in different colors. Among the stakeholders, the Emergency Center represents a private or public organization that will provide the the emergency assistance service and product to patients. Patient and doctor respectively represent the assisted person and the medical responsible for defining and evolving the emergency detection rules as part of an evolutionary approach for personal emergency response. Finally, sensors retailer should provide the vital signs sensors required for monitoring.
 
 \begin{figure*}[ht]
 \centering
@@ -17,11 +17,11 @@ The MPERS sytem and its social dependencies are presented by the actor model in 
 \label{fig:MPERS_ER}
 \end{figure*}
 
-From the diagram in Figure~\ref{fig:MPERS_ER} it is possible to have a first view of the MPERS system-to-be. Main goals are divided in detecting, notifying and cancelling an emergency. Also, the ability to update the emergency rules at runtime (RT) is the fourth and last mandatory goal (AND-decomposition) that fulfils the root `Patient is assisted' root goal. Functional system goals are strictly related to stakeholders functional and non-functional needs.
+From the diagram in Figure~\ref{fig:MPERS_ER} it is possible to have a first view of the MPERS system-to-be. Main goals are divided in detecting, notifying and checking an emergency. Also, the ability to update the emergency rules at runtime (RT) is the fourth and last mandatory goal (AND-decomposition) that fulfils the root `Patient is assisted' root goal. Functional system goals are strictly related to stakeholders functional and non-functional needs.
 
-The yellow circle indicates that MPERS is a system actor. MPERS goals are already notated with a regex indicating its dynamic behaviour as part of the runtime goal model specification required by the proposal. This notation is a reflex of the late requirements phase, as the TAOM4E tool supporting TROPOS methodology shares unique entities and relations among different development phases. The regex syntax is enclosed by brackets to differentiate then from goal name. In future work a specific modelling compartment should receive the values for the runtime regex.
+The yellow circle indicates that MPERS is a system actor. MPERS goals are already notated with a regex indicating its dynamic behaviour as part of the runtime goal model specification required by the proposal. This notation is a reflex of the late requirements phase, as the TAOM4E tool supporting TROPOS methodology shares unique entities and relations among different development phases. The regex syntax is enclosed by brackets to differentiate then from goal name. In future work, a specific modelling compartment should receive the values for the runtime regex.
 
-\section{TROPOS Late Requirements Phase}
+\subsection{TROPOS Late Requirements Phase}
 
 Later requirements phase concentrates the analysis in the system-to-be and its operational environment. The MPERS goal model occupies the most part of the diagram and each of its main goals are further decomposed through AND/OR decomposition. Also, means-end tasks defines how leaf-goals are fulfilled and the runtime regex across goals and tasks specifies dynamic properties of the system-to-be behaviour. Figure~\ref{fig:MPERS_LR} illustrates the late requirements for the MPERS.
 
@@ -32,9 +32,43 @@ Later requirements phase concentrates the analysis in the system-to-be and its o
 \label{fig:MPERS_LR}
 \end{figure*}
 
-At this point of the methodology, the system is represented as a monolithic actor and its goal model may be extended with the runtime specification. This extended model merges multiple views in the same diagram: strategical goals and operational tasks represent the requirements view for the system-to-be as well as the intentionality behind then, while the runtime specification provides a dynamic view of system operation through task execution.
+At this point of the methodology, the system is represented as a monolithic actor and its goal model may be extended with the runtime specification. This extended model merges multiple views in the same diagram: strategical goals and operational tasks represent the requirements view for the system-to-be as well as the intentionality behind then, while the runtime specification provides a dynamic representation for the execution of operational tasks.
 
-A similar dynamic representation would be achieved by the direct correspondence between leaf-tasks of the model and the activities of an UML activity diagram. However, activity diagrams have an homogeneous granularity level and do not clearly correlate activities to the requirements they are meant to satisfy. Activity diagrams denote behaviour through graphical symbols, while the RGM representation mixes the original goal model notation with a textual runtime regex. This simple notation increases the value and utility of a goal model document. Figure~\ref{fig:MPERS_UMLAD} illustrates the similarity between the RGM and a corresponding UML activity diagram for the MPERS case study. 
+In our evaluation, we have first explored the use of the PMC technique for the verification of dependability attributes in the system model of the late requirements phase. The idea is to initially evaluate the approach in a monolithic representation of the system without the additional complexity of a multi-agent architecture. The evaluation involving later TROPOS phases should take place in future work. The remaining of this section will focus on the extended verification phase proposed by this work.
+
+\section{TROPOS Extended Verification Phase}
+
+To evaluate our verification approach with the MPERS case study, we have used a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of NFR related to dependability, i.e., NFR that are either direct attributes encompassed by dependability or that are related to one or more of these attributes. 
+
+\subsection{Runtime goal model}
+
+Figure~\ref{fig:MPERS_LR} already presents the runtime regex associated to system goals and tasks. The reference literature for the RGM was presented in Chapter~\ref{ch_related_work}. In this section, further details about the runtime regex syntax and semantic will be explained as they are a central part of this proposal.
+
+Table~\ref{tab:RGM_REGEX} provides a textual description of each RGM notation with corresponding meaning in terms of what behaviour it specifies and also an example from the MPERS RGM. The formal and detailed description can be found in the reference publication~[RGM].
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{@{}l|X|X@{}}
+\toprule
+\textbf{Expression} & \textbf{Meaning}                                                                   & \textbf{Example (MPERS)} \\ 
+skip                & No action. Useful for conditional ternary expressions involving two elements.      & try(G10)?skip:G11        \\ 
+E1;E2               & A goal/task E1 must be fulfilled/executed before E2.                               & G1;G2;G3                 \\ 
+E1|E2               & Fulfillment/execution of goal/task E1 is alternative exclusive with respect to E2. & T9.1|T9.2                \\ 
+opt(E)              & Fulfillment/execution of goal/task E is not mandatory.                             & opt(T17.2)               \\ 
+E+n                 & Goal/task E must be fulfilled/executed n times, with n \textgreater 0.             & G22+2                    \\ 
+try(E)?E1:E2        & If goal/task E succeeds, E1 must be fulfilled/executed; otherwise, E2.             & try(G10)?skip:G11        \\ 
+E1\#E2              & Interleaved fulfillment/execution of goal/task E1 and E2.                          & G8\#G9                   \\ 
+E\#n                & Interleaved fulfillment/execution of n instances of E, with n \textgreater 0.      & -                        \\ \bottomrule
+\end{tabularx}
+}
+\caption{Description of RGM textual notation used by the proposal.}
+\end{table}
+
+\subsection{RGM-UML activity diagram comparison}
+
+A similar specification could be provided by an UML activity diagram with activities as leaf-tasks of the goal model. However, activity diagrams have an homogeneous granularity level and do not clearly correlate behaviour to the requirements they are meant to satisfy. In contrast go the RGM, activity diagrams denote behaviour through graphical symbols, while the RGM mixes the original goal model notation with a textual runtime regex. This simple notation increases the utility of a goal model diagram. Figure~\ref{fig:MPERS_UMLAD} presents an activity diagram corresponding to the MPERS RGM. 
 
 \begin{figure*}[h!]
 \centering
@@ -43,20 +77,15 @@ A similar dynamic representation would be achieved by the direct correspondence 
 \label{fig:MPERS_UMLAD}
 \end{figure*}
 
-RGM does not express that an emergency has to be confirmed after a time or event condition is met as the UML activity diagram is able to express. Both necessary and sufficient conditions for the triggering and fulfilment of goals and tasks are provided by Formal TROPOS language.  Still, sequential, parallel, alternative, optional and conditional execution flows as long as multiple executions of the same task can be expressed by the RGM, providing a rich behaviour specification that could be checked for meaningful non-functional requirements such as dependability attributes.
+Among its limitations, RGM does not express that an emergency has to be confirmed after a time or event condition is met as the UML activity diagram is able to express. Both necessary and sufficient conditions for the triggering and fulfilment of goals and tasks are provided by Formal TROPOS language.  Still, sequential, parallel, alternative, optional and conditional execution flows as long as multiple executions of the same task can be expressed by the RGM, providing a rich behaviour specification that could be checked for meaningful non-functional requirements such as dependability attributes.
 
 The idea of a runtime goal model is not to replace the activity diagrams, but to empower the goal model with a clear runtime syntax that could be used for 
 documentation and communication and for conformance verification at both design time and during system execution (as it was originally proposed). Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or a standard UML behaviour diagram such as activity and sequence diagrams would have to complement the goal model.
 
-In our evaluation, we have first explored the use of the PMC technique for the verification of dependability attributes in the system model of the late requirements phase. The idea is to initially evaluate the approach in a monolithic representation of the system without the additional complexity of a multi-agent architecture. The evaluation involving later TROPOS phases should take place in future work. The remaining of this section will focus on the extended verification phase and TROPOS proposed by this work.
-
-\section{TROPOS Extended Verification Phase}
-
-To evaluate our verification approach with the MPERS case study, we have used the a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of NFR related to dependability, i.e., NFR that are either direct attributes encompassed by dependability or that are related to one or more of these attributes. 
 
 \subsection{Non-functional requirements specification}
 
-The TROPOS goal model also provides rationale for NFR analysis either via softgoals or qualitative hard goals. Figure~\ref{fig:MPERS_NFR} presents some NFR for the MPERS system actor:
+The TROPOS goal model also provides rationale for NFR analysis either via softgoals or qualitative hard goals. Figure~\ref{fig:MPERS_NFR} presents NFR for the MPERS system actor:
 
 \begin{figure*}[h!]
 \centering
@@ -66,20 +95,34 @@ The TROPOS goal model also provides rationale for NFR analysis either via softgo
 \end{figure*}
 
 %Intersting for motivation!
-Some dependability attributes, as much as the Awareness Requirements by Souza et al.~[AWREQ], define metrics over other requirements. These meta-requirements are not directly fulfilled by system functionalities like `emergency awareness' is fulfilled by `detect and notify emergency', but by how these functionalities will perform. Reliability, for instance, is inversely proportional to the likelihood of failures. Thus, the reliability metric depends on the probability of system functionalities to fail. The conformance of these metrics is not implicit in the model, it requires some verification technique.
+Some dependability attributes, similarly to the Awareness Requirements by Souza et al.~[AWREQ], define metrics over other requirements. These meta-requirements are not directly fulfilled by system functionalities like `emergency awareness' is fulfilled by `detect and notify emergency', but by how these functionalities will perform. Reliability, for instance, is inversely proportional to the likelihood of failures. Thus, the reliability metric depends on the probability of system functionalities to fail. Conformity to these metrics is not implicit in the model, it requires some verification technique.
 
-Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to a stakeholder need through dependency links. Emergency center attended the patient's by providing and maintaining the MPERS system itself and by assuring other NFR metrics over this system. Availability and reliability were selected as metrics over the system behaviour, while maintainability tackles both system behaviour and its ability to update emergency rules at runtime. For the sake of simplicity, we omitted integrity in this evaluation. 
+Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to a stakeholder need through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. Availability and reliability were selected as metrics over the system execution (meta-requirement), while maintainability is partially satisfied by the MPERS ability to update emergency rules at runtime and by other aspects that, for the sake of simplicity, we will omit in this evaluation.
+
+It is no easy task to define the exact constraint to these metrics. First, an analyst or a reliability engineer should be aware of what does it mean to require, e.g., a 99.999\% of reliability of a system. Second, this level may not be achieved by any of the alternatives available. In some cases, the system will have to comply to some standardized metrics. Table~\ref{tab:MPERS_NFR_C} summarizes each quantitative NFR for MPERS.
+\medskip
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]\label{tab:MPERS_NFR_C}
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{@{}XXX@{}}
+\toprule
+\textbf{NFR}               & \textbf{Constraint} & \textbf{Target}        \\ \midrule
+\textbf{Reliability}       & 99.9\%            & \textbf{G1} \\
+\textbf{Power consumption} & 100 p.u.            & \textbf{G2}          \\ \bottomrule
+\end{tabularx}
+}
+\caption{asds}
+\end{table}
+
 %softgoals of `continuous assistance' and `correct assistance'
 
-Other MPERS NFR are `emergency awareness' and `resources optimization'. These are softgoals addressed by system functionalities. The former receives a full contribution (double positive sign). It also positively contributes to `availability' as a false-positive will occupy emergency vehicle and paramedics that could be used in a real situation. The later is just assumed to be partially satisfied by the `emergency is checked' functional goal.
-
-\subsection{Non-functional requirements verification}
-
-Each NFR metric may be associated to a root level goal or to any of its subgoals. The correspondent PMC verification based on the execution of a set of tasks may be:
+As indicated by the \textit{Target} column, each NFR constraint may be associated to a root level goal or to any of its subgoals. The corresponding PMC verification based on the execution of a set of system tasks is defined as:
 
 \begin{itemize}
 
-\item \textit{Global}, if the activities set is a minimum set composed of the tasks that satisfies the chain of subgoals up to the root goal Groot.
+\item \textit{Global}, if the activities set is a minimum set composed of the tasks that satisfies the chain of subgoals up to the root goal Groot, in this case identified as G1.
 \medskip
 
 \item \textit{Local}, if the activities set is a minimum set composed of tasks that satisfies the chain of subgoals up to a goal Gx, where Gx != Groot.
@@ -89,17 +132,26 @@ Each NFR metric may be associated to a root level goal or to any of its subgoals
 
 %put here the formal definition of the root goal, subgoals, activity set, turple, etc
 
-Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal or which subtask should be performed to satisfy its upper task. Accordingly, neither the problem space composed of goals nor the solution space composed of the operational is necessarily unique.
+Other MPERS non-functional requirements are `emergency awareness' and `resources optimization'. These are softgoals addressed by system functionalities. The former receives a full contribution (double positive sign) from goal `emergency is notified', meaning it is fully satisfied by this goal. The later is just assumed to be partially satisfied by the `emergency is checked' functional goal.
 
-This variability leads to more than one minimum set of tasks capable of fulfilling its local or root goals. Thus, either the analyst should decide which alternative will be verified by passing parameters values (deterministic alternative selection, or DAS) or the verification tool should decide based on some probabilistic distribution setted by the analysts (probabilistic alternative selection, or PAS).
+\subsection{Non-functional requirements verification}
 
-DAS is useful for comparing system alternatives to decide which one should be used at design time based on the selected non-functional metrics. This approach is analogue to the TROPOS contribution analysis. In contrast, PAS provides verification for systems designed to operate in variable contexts, i.e., that may have to adapt. The verification of NFR metrics for these systems depend on the expected usage profile of different alternatives. 
+Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal or which subtask should be performed to satisfy its upper task. Accordingly, multiple paths may lead to the satisfaction of the root goal. They will be called alternatives.
 
-As in the contextual goal model, contexts can limit which alternatives can be used in terms of goals and tasks. This effect must be included in the verification to have a realistic representation of the system. For this, analysts may decide which context will be verified (deterministic context selection, or DCS) and the corresponding adoptable alternatives are then checked using a DAS or PAS approach. Contexts values may also be selected following some distribution (probabilistic context selection, or PCS). Both approaches are complementary as the first will validate the system for an isolated context and the last offers a holistic system validation. Table~\ref{tab:DAS_PAS_DCS_PCS} following table summarizes the four approaches and their combination.
+%NOT HERE!
+The probabilistic verification of systems with variability is not a novelty by itself. Many proposals have addressed this problem in the context of Dynamic Software Product Lines (DSPL), some of then using the PMC technique~[Vini, Paula, Who Else?]. In DSPL, optional and alternative features may be activated or deactivated at runtime. A family based verification of one or multiple NFRs, also called qualitative goals, indicates what combinations are valid.
+
+This variability leads to more than one minimum set of tasks capable of fulfilling local or root goals. Thus, the analyst should decide which alternative will be verified by passing parameters values (deterministic alternative selection, or DAS). DAS is useful for comparing system alternatives to decide which one should be used at design time or at runtime based on the evaluation of selected non-functional metrics. At design time, this approach is analogue to the TROPOS contribution analysis. 
+
+% or the verification tool should decide based on some probabilistic distribution setted by the analysts (probabilistic alternative selection, or PAS).
+
+%In contrast, PAS provides verification for systems that include variability in its design. The verification of NFR metrics for these systems depend on how each alternative is selected during system operation.
+
+As in the CGM, contexts may limit which alternatives are adoptable. This effect must be considered in a realistic verification. For this, analysts may decide for which contexts NFR metrics will be verified (deterministic context selection, or DCS), or contexts may be selected following some probabilistic distribution (probabilistic context selection, or PCS). Both approaches are complementary as the first verifies the selected alternative for one context at a time and the last verifies a real scenario representation with multiple contexts. Table~\ref{tab:DAS_PAS_DCS_PCS} summarizes each approach and possible combinations.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[h]
+\begin{table}[h]\label{tab:DAS_PAS_DCS_PCS}
 {\renewcommand{\arraystretch}{1.5}
 \begin{tabularx}{\textwidth}{@{}l|XXX@{}}
 \toprule
@@ -112,20 +164,30 @@ As in the contextual goal model, contexts can limit which alternatives can be us
 \caption{Description of the different approaches for verifying a system with variable alternatives and variable contexts.}
 \end{table}
 
-If the context selection is deterministic, there is no reason for selecting an alternative that is known to be incompatible with the selected context. In opposition, if context selection is probabilistic, that alternative may still be valid in other contexts. For instance, the alternative for identifying the patient location through GPS will certainly fail if the GPS signal is not available. Thus, the DAS-PCS combination leads to a reliability verification of one system alternative.
+If the context selection is deterministic, there is no reason for verifying an alternative that is known to be incompatible with the selected context. In opposition, if context selection is probabilistic, that alternative may still be valid in other contexts. For instance, the alternative for identifying the patient location through GPS (alternative) will certainly fail if the GPS signal is not available (context). Thus, the DAS-PCS combination leads to the reliability verification of one system alternative for multiple contexts.
 
-The same principle is applied to the PAS combinations. Incompatible alternatives are just not available for selection if the context is fixed. But if context selection is probabilistic, the probabilistic alternative selection should be limited to compatible context-alternative pairs. The PAS-PCS combination also can be used for reliability verification, as 
+The idea behind a probabilistic context selection is to emulate a real scenario in which the context of operation varies and the system must avoid requirements violations by using a valid or optimal alternative. This holistic evaluation provides metrics that may be compared to non-functional constraints. If more than one alternative is compatible for a given context, prioritization should point out which one will be used. 
 
-
-
-
-
+%The same principle is applied to the PAS combinations. Incompatible alternatives are removed from the selection list if the context for which they are incompatible is fixed. Or, if context selection is probabilistic, for each context the verification model should be able to avoid the probabilistic selection of incompatible alternatives. This simulates the self-adaptive capability of systems that are designed to tolerate context changes.
 
 %This section is divided in preliminary conceptual explanation about the
 
-In the PMC technique that has been adapted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. As a goal model is traversed from strategical root goal to operational leaf-goals, and each leaf-goal describes a desired state reachable by either a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may be consumed as input for the generation of probabilistic models in PRISM language.
+\subsection{Probabilistic model generation}
 
-Depending on the abstraction level and the nature of the verification, PRISM models may either very complex or may follow a clear pattern. For instance, modules can be used to represent leaf-tasks of a runtime goal model. Considering a DTMC model, a task workflow can be modelled as a sequence of probabilistic transitions of states in modules according to the execution order parsed from the RGM. The resulting model follows a pattern that was used to automatically generate PRISM models representing leaf-tasks execution directly from a runtime goal model.
+In the PMC technique that has been adapted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. This tends to be a costly and error-prone process with a complexity proportional to the number of components, actions and interactions causing state transitions.  
+
+As a goal model is traversed from strategical root goal to operational leaf-goals, and each leaf-goal is reachable by a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may have enough information to be consumed as input for the generation of probabilistic models in PRISM language and for the verification of some important NFRs. However, the manual generation from RGM is still a costly task.
+
+Depending on the abstraction level and the nature of the verification, PRISM models may either very complex or may follow a clear pattern. For instance, PRISM modules can be used to represent leaf-tasks of a runtime goal model. Considering a DTMC model, a task workflow can be modelled as a sequence of probabilistic state transitions according to the behavioural specification parsed from the RGM. This probabilistic model follows a pattern that motivated the implementation of an automatic generation of DTMC models representing leaf-tasks execution directly from a runtime goal model.
+
+Leaf-tasks are not necessarily atomic system tasks. The idea is to leave to analysts the decision concerning the abstraction level represented by the tasks that will be verified. For instance, the abstract task `find active sensors' could be decomposed in more granular and concrete tasks related to the platform, architecture and language used for implementation. 
+
+The more abstract a task is, the more difficult is to obtain their individual metrics, as the trace between an abstract and the concrete system operation becomes less evident. Any NFR verification by the PMC technique requires further qualitative information about individual parts involved in an activity, e.g., the reliability, performance, power consumption, cost and other attributes for tasks in a workflow or for components involved in a task.
+
+This is a key point in this approach, as it may seen too loose to couple a probabilistic verification to a goal model with a high-level operational representation of a system. But its feasibility becomes clear when the metrics being verified are compatible with the abstraction level of the tasks and information regarding how each task individually performs is available or can be collected.
+
+
+\subsection{From NFR to PCTL properties}
 
 The estimation of attributes through PMC technique is limited to those that a probabilistic model may evaluate. Dependability attributes have an abstract definition that must be associated to a concrete and verifiable PCTL property. To demonstrate our approach, we verify the MPERS model for the following attributes:
 
@@ -140,16 +202,11 @@ The estimation of attributes through PMC technique is limited to those that a pr
 \end{itemize}
 
 
-
-must define the sequence of probabilistic state transitions in the model. These transitions 
-
-
 each task has its own states, including the failure and the success states. Many factors may contribute to the correctness or the failure of system tasks, including internal and external events. The probability of a successful task execution defines its reliability. 
 
 In a complex workflow of tasks with different rel 
 
-
- In order to be successful, tasks depend on the proper interaction among the components 
+In order to be successful, tasks depend on the proper interaction among the components 
 
 seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.
 
@@ -170,8 +227,6 @@ seen as an activity diagram and be used to generate a probabilistic model in PRI
 
 \end{itemize}
 
-
-
 Dependability analysis is used to provide information about different dependability attributes related to system failures. These metrics may be specified as non-functional requirements for isolated system functionalities or for the whole system. Instead of softgoals, we use meta-requirements over functional goals with clear-cut quantitative criteria such as `99.999\%' reliable - a probabilistic value to make it compatible with the PMC estimation results.
 
 To perform the , we focus on dependability related metrics that should be estimated and compared to their required constraint values through quantitative analysis. Sensitive analysis to reveal how different system parts contribute to the overall value of those attributes. Sensitive analysis may be considered analogous to the original GORE contribution analysis.
@@ -185,7 +240,6 @@ As we wanted to automate the code generating process for the verification model,
 To reduce the effort of codifying the verification model, an automated generation of the PRISM probabilistic model was implemented based on an existing open source tool for TROPOS development support named TAOM4E[citation]. TAOM4E provides a graphical environment for goal modelling with TROPOS methodology based on the well known Eclipse Modelling Framework (EMF) and Graphical Editing Framework (GEF). The GORE to PRISM generator was implemented as a Eclipse plugin and integrated to the TAOM4E environment. 
 
 The purpose  of the automated code generation for the probabilistic PRISM model is to optimize the formal verification step by abstracting the PRISM language from the analysts and reduce the overhead and time of the model verification. This should increase the feasibility of adopting the extended TROPOS methodology by keeping analysts with their original responsibility of modelling and analysing the system, its social environment and its different contexts of operation.
-
 
 
 
