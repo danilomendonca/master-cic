@@ -77,6 +77,23 @@ In GORE, dynamic contexts may affect what goals a system have to reach, the mean
 The third effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve.
  
 
+\section{Variability Solving}
+
+In goal models, OR-decomposition may lead to more than one path that, if its tasks are executed, goals satisfied and dependencies met, will satisfy the root goal of a system. This variability problem has different natures and must be treated accordingly:
+
+\begin{itemize}
+
+\item Different paths, one context, one solution: Despite the elicitation of more than one path, only one alternative will be kept. Softgoals and non-functional metrics are generally used as criteria for selection.
+\medskip
+
+\item Different paths, multiple contexts, multiple  solutions: A system affected by context variation may have to select a different alternative for different contexts, justifying a system-to-be with multiple solutions. 
+
+\end{itemize}
+
+In the first case, NFR verification should point out at design time which alternative paths also conforms to the non-functional metrics associated to the goal model in addition to the softgoal contribution analysis. If more than one metric exists, some multi-criteria approach should decide which alternative will be selected. 
+
+In the last case, NFR verification have two purposes: to select the best single alternative for a given context at runtime, or to measure the joint set of alternatives for any non-functional metric at design time. The former may follow a similar multi-criteria approach if more than one metric exists. The later corresponds to the family verification of a software product line~[GENAINA].
+
 \section{Dependability Analysis}
 
 The concept of dependability is related to dependence and trust as well as the ability of a system to avoid failures that are more frequent and more severe than certain threshold~[AVIZIENIS]. According to Avizienis et al., dependability encompasses the following attributes: 
