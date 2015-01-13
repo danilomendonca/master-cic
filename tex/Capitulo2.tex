@@ -77,22 +77,21 @@ In GORE, dynamic contexts may affect what goals a system have to reach, the mean
 The third effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve.
  
 
-\section{Variability Solving}
+\section{Variability Solving in GORE}
 
-In goal models, OR-decomposition may lead to more than one path that, if its tasks are executed, goals satisfied and dependencies met, will satisfy the root goal of a system. This variability problem has different natures and must be treated accordingly:
+Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal, which task should be executed to satisfy its upper goal or which subtask should be performed to satisfy its upper task. Accordingly, multiple paths may lead to the satisfaction of the root goal. They will be called alternatives. Solving this variability problem may follow different approaches:
 
-\begin{itemize}
+\subsection{Different paths, one context, one solution}
 
-\item Different paths, one context, one solution: Despite the elicitation of more than one path, only one alternative will be kept. Softgoals and non-functional metrics are generally used as criteria for selection.
-\medskip
+Despite the elicitation of more than one path, only one alternative will be kept at design time. Softgoals are generally used as criteria for the alternative selection~[i*, TROPOS, KAOS]. 
 
-\item Different paths, multiple contexts, multiple  solutions: A system affected by context variation may have to select a different alternative for different contexts, justifying a system-to-be with multiple solutions. 
+In our work, we also base this decision on non-functional constraints. NFR verification should point out at design time which alternative paths conforms to the non-functional constraints associated to the goal model. If more than one metric exists, some multi-criteria approach should decide which alternative will be selected. 
 
-\end{itemize}
+\subsection{Different paths, multiple contexts, multiple  solutions}
 
-In the first case, NFR verification should point out at design time which alternative paths also conforms to the non-functional metrics associated to the goal model in addition to the softgoal contribution analysis. If more than one metric exists, some multi-criteria approach should decide which alternative will be selected. 
+A system affected by context variation may have to select a different alternative for different contexts, justifying a system-to-be design with multiple solutions. 
 
-In the last case, NFR verification have two purposes: to select the best single alternative for a given context at runtime, or to measure the joint set of alternatives for any non-functional metric at design time. The former may follow a similar multi-criteria approach if more than one metric exists. The later corresponds to the family verification of a software product line~[GENAINA].
+In our work, selected paths must comply to existing non-functional constraints. NFR verification should measure the joint set of alternatives for any non-functional metric at design time or, in future work, to select the best single alternative for a given context at runtime. The first estimates NFR based on the activation profile of different alternatives. The later corresponds to the family verification of a dynamic software product lines~[GENAINA].
 
 \section{Dependability Analysis}
 
@@ -119,9 +118,9 @@ The concept of dependability is related to dependence and trust as well as the a
 
 %Correctness is opposed to failures. 
 
-A holistic dependability specification has to include not only the software operation, but also the requirements for which that operation is meant. Requirements are an important factor to decide the acceptable frequency and severity of a software failure. Similarly, context is another factor in that decision. The frequency and the likelihood of failures are related to the dependability attributes of reliability, availability and integrity. The severity of failures consequence is related to safety.
+A holistic dependability specification has to include not only the software operation, but also the requirements for which that operation is meant. Non-functional metrics are an important factor to decide the acceptable frequency and severity of a software or hardware failure. 
 
-An execution failure is a perceived deviation from system expected behaviour that may have variable degree of consequence on the user(s) and the environment. These failures are caused by specification faults or specification violations. In the first case, requirements model fails to describe the system and either the goals or the means to fulfil then are incorrect or incomplete. In the second case, software or hardware behaviour did not follow its specification due to a natural phenomena, a human-made, a malicious or an interaction fault~[AVIZIENIS].
+A failure is a perceived deviation from system expected behaviour that may have variable degree of consequence on the user(s) and the environment. These failures are caused by specification faults or specification violations. In the first case, requirements model fails to describe the system: either the goals or the means to fulfil then are incorrect or incomplete. In the second case, software or hardware behaviour did not follow its specification due to a natural phenomena, a human-made fault, a malicious fault or an interaction fault~[AVIZIENIS].
 
 %Avizienis et al. also characterizes a failure according to four viewpoints. For this work, failure domain and failure consequence are important as they define .
 
