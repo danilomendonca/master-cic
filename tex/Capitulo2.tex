@@ -1,4 +1,4 @@
-\chapter{Baseline}\label{ch_baseline}%
+\chapter{Baseline}\label{ch:baseline}%
 
 \section{Goal-oriented Requirements Engineering}
 
@@ -40,7 +40,7 @@ Three frameworks/methodologies, namely KAOS, i* and TROPOS, represent the founda
 
 \section{TROPOS Goal-oriented Software Development Methodology}
 
-TROPOS is a GORE methodology based on the i* framework. Its main improvement is the addition of new phases of requirements engineering and system design, namely~[TROPOS]:
+TROPOS is a GORE methodology based on the i* framework~[TROPOS]. Its main improvement is the addition of new phases of requirements engineering and system design, namely:
 
 \begin{itemize}
 
@@ -77,21 +77,36 @@ In GORE, dynamic contexts may affect what goals a system have to reach, the mean
 The third effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve.
  
 
-\section{Variability Solving in GORE}
+\section{Variability in GORE}
 
-Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal, which task should be executed to satisfy its upper goal or which subtask should be performed to satisfy its upper task. Accordingly, multiple paths may lead to the satisfaction of the root goal. They will be called alternatives. Solving this variability problem may follow different approaches:
+Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal,  which subtask should be executed to satisfy its upper task or which task should be executed to satisfy its upper goal. Accordingly, multiple paths may lead to the satisfaction of the root goal. They will be called alternative behaviours, or alternatives. 
+
+Solving the variability problem with goal models have different meanings according to the life cycle phase it takes place. At design time, multiple alternatives are elicited, but only one is selected to be part of the system-to-be. At runtime, system inherits variability in order to adapt to different contexts of operation. For each context, one adoptable alternative must be selected. 
+
+Our proposal aims to solve the variability in goal models at design time through static verification of system models for static or dynamic contexts of operation. In both cases, alternatives are selected based on their conformance to non-functional requirements in terms of softgoals and non-functional metrics
+
+%to select the best alternative at design time for the system-to-be, or to select the best alternative at runtime for the system in operation. Both problems are related to how each alternative conforms to requirements in terms of softgoals and non-functional metrics and to the context of operation. At design time, estimation of NFR is conduced on the model of the system behaviour. 
 
 \subsection{Different paths, one context, one solution}
 
-Despite the elicitation of more than one path, only one alternative will be kept at design time. Softgoals are generally used as criteria for the alternative selection~[i*, TROPOS, KAOS]. 
+Despite the elicitation of more than one path, only one alternative is kept at design time. Softgoals are generally used as criteria for the alternative selection~[i*, TROPOS, KAOS]. We extend TROPOS with a model-based verification of  non-functional constraints. Verification should point out at design time:
 
-In our work, we also base this decision on non-functional constraints. NFR verification should point out at design time which alternative paths conforms to the non-functional constraints associated to the goal model. If more than one metric exists, some multi-criteria approach should decide which alternative will be selected. 
+\begin{enumerate}
+
+\item Which alternative conforms to the non-functional metrics associated to the goal model. 
+\medskip
+
+\item The best alternative given one or more metrics. In the last case, a multi-criteria approach should decide which alternative will be selected for the system-to-be.
+
+\end{enumerate}
 
 \subsection{Different paths, multiple contexts, multiple  solutions}
 
-A system affected by context variation may have to select a different alternative for different contexts, justifying a system-to-be design with multiple solutions. 
+A system affected by context variation may have to select different alternatives for different contexts, justifying variability in the system-to-be design. Solving variability becomes more complex as for each context a different alternative may provide the best contribution to softgoals and achieve higher values for non-functional metrics. 
 
-In our work, selected paths must comply to existing non-functional constraints. NFR verification should measure the joint set of alternatives for any non-functional metric at design time or, in future work, to select the best single alternative for a given context at runtime. The first estimates NFR based on the activation profile of different alternatives. The later corresponds to the family verification of a dynamic software product lines~[GENAINA].
+In our work, variability solving for multiple contexts involves an iterative verification in which contexts are analysed for all adoptable alternatives. At least one alternative must be able to fully satisfy both functional and non-functional requirements of the system.
+
+%The later corresponds to the family verification of a dynamic software product lines~[GENAINA].
 
 \section{Dependability Analysis}
 
