@@ -141,13 +141,13 @@ Other MPERS NFR are `emergency awareness' and `resources optimization'. These so
 
 This section describes the application of a PMC technique to verify the conformance of the RGM to defined non-functional constraints and also to solve the variability problem at design time considering both cases explained in Section~\ref{sec:variability}, i.e., for static context and dynamic contexts.
 
-\subsubsection{The DTMC model}
+\subsubsection{Hight-level DTMC model}
 
 %It is not always the case that multiple alternatives must be evaluated and compared. A goal model may be built with only mandatory goals, dependencies and tasks. Nonetheless, non-functional constraints may still have to be checked, i.e., a single alternative verification may have to be performed. 
 
 The state-based verification of meta-requirements or non-functional constraints that specifies how different functionalities should perform is a complex task that involves a representation of system states and their transitions. A goal model may define system requirements with variable abstraction levels. As such, the feasibility of the verification of a given metric depends on the information provided by the model.
 
-The MPERS RGM in Figure~\ref{fig:MPERS_LR} expands its main goals in further subgoals that are ultimately satisfied by means-end tasks. Some tasks are themselves decomposed into more granular subtasks. In our proposal, leaf-tasks are mapped to modules in the DTMC model. In PRISM, modules are containers for variables and commands, i.e., for states and behaviour. Figure~\ref{fig:PRISM_TASK_MODULE} presents a high-level representation of a system task as a PRISM module.
+The MPERS RGM in Figure~\ref{fig:MPERS_LR} expands its main goals in further subgoals that are ultimately satisfied by leaf-tasks. In our proposal, leaf-tasks are mapped to modules in the DTMC model. In PRISM, modules are containers for variables and commands, i.e., for states and behaviour. Figure~\ref{fig:PRISM_TASK_MODULE} presents a black-box representation of a system task as a PRISM module.
 
 \begin{figure*}[ht]
 \centering
@@ -158,7 +158,9 @@ The MPERS RGM in Figure~\ref{fig:MPERS_LR} expands its main goals in further sub
 
 In Figure~\ref{fig:PRISM_TASK_MODULE}, variable sTask indicates the state of some task. Different states of a task's life cycle are mapped to the value of this variable, namely: init (0), running (1), success (2) and failure (3). Success and failure are the final absorbing states for a task instance. Transition to these states is conditioned to the rTask probability: the closer this variable is to 1, the higher the probability of reaching the success state. 
 
-Given a set of leaf-tasks that fulfils a chain of subgoals until a certain goal G and a reliability constraint defined as the probability of successfully achieving this goal, a DTMC model composed of modules for each leaf-task states and transitions is build. This model must represent the same workflow defined by the corresponding runtime goal model. Figure~\ref{fig:CRGM_TO_DTMC} illustrates this process.
+Given a set of leaf-tasks that fulfils a chain of subgoals until a certain goal G, a DTMC model composed of modules for each leaf-task states and transitions is build. This model must represent the same workflow of the corresponding RGM. We call it a high-level DTMC model because leaf-tasks are similar to activities in a UML diagram whose internal behaviours could be further detailed, e.g., by sequence diagrams. 
+
+Figure~\ref{fig:CRGM_TO_DTMC} illustrates the process that starts with regular activities of the TROPOS methodology, i.e., the goal-oriented modelling, and ends with the generation of a high-level DTMC model.
 
 \begin{figure*}[ht]
 \centering
@@ -167,7 +169,7 @@ Given a set of leaf-tasks that fulfils a chain of subgoals until a certain goal 
 \label{fig:CRGM_TO_DTMC}
 \end{figure*}
 
-\subsubsection{RGM to DTMC}
+\subsubsection{Generating the DTMC model from a RGM}
 
 Each task starts at a discrete time slot. Time slots defines the sequence order of tasks executions. Interleaved tasks (T1\#T2) have their initial state transition synchronized at the same time slot through labels, but occupy different time paths, i.e., following transitions are interleaved. Sequential tasks (T1;T2) have subsequent time slots, meaning that T2's initial transition is synchronized to T1's success transition. Table~\ref{tab:MPERS_DTMC_SLOTS} presents the time slots, paths and other dynamic aspects of MPERS leaf-tasks.
 
@@ -203,37 +205,56 @@ Each task starts at a discrete time slot. Time slots defines the sequence order 
 
 Other possible behaviours are: alternative execution (E1|E2), optional execution (opt(E1)) and conditional execution (try(E)?E1:E2). For alternative OR decomposition, or XOR, a parameter in the model should decide which alternative from a set of two or more is selected for analysis. Only one alternative should be enabled at a time. Similarly, optional tasks are enabled by a boolean variable. Finally, labels are used to condition the execution of tasks to the success and failure of a third task. 
 
-Cardinality is also supported by the runtime regex specification. In our proposal, execution cardinality is simply represented by n modules with subsequent time slots (E+n) or by modules whose initial transition are synchronized and following transitions are interleaved (E\#n). Figures~\ref{fig:PRISM_ALT_TSKS, fig:PRISM_OPT_TSK, fig:PRISM_COND_TSK} illustrate different tasks behaviours.
+Cardinality is also supported by the runtime regex specification. In our proposal, execution cardinality is simply represented by n modules with subsequent time slots (E+n) or by modules whose initial transition are synchronized and following transitions are interleaved (E\#n). Figures~\ref{fig:PRISM_ALT_TSKS}, \ref{fig:PRISM_OPT_TSK} and \ref{fig:PRISM_TRY_TSKS} illustrate different tasks behaviours.
 
 \begin{figure*}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imgs/PRISM_ALT_TSKS.png}
-\caption{Alternative tasks T9.1 and T9.2 as DTMC modules.}
+\caption{Alternative tasks T9.1 and T9.2 as DTMC modules with additional integer parameter.}
 \label{fig:PRISM_ALT_TSKS}
 \end{figure*}
 
 \begin{figure*}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imgs/PRISM_OPT_TSK.png}
-\caption{An optional task T17.2 as a DTMC module.}
+\caption{An optional task T17.2 as a DTMC module with additional boolean parameter.}
 \label{fig:PRISM_OPT_TSK}
+\end{figure*}
+
+\begin{figure*}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imgs/PRISM_TRY_TSKS.png}
+\caption{Conditional tasks T9.00 and T9.1 as DTMC modules.}
+\label{fig:PRISM_TRY_TSKS}
 \end{figure*}
 
 %Listing~\ref{ls:MPERS_DTMC} presents the DTMC model for the MPERS.
 
-%To illustrate our proposal for NFR verification of a single alternative, we selected the local goal G5 that defines the state where emergency rules are updated without major system interruption. Table~\ref{tab:MPERS_NFR} has a non-functional constraint for this goal that specifies the minimum 
+%To illustrate our proposal for NFR verification of a single alternative, we selected the local goal G5 that defines the state where emergency rules are updated without major system interruption. Table~\ref{tab:MPERS_NFR} has a non-functional constraint for this goal that specifies the minimum
+
+\subsubsection{Gathering individual task metrics}
+
+Leaf-tasks are not necessarily atomic system tasks. The idea is to leave to analysts the decision concerning the abstraction level represented by the tasks that will be verified. For instance, the abstract task `find active sensors' could be decomposed in more granular and concrete tasks related to the platform, architecture and language used for implementation. 
+
+The more abstract a task is, the more difficult is to obtain their individual metrics, as the trace between an abstract and the concrete system operation becomes less evident. Any NFR verification by the PMC technique requires further qualitative information about individual parts involved in an activity, e.g., the reliability, performance, power consumption, cost and other attributes for tasks in a workflow or for components involved in a task operation.
+
+This is a key point in this approach, as it may seen too loose to couple a probabilistic verification to a goal model with a high-level operational representation of a system. But its feasibility becomes clear when the metrics being verified are compatible with the abstraction level of the tasks and information regarding how each task individually performs is available or can be collected.
+
+\subsection{Reasoning with Ex-Tropos}
 
 \subsubsection{Variability in GORE}
 
-The variability in goal models leads to more than one minimum set of tasks capable of fulfilling local or root goals. In OR-decomposition, at least one alternative is required and the maximum number of combinations is defined by $1 + 2^{(n-1)}$, with n the number of OR-decomposed goals/tasks. Therefore, the individual verification of all alternatives in a goal model may prove to be inefficient if too many variation points exist in the model.
+The variability in goal models leads to more than one minimum set of tasks capable of fulfilling local or root goals. In OR-decompositions, at least one alternative is required and the maximum number of combinations is defined by $1 + 2^{(n-1)}$, with n the number of OR-decomposed goals/tasks. Therefore, the verification of all alternatives in a goal model with individual models may prove to be inefficient or infeasible if too many variation points exist in the model.
 
-The PMC approach has already been explored for the verification of models with variability. Rodrigues et al. proposed a family-based verification of software product lines (SPL)~[RODRIGUES]. The main idea is to reduce the analysis effort and boost the feasibility of the SPL verification. Parameters in a PRISM probabilistic model generates a parametric formula for all products in the SPL for a given PCTL property. 
+The PMC approach has already been explored for the verification of models with variability. Rodrigues et al. proposed a family-based verification of software product lines (SPL)~[RODRIGUES]. The main idea is to reduce the analysis effort and boost the feasibility of the SPL verification. In the proposed family-based verification, parameters in a PRISM probabilistic model generates a parametric formula for all products in the SPL for a given PCTL property. 
 
-In our proposal, PCM verification follows the same principle of the SPL family-based verification. A parametric formula should be generated from the RGM. Alternatives are selected by passing values to parameters. For instance, if both SOAP and REST are available means for remote emergency notification, a parameter with values 0 or 1 will indicate which alternative is enabled for verification. Eq.~\ref{eq:MPERS_RELIABILITY_FORM} defines the reliability formula for the root goal G1.
+In our proposal, PCM verification follows the same principle of the SPL family-based verification. A parametric DTMC model should be generated from the RGM. Alternatives are selected by passing values to parameters. For instance, if both GPS and triangulation are available means for identifying the patient location, a parameter with values 0 or 1 will indicate which alternative is enabled for verification. 
 
-\begin{equation}
-G1r=c^2\label{eq:MPERS_RELIABILITY_FORM}
-\end{equation}
+%Eq.~\ref{eq:MPERS_RELIABILITY_FORM} defines the reliability formula for the root goal G1.
+
+%\begin{equation}
+%G1r=c^2\label{eq:MPERS_RELIABILITY_FORM}
+%\end{equation}
 
 A family-based PMC is useful for comparing each alternative with non-functional metrics as criteria to decide which one should be used by the system-to-be at design time or by the real system at runtime. At design time, this approach is analogue to the TROPOS contribution analysis. In both cases, a unique parametric formula evaluates a PCTL property corresponding to a non-functional metric.  %improve the example!
 
@@ -295,21 +316,6 @@ Transition probability between running to final success state is described by th
 
 %This section is divided in preliminary conceptual explanation about the
 
-\subsection{Probabilistic model generation}
-
-In the PMC technique that has been adapted by this proposal, a behavioural specification, usually provided by UML activity and sequence diagrams, are manually converted to a probabilistic model in PRISM language. This tends to be a costly and error-prone process with a complexity proportional to the number of components, actions and interactions causing state transitions.  
-
-As a goal model is traversed from strategical root goal to operational leaf-goals, and each leaf-goal is reachable by a delegation to other actor or by a operational task, then a behaviour specification as proposed by the RGM may have enough information to be consumed as input for the generation of probabilistic models in PRISM language and for the verification of some important NFRs. However, the manual generation from RGM is still a costly task.
-
-Depending on the abstraction level and the nature of the verification, PRISM models may either very complex or may follow a clear pattern. For instance, PRISM modules can be used to represent leaf-tasks of a runtime goal model. Considering a DTMC model, a task workflow can be modelled as a sequence of probabilistic state transitions according to the behavioural specification parsed from the RGM. This probabilistic model follows a pattern that motivated the implementation of an automatic generation of DTMC models representing leaf-tasks execution directly from a runtime goal model.
-
-Leaf-tasks are not necessarily atomic system tasks. The idea is to leave to analysts the decision concerning the abstraction level represented by the tasks that will be verified. For instance, the abstract task `find active sensors' could be decomposed in more granular and concrete tasks related to the platform, architecture and language used for implementation. 
-
-The more abstract a task is, the more difficult is to obtain their individual metrics, as the trace between an abstract and the concrete system operation becomes less evident. Any NFR verification by the PMC technique requires further qualitative information about individual parts involved in an activity, e.g., the reliability, performance, power consumption, cost and other attributes for tasks in a workflow or for components involved in a task.
-
-This is a key point in this approach, as it may seen too loose to couple a probabilistic verification to a goal model with a high-level operational representation of a system. But its feasibility becomes clear when the metrics being verified are compatible with the abstraction level of the tasks and information regarding how each task individually performs is available or can be collected.
-
-
 \subsection{From NFR to PCTL properties}
 
 The estimation of attributes through PMC technique is limited to those that a probabilistic model may evaluate. Dependability attributes have an abstract definition that must be associated to a concrete and verifiable PCTL property. To demonstrate our approach, we verify the MPERS model for the following attributes:
@@ -353,19 +359,3 @@ seen as an activity diagram and be used to generate a probabilistic model in PRI
 Dependability analysis is used to provide information about different dependability attributes related to system failures. These metrics may be specified as non-functional requirements for isolated system functionalities or for the whole system. Instead of softgoals, we use meta-requirements over functional goals with clear-cut quantitative criteria such as `99.999\%' reliable - a probabilistic value to make it compatible with the PMC estimation results.
 
 To perform the , we focus on dependability related metrics that should be estimated and compared to their required constraint values through quantitative analysis. Sensitive analysis to reveal how different system parts contribute to the overall value of those attributes. Sensitive analysis may be considered analogous to the original GORE contribution analysis.
-
-
-
-\section{TROPOS to PMC Code Generation}
-
-As we wanted to automate the code generating process for the verification model, the graphical modelling environment that supports TROPOS methodology and the code generation for multi-agents was extended to also generate probabilistic models for the PMC technique.
-
-To reduce the effort of codifying the verification model, an automated generation of the PRISM probabilistic model was implemented based on an existing open source tool for TROPOS development support named TAOM4E[citation]. TAOM4E provides a graphical environment for goal modelling with TROPOS methodology based on the well known Eclipse Modelling Framework (EMF) and Graphical Editing Framework (GEF). The GORE to PRISM generator was implemented as a Eclipse plugin and integrated to the TAOM4E environment. 
-
-The purpose  of the automated code generation for the probabilistic PRISM model is to optimize the formal verification step by abstracting the PRISM language from the analysts and reduce the overhead and time of the model verification. This should increase the feasibility of adopting the extended TROPOS methodology by keeping analysts with their original responsibility of modelling and analysing the system, its social environment and its different contexts of operation.
-
-
-
-
-
-In terms of a high level system behaviour, each activity has its own states space including success and failure. Our probabilistic verification approach requires not only a formal specification of the system behaviour, but also metrics related to how individual components involved in system activities will perform in respect to the analysed metric. In reliability verification, each component has an individual probability of successfully performing its functional task. Analysts must obtain these values by consulting their manufacturer, by individually analysing each component reliability based on their behaviour specification until the atomic level or by monitoring these components in a testing or production environment. Further details of how individual metrics may be obtained for the PCM may be found at the literature and are out of the scope of this work.
