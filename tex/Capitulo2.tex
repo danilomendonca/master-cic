@@ -74,15 +74,15 @@ In GORE, dynamic contexts may affect what goals a system have to reach, the mean
 
 \end{enumerate}
 
-The third effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve.
+The third effect is the main focus of this work, as it is related to the GORE contribution analysis that we aim to improve. In our proposal, we extend the concept of the context variation effect to non-functional metrics of goals and tasks - as the components used for concrete task execution may also be affected by context variations, e.g., the reliability of a sensor in different temperatures. 
 
 \section{Variability in GORE}\label{sec:variability}
 
-Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal,  which subtask should be executed to satisfy its upper task or which task should be executed to satisfy its upper goal. Accordingly, multiple paths may lead to the satisfaction of the root goal. They will be called alternative behaviours, or alternatives. 
+Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal,  which subtask should be executed to satisfy its upper task or which task should be executed to satisfy its upper goal. Accordingly, multiple paths may lead to the satisfaction of the root goal. They are called alternative behaviours, or alternatives. 
 
-Solving the variability problem with goal models have different meanings according to the life cycle phase it takes place. At design time, multiple alternatives are elicited, but only one is selected to be part of the system-to-be. At runtime, system inherits variability in order to adapt to different contexts of operation. For each context, one adoptable alternative must be selected. 
+Solving the variability problem with goal models have different meanings according to the life cycle phase it takes place. At design time, multiple alternatives are elicited, but not all are selected to be part of the system-to-be. At runtime, system inherits variability in order to adapt to different contexts of operation. For each context, one adoptable alternative must be selected. 
 
-Our proposal aims to solve the variability in goal models at design time through static verification of system models for static or dynamic contexts of operation. In both cases, alternatives are selected based on their conformance to non-functional requirements in terms of softgoals and non-functional metrics
+Our proposal aims to solve the variability in goal models at design time through static verification of system models for multiple contexts of operation. For this, analysed contexts are iterated and alternatives are selected based on their contextual conformance to non-functional requirements in terms of softgoals and non-functional metrics.
 
 %to select the best alternative at design time for the system-to-be, or to select the best alternative at runtime for the system in operation. Both problems are related to how each alternative conforms to requirements in terms of softgoals and non-functional metrics and to the context of operation. At design time, estimation of NFR is conduced on the model of the system behaviour. 
 
@@ -134,11 +134,11 @@ The concept of dependability is related to dependence and trust as well as the a
 
 A holistic dependability specification has to include not only the software operation, but also the requirements for which that operation is meant. Non-functional metrics are an important factor to decide the acceptable frequency and severity of a software or hardware failure. 
 
-A failure is a perceived deviation from system expected behaviour that may have variable degree of consequence on the user(s) and the environment. These failures are caused by specification faults or specification violations. In the first case, requirements model fails to describe the system: either the goals or the means to fulfil then are incorrect or incomplete. In the second case, software or hardware behaviour did not follow its specification due to a natural phenomena, a human-made fault, a malicious fault or an interaction fault~[AVIZIENIS].
+A failure is a perceived deviation from system expected behaviour that may have variable degrees of consequence on the user(s) and the environment. These failures are caused by specification faults or specification violations. In the first case, requirements model fails to describe the system: either the goals or the means to fulfil then are incorrect or incomplete. In the second case, software or hardware behaviour did not follow its specification due to a natural phenomena, a human-made fault, a malicious fault or an interaction fault~[AVIZIENIS].
 
 %Avizienis et al. also characterizes a failure according to four viewpoints. For this work, failure domain and failure consequence are important as they define .
 
-The scope of this work is restricted to specification violations, i.e., we assume that a system specification is complete and consistent. Failures are restricted to anomalous behaviour of the components participating in the execution of system tasks, including technical components and human actors. Regarding the different means to attain dependability, our proposal consists of a fault forecasting as part of the Validation \& Verification phase of RE by estimating metrics related to dependability and assuring their conformance to the non-functional constraints associated to the goal model. 
+The scope of this work is restricted to specification violations, i.e., we assume that a system specification is complete and consistent. Failures are restricted to anomalous behaviour of the components participating in the execution of system tasks, including technical components and human actors. Regarding the different means to attain dependability, our proposal consists of a fault forecasting as part of the Validation \& Verification phase of RE by estimating metrics related to dependability and assuring their conformance to the dependability constraints associated to the goal model. 
 
 %
 %At early project phases, hazard resolution may involve simply getting more information about hazards or generating alternative design solutions~\cite{Leveson:1995}. In our work, we have used a qualitative means to analyse the dependability to be delivered by goals of a certain system taking into account contextual effects. Our approach improves the understanding of systems fault-causality effect and the identification of best approaches to reduce risk or even determine rates for safety or system level functional failure. Moreover, dependability requirement analysis cannot be accurately fulfilled without taking into account the context under which the system will operate.
@@ -168,13 +168,15 @@ The scope of this work is restricted to specification violations, i.e., we assum
 
 \section{PRISM Probabilistic Model Checker}
 
-A model checking is a formal method that aims to automatically verify if a system model meets its specification for defined properties. Probabilistic and state based model checking supports the verification of finite-state probabilistic models such as discrete-time Markov chain (DTMC), continuous-time Markov chain (CTMC) and Markov decision process (MDP), among others. Different types of properties may be defined to verify a system model for different qualitative metrics.
+A model checking is a formal method that aims to automatically verify if a system model meets its specification for defined properties. Probabilistic and state based model checking supports the verification of finite-state probabilistic models such as discrete-time Markov chain (DTMC), continuous-time Markov chain (CTMC) and Markov decision process (MDP). Different types of properties enables the verification of a vast range of non-functional metrics.
 
-The PMC technique used in this approach is supported by the PRISM model checker tool~[PRISM]. PRISM allows the modelling and analysis of systems which exhibit random or probabilistic behaviour. The decision of using PRISM as the probabilistic state based model checker was due to the number of successful case studies that have used this tool, indicating its maturity [PRISM CS], and also due to its rich environment that is able to represent different kinds of probabilistic models and their evaluations. 
+The PMC technique used in this approach is supported by the PRISM model checker tool~[PRISM]. PRISM allows the modelling and analysis of systems which exhibit random or probabilistic behaviour. The decision of using PRISM as the probabilistic state-based model checker was due to the number of successful case studies that have used this tool, indicating its maturity [PRISM CS].
+
+%, and also due to its rich environment that is able to represent different kinds of probabilistic models and their evaluations. 
 
 PRISM is suitable for many different kinds of model evaluations depending on the abstraction level, the type of probabilistic model and the PCTL properties to be analysed. PRISM language offers a rich set of constructs that may represent system modules and components, among others architectural and design configurations. Both qualitative and sensitive analysis are available.
 
-As it will be explained in later sections, goal models may be easily extended with the proper information required for the verification of some important dependability attributes. The objective is to anticipate non-functional dependability violations and to support the decision of which alternatives to use in the system-to-be. A model checking technique should be used for dependability analysis as long as: 
+As it will be explained in later sections, goal models may extended with the behaviour specification required for the verification of some important dependability attributes. The objective is to anticipate non-functional dependability violations and to support the decision of which alternatives to use in the system-to-be. A model checking technique should be used for dependability analysis as long as: 
 
 \begin{itemize}
 
@@ -189,18 +191,18 @@ As it will be explained in later sections, goal models may be easily extended wi
 
 \end{itemize}
 
-Finally, PRISM also supports a parametric model verification. That is, instead of providing the final evaluation for a given property, models may use parameters instead of initialized variables and the verification will output a parametric formula whose evaluation will check the model for any valid combination of parameters values.
+Finally, PRISM also supports a parametric model verification. That is, instead of providing the final evaluation for a given property, models may use parameters instead of initialized variables and the verification will output a parametric formula whose evaluation will estimate or verify the model for any valid combination of parameters values.
 
 \section{Mobile Personal Emergency Response System}
 
-The MPERS case study will be further detailed in later sections as the goal models generated by TROPOS methodology are themselves useful for communication purposes. As such, this section will cover some non-functional aspects of this system that justify the use of our formal verification approach.
+The MPERS case study will be further detailed in later chapter as the proposed TROPOS extension is described with the MPERS goal models of previous requirements engineering phases. As such, this section will cover some relevant aspects of this system that justify the use of our formal verification approach.
 
 An emergency response system is a mission-critical system for which failures in achieving its main goals by the time they are required may lead to catastrophic consequences on users, i.e., on patients monitored by the system expecting to be promptly assisted in case of a medical emergency. Accordingly, any stakeholder that wishes to offer a service based on this system will have both ethical and contractual obligations regarding the safety of its product, that is, it must use appropriate means to prevent system failures.
 
-Other dependability attributes such as reliability and availability are metrics over the correctness of system behaviour. MPERS is expected to have a high availability - as it must be ready to respond to an emergency that may happen at any time - and a high reliability - as an incorrect emergency response may lead to death or to costly false-positives. Integrity is a less critical attribute in this case, but must also be addressed as patient privacy may not be violated by disclosing his personal health or geolocation info to unauthorized persons. Maintainability is addressed by the use of a software development methodology and by the ability to update emergency rules remotely at runtime.
+MPERS is expected to have a high availability - as it must be ready to respond to an emergency that may happen at any time - and a high reliability - as an incorrect emergency response may lead to death or to costly false-positives. Integrity is a less critical attribute in this case, but must also be addressed as patient privacy may not be violated by disclosing his personal health or geolocation info to unauthorized persons. Maintainability is addressed, among others, by the use of a software development methodology and by the ability to update emergency rules remotely at runtime.
 
 
-Reliability verification of an Ambient Assisted Living System also based on body-area networks though PCM technique was explored by Fernandes~[Fernandes, 2012]. Reliability estimation demonstrates the non-determinism in the verification model that will result in an non-deterministic evaluation result. Moreover, PRISM cost/reward structure is illustrated by the power consumption verification. Analogue approaches could be used for other attributes with non-determinism and cost/reward structures in the model. The value obtained by this quantitative analysis of both attributes must comply with the corresponding non-functional constraint associated to the goal model.
+Reliability verification of an Ambient Assisted Living System also based on body-area networks though PCM technique was explored by Fernandes~[Fernandes, 2012]. Reliability estimation demonstrates the non-determinism in the verification model that will result in an non-deterministic evaluation result. Moreover, PRISM cost/reward structures could be used for the verification of non-functional metrics such as power consumption. In this work, we limit the analysis to the reliability verification as part of a dependability analysis.
 
 %It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for the user(s) and for the environment.
 

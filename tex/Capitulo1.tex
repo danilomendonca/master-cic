@@ -2,30 +2,32 @@
 
 \section{Problem Definition}
 
-Among the different causes that lead a system to fail, some can be tracked back to design decisions in early system development process. The systematization provided by requirements engineering has been used to improve the quality and precision of the delivered documents, models and specification. Nonetheless, many methodologies do not further investigate or verify if the system-to-be conforms to non-functional constraints based on its design model, relying only on later monitoring and testing.
+Among the different causes that lead a system to fail, some can be tracked back to design decisions in early system development process. A systematic requirements engineering process may improve the quality and precision of the delivered documents, models and specification. Nonetheless, many methodologies for system development do not further investigate or verify if the designed system-to-be conforms to non-functional constraints.  
+
+%based on its design model, relying only on later monitoring and testing.
 
 % both strategically through higher level goals and operationally through lower level goals and tasks
 
-Non-functional dependability requirements are important metrics related to the correct system operation. Dependability defines the ability of delivering a service that can justifiably be trusted. Fail forecasting should provide a qualitative and/or a quantitative evaluation of the system behaviour in respect to fault occurrence or activation, while fault removal includes the verification, diagnosis and correction~[AVIZIENIS]. For some systems, late fault correction may be very costly and, in the worse case, may happen after the manifestation of a catastrophic failure that could have been avoided early correction~[DEPENDABILITY].
+Dependability requirements are NFR related to the correct system operation. Dependability defines the ability of delivering a service that can justifiably be trusted. Fail forecasting should provide a qualitative and/or a quantitative evaluation of the system behaviour in respect to fault occurrence or activation, while fault removal includes the verification, diagnosis and correction~[AVIZIENIS]. For some systems, late fault correction may be very costly and, in the worse case, may only happen after the manifestation of a catastrophic failure~[DEPENDABILITY].
 
 In traditional Goal-oriented requirements engineering (GORE) methodologies [GORE CAC], contribution  analysis is based on domain knowledge about the positive, neutral (implicit) or negative impact of a given system alternative to one or more system goals, generally a qualitative goal. By  comparing the overall contribution of two or more alternatives, a decision is made about which one should be adopted for the system-to-be. For instance, if one goal is to communicate with a remote user mobile, alternative means for the notification agent could be to send a SMS, an internet based message or a voice call. These alternatives may contribute with different values for qualitative goals such as `reliable delivery', `fast delivery', `convenient delivery', etc. 
 
-TROPOS contribution analysis is limited in many ways. First, it is based on domain knowledge information that may not exist or may not be precise and reliable. As a consequence, the decision of which alternative to use may be biased and lead to unexpected violations at runtime - the selected alternative may prove unable to fulfil its qualitative goals. From this, our first research question emerges:
+In TROPOS, a contribution analysis aims to select the best alternative based on positive or negative contribution to  softgoals. This analysis is limited in many ways. First, it is based on domain knowledge information that may not exist or may not be precise and reliable. As a consequence, the decision of which alternative to use may be biased and lead to unexpected violations at runtime - the selected alternative may prove to be inappropriate. From this, our first research question emerges:
 \bigskip
 
 \setlength{\fboxsep}{10pt}
 \noindent\fbox{%
     \parbox{\textwidth}{%
-        \textbf{Research Question 1}		Is it possible to improve the precision of the alternative selection in TROPOS methodology?
+        \textbf{Research Question 1}		Is it possible to improve the precision of the non-functional verification in TROPOS methodology?
     }%
 }\bigskip
 
-Second, contribution analysis is limited to a static representation without any dynamic information that could be used to estimate and verify quality attributes that depend on system behaviour and its many nuances such as temporal order, cardinality and priority. From this, our second research question arises: 
+Second, contribution analysis is based on a static representation without any runtime specification required for estimating non-functional metrics that depend on system behaviour and its many nuances such as temporal order, cardinality and priority. From this, our second research question arises: 
 \bigskip
 
 \noindent\fbox{%
     \parbox{\textwidth}{%
-        \textbf{Research Question 2}		Is it possible to complement a goal model with a behaviour specification concerning, e.g., the cardinality, temporal order and priority of the achievement of goals and the execution of tasks?
+        \textbf{Research Question 2}		Is it possible to complement a goal model with a behaviour specification concerning, e.g., the temporal order, cardinality and priority of the achievement of goals and the execution of tasks?
     }%
 }\bigskip
 
@@ -34,7 +36,7 @@ Third, contribution links are deterministic. As such, the design decisions based
 
 \noindent\fbox{%
     \parbox{\textwidth}{%
-        \textbf{Research Question 3}		Is it possible to use a probabilistic approach for the model-based verification of non-functional requirements?
+        \textbf{Research Question 3}		Is it possible to use a probabilistic approach for the verification of non-functional requirements?
     }%
 }\bigskip
 
@@ -63,28 +65,26 @@ Additionally to the contribution analysis limitations, the context in which syst
 
 \section{Proposed Solution}
 
-Static model-based verification is a formal approach to evaluate metrics over a finite-state model representing the system behaviour. The advantage of this approach is to reduce the correction costs by anticipating failures at early stages of the development cycle using not the system itself, but its representation. As long as the system model is precise, this method may provide a reliable evaluation of non-functional metrics. 
+Static model-based verification is a formal approach to evaluate metrics over a finite-state model representing the system behaviour. The advantage of this approach is to reduce the correction costs by anticipating failures at early stages of the development cycle using not the system itself, but its representation. As long as the system model is precise, this method may provide a reliable evaluation of non-functional metrics such as dependability attributes. 
 
-Goal models are not restricted to strategical goals. Through decomposition, more granular goals and finally tasks are defined. Tasks are responsible for the operationalization of system goals. Thus, tasks may be directly mapped to system activities that composes the system behaviour. A model-based verification of a goal model, as it will be explained in later sections, addresses our RQ1.
+Goal models are not restricted to strategical goals. Through AND/OR-decomposition, goals are further detailed and means-end tasks are responsible for the operationalization of leaf-goals. Thus, tasks may be directly mapped to activities that composes the system behaviour. A probabilistic, model-based verification of a goal model, as it will be explained in later sections, addresses our RQ1.
 
 %Increased analysis overhead is one of the drawbacks of this approach. Thus, its application must be well justified by the criticality level of the system and by the adoption of an appropriated verification approach. 
 
-As the goal model proposed in TROPOS is static, no information regarding achievement/execution order, cardinality and priority of goals/tasks is available, except the activity diagram for the detailing of an agent's single capability behaviour and the sequence diagram for agents interaction. Nonetheless, this problem was tackled by Dalpiaz et al. with a regular expression language to express behaviour, e.g., how many times the same goal should be achieved and the execution order of different system tasks~[RGM]. This answers our RQ2. 
+As the goal model proposed in TROPOS is static, no information regarding achievement/execution order, cardinality and priority of goals/tasks is available, except the activity diagram for the detailing of an agent's single capability behaviour and the sequence diagram for agents interaction. Nonetheless, this problem was tackled by Dalpiaz et al. with a regular expression language to specify the behaviour in a goal model, e.g., how many times the same goal should be achieved and the execution order of different system tasks~[RGM]. This answers our RQ2. 
 
 %Despite its valuable contribution to the requirements analysis and engineering, GORE still lacks the proper means to verify the conformance of some important metrics such as dependability requirements and others non-functional requirements (NFR) related to the likelihood and frequency of system execution failures. By tackling the verification of these metrics with a more precise and reliable approach, this work aims to mitigate the occurrence of failures at an early phase of the system development that must justifiably be trusted.
 
 %In order to provide a more solid and precise approach for the non-functional verification of different system alternatives and to improve the GORE contribution analysis, we propose the extension of the TROPOS goal-oriented software development methodology with 
 
-A probabilistic model checking (PMC) approach has already been explored and is supported by tools such as PRISM model checker[genaína PMC, PRISM]. PMC is a formal method for static verification of system models. In order to verify the system-to-be defined by a goal model, a corresponding verification model should be composed of one or more combination of tasks representing alternatives whose execution must follow some behaviour specification - as proposed by Dalpiaz et al. with the runtime goal model. If individual tasks metrics are available, the goal model could be checked for properties such as reliability, availability, performance and power consumption. PMC addresses our RQ3.
+A probabilistic model checking (PMC) approach has already been explored and is supported by tools such as PRISM model checker[genaína PMC, PRISM]. PMC is a formal method for static verification of different properties, including non-functional metrics like reliability. In order to verify non-functional requirements for the system-to-be, a corresponding probabilistic model of the system behaviour must be built. In this work, the RGM proposed by Dalpiaz et al. is used as input for the generation of a DTMC model and non-functional requirements are verified with the PMC technique proposed by Uriel~[URIEL]. This probabilistic approach addresses our RQ3.
 
-PRISM is a model checker tool that supports probabilistic models and enables PCTL property verification. PCTL provides the syntax for time-bounded probabilistic properties such as ``what is the probability of failure of a given goal in the next 1 hour?''. This is useful for scenarios with restrictions affected by time, like the battery of a mobile device. The use of PCTL properties addresses both RQ3 and RQ4.
+PRISM is a model checker tool that supports PCTL property verification. PCTL provides the syntax for time-bounded probabilistic properties such as ``what is the probability of failure of a given goal in the next x time units?''. This is useful for scenarios with restrictions affected by time, like the battery of a mobile device. The use of PCTL properties addresses our RQ3 (probabilistic) and RQ4 (temporal).
 
 %IN PROPOSAL
 %We have used the RGM proposal to fill the gap between the static goal model and its dynamic representation. This dynamic view of the goal model is translated to a probabilistic model following the PMC technique and the PRISM model checker as the tool to automate the verification. PRISM language is used to define the probabilistic model and the Probabilistic Computation Tree Logic (PCTL) to describe the properties to be verified in the model. These properties are derived from the NFR associated to corresponding system goals being verified.
 
-Finally, to address the problem of a dynamic context of operation, the context effects over goals, means and metrics should be treated by the verification model. Context variables may be parametrized to produce a formula that can check the system and its alternatives for different contexts. The feasibility of this approach, as presented by later chapter of this work, answers RQ5. 
-
-The probabilistic verification of NFR, performed as part of the Validation \& Verification (VV) phase in RE, should anticipate (contextual) violations of non-functional requirements. Treating a detected violation at design time may correspond to actions such as making a different choice for underlying components used by this alternative's tasks, optimizing its behaviour specification or even the disposal of this alternative as a means to satisfy its goal if there is at least one other valid alternative. PMC technique also allows the identification of system alternatives with more influence on each metric through sensitive analysis. 
+Finally, to address the problem of a dynamic context of operation, the context effects over goals, means and metrics should be treated by the verification model. Context variables may be parametrized to produce a formula that can check the system and its alternatives for different contexts. The feasibility of this approach, as presented by later chapters of this work, answers RQ5. 
 
 %By coupling a formal verification to a goal model, our approach benefit from a clearer understanding of the system-to-be and its criticality, justifying the verification of system parts or the system whole. The automatic generation of the verification model from an extended version of the goal mode, namely the runtime goal model, greatly reduces the verification overhead. Finally, including context effects provide a more realistic representation of the system to be verified.
 
@@ -111,16 +111,16 @@ This section summarizes the contributions of this proposal.
 
 \begin{enumerate}
 
-\item A formal approach for the estimation and verification of NFR in TROPOS Goal-oriented software development methodology.
+\item A formal approach for the verification of non-functional requirements in TROPOS Goal-oriented software development methodology.
 \medskip
 
 \item Inclusion of context effects over goals, means and metrics in the probabilistic model using appropriate constructs and parameters for each case.
 \medskip
 
-\item Conversion rules between different decomposition and runtime constraints in a runtime goal model to a probabilistic model in PRISM language.
+\item Conversion rules between different decomposition types and behaviours rules in a runtime goal model to a probabilistic model in PRISM language.
 \medskip
 
-\item A parser implementation for the regular expression (regex) language used in runtime goal models with support for execution order, cardinality, alternative execution, optional execution and conditional execution. 
+\item A parser implementation for the regular expression (regex) language used in runtime goal models with support for execution order, cardinality, alternative execution, optional execution, conditional execution and multiple executions of the same task. 
 \medskip
 
 \item An automatic generation of the PRISM probabilistic model representing activities from a runtime goal model annotated with the runtime regex and graphically modelled using the TAOM4E tool that supports TROPOS methodology.
