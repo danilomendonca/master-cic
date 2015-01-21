@@ -193,6 +193,13 @@ As it will be explained in later sections, goal models may extended with the beh
 
 Finally, PRISM also supports a parametric model verification. That is, instead of providing the final evaluation for a given property, models may use parameters instead of initialized variables and the verification will output a parametric formula whose evaluation will estimate or verify the model for any valid combination of parameters values.
 
+\section{Antlr Language Recognition Tool}
+
+ANTLR or Another Tool for Language Recognition is a open source parser generator for reading, processing, executing or translating structured text or binary files. The main purpose is to automatically generate a parser for a custom language defined in a specific grammar language supported by the tool. The parser can then be imported in any version compatible JAVA project to build and walk parsed trees. 
+
+As a result, any domain-specific language may be specified and then parsed using JAVA methods that will manipulate primitive attributes and objects according to what each parser rule and lexical term means for that language. In our proposal, ANTLR was successfully used to generate the parser for the regular expression language that specifies the behaviour of a runtime goal model (RGM). Further details of the grammar with both parser rules and lexical terms is given in later section.
+
+
 \section{Mobile Personal Emergency Response System}
 
 The MPERS case study will be further detailed in later chapter as the proposed TROPOS extension is described with the MPERS goal models of previous requirements engineering phases. As such, this section will cover some relevant aspects of this system that justify the use of our formal verification approach.
@@ -206,8 +213,3 @@ Reliability verification of an Ambient Assisted Living System also based on body
 
 %It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for the user(s) and for the environment.
 
-\section{Antlr Language Recognition Tool}
-
-ANTLR or Another Tool for Language Recognition is a open source parser generator for reading, processing, executing or translating structured text or binary files. The main purpose is to automatically generate a parser for a custom language defined in a specific grammar language supported by the tool. The parser can then be imported in any version compatible JAVA project to build and walk parsed trees. 
-
-As a result, any domain-specific language may be specified and then parsed using JAVA methods that will manipulate primitive attributes and objects according to what each parser rule and lexical term means for that language. In our proposal, ANTLR was successfully used to generate the parser for the regular expression language that specifies the behaviour of a runtime goal model (RGM). Further details of the grammar with both parser rules and lexical terms is given in later section.

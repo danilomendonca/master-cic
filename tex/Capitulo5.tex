@@ -1,4 +1,4 @@
-\chapter{TROPOS Methodology with Probabilistic Requirements Verification}\label{ch:proposal}
+\chapter{Probabilistic NFR Verification for TROPOS Methodology}\label{ch:proposal}
 
 This chapter describes the extended TROPOS methodology applied to the MPERS case study. Both TROPOS early and late requirements analysis phases are fully presented, as well as the verification process that requires a behaviour specification and the additional contextual notation regarding context effects. Further details about the TROPOS methodology may be found in the reference literature~[TROPOS]. 
 
@@ -154,7 +154,7 @@ Among its limitations, RGM does not express that an emergency has to be confirme
 The idea of a runtime goal model is not to replace UML activity diagrams, but to complement the static goal model with a clear runtime syntax that could be used for 
 communication and for conformance verification at both design time and during system execution - as the execution monitoring originally proposed by Dalpiaz et al~[RGM]. Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or complemented by UML behaviour diagrams.
 
-\subsection{Non-functional requirements verification}
+\subsection{Non-functional requirements verification}\label{ssec:NFR-verification}
 
 %NOT HERE!
 %The probabilistic verification of systems with variability is not a novelty by itself. Many proposals have addressed this problem in the context of Dynamic Software Product Lines (DSPL), some of then using the PMC technique~[Vini, Paula, Who Else?]. In DSPL, optional and alternative features may be activated or deactivated at runtime. A family based verification of one or multiple NFRs, also called qualitative goals, indicates what combinations are valid or which combination is optimal.
@@ -328,112 +328,82 @@ Depending on the purpose of the goal modelling - from early requirements elicita
 
 \subsubsection{Hybrid monitoring approach}
 
-In contrast to a pure model-based verification approach, tasks execution instances could be monitored using the original RMG conformance algorithms. This hybrid verification requires a concrete system implementation besides the RGM system model. 
+In contrast to a pure model-based verification approach, the hybrid verification requires a concrete system implementation besides the RGM system model. Tasks execution instances could be monitored by instrumented code and the original RMG monitoring algorithms that are able to differentiate one task instance from the other. 
+
+In terms of reliability metric, this approach should be used to collect the frequencies of success and failure of task executions and to calculate their corresponding reliability values used in the high-level DTMC.
+
+\subsection{From NFR to PCTL properties}
+
+The estimation of attributes through PMC technique is limited to those that a probabilistic model may evaluate. Dependability attributes have an abstract definition that must be associated to a concrete and verifiable PCTL property. In this evaluation, we focus on the dependability attribute of reliability. 
+
+Given a DTMC model representing system activities, global reliability may be defined as the probability of reaching a final state where all system goals are achieved. This property is called reachability and can be specified using the PCTL language. For the MPERS root goal G1, reliability can be defined by: $ P=? [ G (noError) ] $, with noError a boolean formula indicating that no task has transitioned to the failure state and P the steady-state probability of a true value for noError formula.
+
+
+%\begin{itemize}
+%
+%\item \textbf{Reliability}, represented by the probability of a successful execution of all the activities involved in fulfilling leaf-goals of a certain system alternative. It is also know as the \textit{reachability} as the describes the probability of reaching a final and successful system state. 
+%\bigskip
+%
+%\item \textbf{Availability}, represented by the power consumption estimation to maximize the time that the system will remain operational depending only on its battery. This attribute is well related to mobile computing. 
+%\medskip
+%
+%\end{itemize}
+
+
 
 %In Section~\ref{ssec:RGM-UML} we argued that the RGM could replace a corresponding high-level UML activity diagram for PMC verification. However, if internal task behaviour is to be evaluated for a given metric, a both activity and sequence diagrams could serve as input for the evaluation of individual task metrics using a similar PMC technique.
 
 \subsection{Reasoning with Ex-Tropos}
 
-The probabilistic verification of NFR, performed as part of the Validation \& Verification (VV) phase in RE, should anticipate (contextual) violations of non-functional requirements. Treating a detected violation at design time may correspond to actions such as making a different choice for underlying components used by this alternative's tasks, optimizing its behaviour specification or even the disposal of this alternative as a means to satisfy its goal if there is at least one other valid alternative. 
+The probabilistic verification of NFRs, performed as part of the Validation \& Verification (VV) phase in RE, should anticipate violations of non-functional constraints. Treating a detected violation at design time may correspond to actions such as making a different choice for underlying technical components or social actors involved in the execution of tasks, optimizing the behaviour specification or even disposing a violating alternative as a means to satisfy its goal if there is at least one other valid alternative. 
 
-PMC technique also allows the identification of system alternatives with more influence on each metric through sensitive analysis.
+%PMC technique also allows the identification of system alternatives with more influence on each metric through sensitive analysis.
 
-\subsubsection{Variability in GORE}
+\subsubsection{Solving variability}
 
 The variability in goal models leads to more than one minimum set of tasks capable of fulfilling local or root goals. In OR-decompositions, at least one alternative is required and the maximum number of combinations is defined by $1 + 2^{(n-1)}$, with n the number of OR-decomposed goals/tasks. Therefore, the verification of all alternatives in a goal model with individual models may prove to be inefficient or infeasible if too many variation points exist in the model.
 
-The PMC approach has already been explored for the verification of models with variability. Rodrigues et al. proposed a family-based verification of software product lines (SPL)~[RODRIGUES]. The main idea is to reduce the analysis effort and boost the feasibility of the SPL verification. In the proposed family-based verification, parameters in a PRISM probabilistic model generates a parametric formula for all products in the SPL for a given PCTL property. 
+The PMC approach has already been explored for the verification of other models that supports variability. Rodrigues et al. proposed a family-based verification of software product lines (SPL)~[RODRIGUES]. The main idea is to reduce the analysis effort and boost the feasibility of the SPL verification as parameters in a PRISM probabilistic model generates a single parametric formula for all products in the SPL for a given PCTL property. Individual product evaluation is achieved by the initialization of corresponding parameters in the formula. 
 
-In our proposal, PCM verification follows the same principle of the SPL family-based verification. A parametric DTMC model should be generated from the RGM. Alternatives are selected by passing values to parameters. For instance, if both GPS and triangulation are available means for identifying the patient location, a parameter with values 0 or 1 will indicate which alternative is enabled for verification. 
-
-%Eq.~\ref{eq:MPERS_RELIABILITY_FORM} defines the reliability formula for the root goal G1.
-
-%\begin{equation}
-%G1r=c^2\label{eq:MPERS_RELIABILITY_FORM}
-%\end{equation}
-
-A family-based PMC is useful for comparing each alternative with non-functional metrics as criteria to decide which one should be used by the system-to-be at design time or by the real system at runtime. At design time, this approach is analogue to the TROPOS contribution analysis. In both cases, a unique parametric formula evaluates a PCTL property corresponding to a non-functional metric.  %improve the example!
-
-
-% or the verification tool should decide based on some probabilistic distribution setted by the analysts (probabilistic alternative selection, or PAS).
-
-%In contrast, PAS provides verification for systems that include variability in its design. The verification of NFR metrics for these systems depend on how each alternative is selected during system operation.
+In our proposal, PCM verification follows the same principle of the SPL family-based verification. A parametric DTMC model should be generated from the runtime goal model. Alternatives are selected by passing values to parameters. For instance, if both GPS and triangulation are available means for identifying the patient location, a parameter with values 0 or 1 will indicate which alternative is enabled for verification, as described in Section~\ref{ssec:NFR-verification}.
 
 \subsubsection{Context selection}
 
-As in the contextual goal model, contexts may limit which alternatives are adoptable. This effect must be considered in a realistic verification. As a novelty, our approach for the verification of non-functional metrics through PMC will also include variable contexts of operation and their effects in the verification model. Two different approaches for context selection may be employed: 
+In a contextual goal model, or CGM, contexts may restrict which goals must be achieved, limit the adoptable alternatives (means) and also affect the non-functional metrics of individual tasks. These effects must be considered in a realistic verification. As a novelty, our approach for the verification of non-functional metrics through PMC will also include variable contexts of operation and their effects in the verification model. 
+
+We considered two different approaches for the NFR verification of system with dynamic contexts of operation:
 
 \begin{itemize}
 
-\item \textit{Deterministic context selection, or DCS}: one context is selected by the analyst before the verification. Context effects in the verification model should be activated and cause the evaluation result to correspond to the selected context.
+\item \textit{Deterministic context activation, or DCA}: a single context is activated by parameters in the model. In this approach, a parametric formula evaluates a given alternative for a specific context of operation. It is useful for the individual verification of context-alternative pairs, e.g., a context where battery is fully charged and all vital signs sensors are activated.
 \medskip
 
-\item \textit{Probabilistic context selection, or PCS}: a probability distribution will define the likelihood of a context to be selected and the corresponding context implications in the verification model to be activated.  
+\item \textit{Probabilistic context selection, or PCA}: a probability distribution will define the likelihood of a context to be activated and the corresponding context implications in the verification model to be enabled. It is useful for the emulation of an approximate scenario in which the context of operation varies following some probabilist distribution. The resulting model evaluates an activated alternative for multiple contexts. 
 
 \end{itemize}
 
-Both approaches are complementary as the first verifies the selected alternative for one context at a time and the last verifies a realistic scenario with multiple possible contexts. 
-
-\subsubsection{Context-alternative selection}
-
-Table~\ref{tab:DAS_PAS_DCS_PCS} summarizes each verification approach and possible combinations.
+Both approaches are complementary as the first verifies the selected alternative for one context at a time and the former verifies a realistic scenario with multiple possible contexts. Table~\ref{tab:SC_DCA_PCA} summarizes each verification approach.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[h]\label{tab:DAS_PAS_DCS_PCS}
-{\renewcommand{\arraystretch}{1.5}
-\begin{tabularx}{\textwidth}{@{}l|XXX@{}}
+\begin{table}[h]
+{\renewcommand{\arraystretch}{2.5}
+\begin{tabularx}{\textwidth}{@{}l|XX@{}}
 \toprule
-             &                                                         & \textbf{DAS}                                                                                                      & \textbf{PAS}                                                                                                     \\ \midrule
-             &                                                         & A single alternative is selected by the analyst.                                                                  & Alternative selection follows a probabilistic distribution.                                                      \\
-\textbf{DCS} & An unique context is selected by the analyst.           & Alternative selection by the analyst is limited by the selected context.                                          & Probabilistic alternative selection is limited by the selected context.                                          \\
-\textbf{PCS} & Context selection follows a probabilistic distribution. & Alternative selection by the analyst may fail according to the probability of selecting an incomplatible context. & Probabilistic alternative selection may fail according to the probability of selecting an incomplatible context. \\ \bottomrule
+			 &                                                         \textbf{Context selection}			 &                                                                                                      \textbf{Alternative selection}			\\ \midrule
+\textbf{DCS} & Contexts are individually activated by parameters.  & Alternative selection by the analyst is limited by the activated context.                                                                                    \\
+\textbf{PCS} & Context selection follows a probabilistic distribution. & Verification model should select adoptable alternatives according to the activated context.\\ \bottomrule
 \end{tabularx}
 }
 \caption{Description of the different approaches for verifying a system with variable alternatives and variable contexts.}
+\label{tab:SC_DCA_PCA}
 \end{table}
 
-If the context selection is deterministic (DCS), there is no reason for verifying an alternative that is known to be incompatible with the selected context. Therefore, only adoptable alternatives must be verified. In opposition, if context selection is probabilistic, that alternative may still be valid in other contexts, hence it must be included in the multi-context evaluation. For instance, the patient location identification through GPS (alternative) will certainly fail if the GPS signal is not available (context). Thus, the DAS-DCS combination checks one compatible context-alternative pair at a time, while DAS-PCS combination leads to the verification of multiple context-alternative pairs at the same time.
+%If the context selection is deterministic (DCS), there is no reason for verifying an alternative that is known to be incompatible with the selected context. Therefore, only adoptable alternatives must be verified. In opposition, if context selection is probabilistic, that alternative may still be valid in other contexts, hence it must be included in the multi-context evaluation. For instance, the patient location identification through GPS (alternative) will certainly fail if the GPS signal is not available (context). Thus, the DAS-DCS combination checks one compatible context-alternative pair at a time, while DAS-PCS combination leads to the verification of multiple context-alternative pairs at the same time.
 
-The idea behind a probabilistic context selection is to emulate a realistic scenario in which the context of operation varies and the system must avoid requirements violations by  having an adoptable alternative for each context. This holistic evaluation provides measures weighted by the probabilistic context distribution. For instance, if GPS signal is available 70\% of the time and triangulation is available 90\% of the time and if each method has its own reliability, namely rGPS and rTRI, the reliability of high-level task `identify patient location' is defined by the expression 0.9*rGPS + 0.1*0.7*rTRI, considering that GPS has priority over triangulation. 
+The idea behind a probabilistic context selection is to emulate a realistic scenario in which the context of operation varies and the system must avoid requirements violations by  having an adoptable alternative for each context. This holistic evaluation approach provides measures for the validation of self-adaptive systems against non-functional constraints like reliability.
 
-
-\subsubsection{Discrete-time Markov chain model}
-
-
-
-\subsubsection{Reliability verification}
-
-Transition probability between running to final success state is described by the individual reliability of the corresponding task, namely rTask. 
-
-\subsubsection{Power consumption verification}
-
-%The same principle is applied to the PAS combinations. Incompatible alternatives are removed from the selection list if the context for which they are incompatible is fixed. Or, if context selection is probabilistic, for each context the verification model should be able to avoid the probabilistic selection of incompatible alternatives. This simulates the self-adaptive capability of systems that are designed to tolerate context changes.
-
-%This section is divided in preliminary conceptual explanation about the
-
-\subsection{From NFR to PCTL properties}
-
-The estimation of attributes through PMC technique is limited to those that a probabilistic model may evaluate. Dependability attributes have an abstract definition that must be associated to a concrete and verifiable PCTL property. To demonstrate our approach, we verify the MPERS model for the following attributes:
-
-\begin{itemize}
-
-\item \textbf{Reliability}, represented by the probability of a successful execution of all the activities involved in fulfilling leaf-goals of a certain system alternative. It is also know as the \textit{reachability} as the describes the probability of reaching a final and successful system state. 
-\bigskip
-
-\item \textbf{Availability}, represented by the power consumption estimation to maximize the time that the system will remain operational depending only on its battery. This attribute is well related to mobile computing. 
-\medskip
-
-\end{itemize}
-
-
-each task has its own states, including the failure and the success states. Many factors may contribute to the correctness or the failure of system tasks, including internal and external events. The probability of a successful task execution defines its reliability. 
-
-In a complex workflow of tasks with different rel 
-
-In order to be successful, tasks depend on the proper interaction among the components 
-
-seen as an activity diagram and be used to generate a probabilistic model in PRISM language. This allows the model checking of the corresponding goal model as a set of activities for which temporal and other behaviour aspects are specified by the runtime regex of the RGM.
+weighted by the probabilistic context distribution. For instance, if GPS signal is available 70\% of the time and triangulation is available 90\% of the time and if each method has its own reliability, namely rGPS and rTRI, the reliability of high-level task `identify patient location' is defined by the expression 0.9*rGPS + 0.1*0.7*rTRI, considering that GPS has priority over triangulation. 
 
 \section{Treating NFR Violations}
 
@@ -452,6 +422,22 @@ seen as an activity diagram and be used to generate a probabilistic model in PRI
 
 \end{itemize}
 
-Dependability analysis is used to provide information about different dependability attributes related to system failures. These metrics may be specified as non-functional requirements for isolated system functionalities or for the whole system. Instead of softgoals, we use meta-requirements over functional goals with clear-cut quantitative criteria such as `99.999\%' reliable - a probabilistic value to make it compatible with the PMC estimation results.
+%Dependability analysis is used to provide information about different dependability attributes related to system failures. These metrics may be specified as non-functional requirements for isolated system functionalities or for the whole system. Instead of softgoals, we use meta-requirements over functional goals with clear-cut quantitative criteria such as `99.999\%' reliable - a probabilistic value to make it compatible with the PMC estimation results.
 
-To perform the , we focus on dependability related metrics that should be estimated and compared to their required constraint values through quantitative analysis. Sensitive analysis to reveal how different system parts contribute to the overall value of those attributes. Sensitive analysis may be considered analogous to the original GORE contribution analysis.
+%To perform the NFR verification, we focus on dependability related metrics that should be estimated and compared to their required constraint values through quantitative analysis. Sensitive analysis to reveal how different system parts contribute to the overall value of those attributes. Sensitive analysis may be considered analogous to the original GORE contribution analysis.
+
+
+
+%Eq.~\ref{eq:MPERS_RELIABILITY_FORM} defines the reliability formula for the root goal G1.
+
+%\begin{equation}
+%G1r=c^2\label{eq:MPERS_RELIABILITY_FORM}
+%\end{equation}
+
+%A family-based PMC is useful for comparing each alternative with non-functional metrics as criteria to decide which one should be used by the system-to-be at design time or by the real system at runtime. At design time, this approach is analogue to the TROPOS contribution analysis. In both cases, a unique parametric formula evaluates a PCTL property corresponding to a non-functional metric.  %improve the example!
+
+
+% or the verification tool should decide based on some probabilistic distribution setted by the analysts (probabilistic alternative selection, or PAS).
+
+%In contrast, PAS provides verification for systems that include variability in its design. The verification of NFR metrics for these systems depend on how each alternative is selected during system operation.
+
