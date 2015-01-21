@@ -34,15 +34,15 @@ Later requirements phase concentrates the analysis in the system-to-be and its o
 
 At this stage of the methodology, the system is represented as a monolithic actor and its goal model may be extended with the runtime specification. This extended model merges multiple views in the same diagram: goals and tasks represent the requirements view for the system-to-be as well as the intentionality behind then, while the runtime specification provides a dynamic representation in terms of goal achievement  and task execution.
 
-In this work, we have first explored the use of the PMC technique for the verification of dependability attributes in the system model of the TROPOS late requirements phase. The idea is to initially evaluate the approach in a monolithic representation without the additional complexity of a multi-agent architecture. The evaluation involving later TROPOS phases should be explored in future work. The remaining of this section will focus on the extended verification phase proposed by this work.
+To evaluate our proposal, we have first explored the use of the PMC technique for the verification of dependability attributes in the system model of the TROPOS late requirements phase. The idea is to initially evaluate the approach in a monolithic representation without the additional complexity of a multi-agent architecture. The evaluation involving later TROPOS phases should be explored in future work. The remaining of this section will focus on the extended verification phase proposed by this work.
 
 \section{TROPOS Extended Verification Phase}
 
 %To evaluate our verification approach with the MPERS case study, we have used a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of NFR related to dependability, i.e., NFR that are either direct attributes encompassed by dependability or that are related to one or more of these attributes.
 
-In this section, the TROPOS extension for NFR verification using a PMC technique is presented. First, non-functional constraints are associated to the MPERS goal model. Then, the runtime regex is further detailed and compared to a UML activity diagram. After this, the high-level DTMC model is built and details about the conversion from a RGM to a DTMC are provided. Finally, we demonstrate how to estimate reliability of the RGM based on individual reliability of leaf-tasks mapped to the DTMC model.
+In this section, we present our proposed TROPOS extension for verification of NFRs. First, non-functional constraints are associated to the MPERS goal model. Then, the runtime regex is further detailed and compared to a UML activity diagram. After this, the high-level DTMC model is built and details about the conversion from a RGM to a DTMC are provided. Finally, we demonstrate how to estimate reliability of the RGM based on a high-level DTMC model composed of leaf-tasks selected for analysis. 
 
-Figure~\ref{fig:CRGM_TO_DTMC} illustrates the extended TROPOS methodology that starts with original phases involving goal-oriented modelling and ends with the generation of a high-level DTMC model used for the verification of NFRs as the MPERS global reliability.
+Figure~\ref{fig:CRGM_TO_DTMC} illustrates the extended TROPOS methodology that starts with original phases involving goal-oriented modelling and ends with the generation of a high-level DTMC model used for the verification of NFRs.
 
 \begin{figure*}[h!]
 \centering
@@ -53,11 +53,13 @@ Figure~\ref{fig:CRGM_TO_DTMC} illustrates the extended TROPOS methodology that s
 
 \subsection{Non-functional requirements specification}
 
+%\subsubsection{NFR framework with quantitative constraints}
+
 TROPOS goal model also provides rationale for NFR analysis, as it originally inherited the softgoal analysis from the NFR framework~[NFR]. In our approach, non-functional constraints are modelled as qualitative hard goals with a clear cut value for its satisfaction, complementing the other NFRs modelled as softgoals. As a benefit of a goal-oriented modelling for NFRs, the elicitation of a given NFR may be justified by its relation to other elements in the model. Figure~\ref{fig:MPERS_NFR} presents some NFRs for the MPERS system actor.
 
 \begin{figure*}[h!]
 \centering
-\includegraphics[width=0.6\textwidth]{imgs/MPERS_NFR.png}
+\includegraphics[width=0.7\textwidth]{imgs/MPERS_NFR.png}
 \caption{MPERS non-functional requirements.}
 \label{fig:MPERS_NFR}
 \end{figure*}
@@ -69,9 +71,11 @@ Similarly to the Awareness Requirements by Souza et al.~[AWREQ], some NFR define
 
 %PUT SOME NFR CONCEPTUAL MODEL HERE!
 
-Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to stakeholder needs through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. Availability and reliability were selected as metrics over the system execution (meta-requirement), while maintainability is partially satisfied by the MPERS ability to update emergency rules at runtime and by other aspects that, for the sake of simplicity, we will omit in this evaluation.
+Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to stakeholder needs through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. Reliability was selected as metric over the system execution (meta-requirement), while availability and maintainability are partially satisfied by the `low power consumption' softgoal and MPERS ability to update emergency rules at runtime, respectively. This evaluation will focus on the reliability metric and, for the sake of simplicity, will omit other NFRs like availability as metric.
 
-The specification of non-functional constraints is a sensible task that depends on expertise and on domain knowledge. For instance, an analyst or a reliability engineer should be aware of what does it mean for a system to be 99.999\% reliable, as this level may not be achieved by any alternative solution and must be coherent to the system criticality - a catastrophic failure should be avoided by all means. In some cases, the system will have to comply to some industry standards or contract based constraints. Table~\ref{tab:MPERS_NFR} summarizes two possible non-functional constraints for the MPERS.
+\subsubsection{Specifying non-functional constraints}
+
+The specification of non-functional constraints is a sensible task that depends on expertise and on domain knowledge. For instance, an analyst or a reliability engineer should be aware of what does it mean for a system to be 99.99\% reliable, as this level may not be achieved by any alternative solution and must be coherent to the system criticality - a catastrophic failure should be avoided by all means. In some cases, the system will have to comply to some industry standards or contract based constraints. Table~\ref{tab:MPERS_NFR} summarizes two possible non-functional constraints for the MPERS.
 \medskip
 
 % Please add the following required packages to your document preamble:
@@ -136,7 +140,7 @@ A small variation of the original regex was employed for the E+ and E\# rules. I
 
 \subsubsection{RGM - UML activity diagram comparison}\label{ssec:RGM-UML}
 
-A similar specification could be provided by an UML activity diagram with activities as leaf-tasks of the goal model. However, activity diagrams have an homogeneous abstraction level and do not clearly correlate behaviour to the requirements they are meant to satisfy. In contrast to the RGM, activity diagrams denote behaviour through graphical symbols, while the RGM mixes the original goal model notation with a runtime regex. This simple notation increases the utility of a goal model diagram. Figure~\ref{fig:MPERS_UMLAD} presents an activity diagram corresponding to the MPERS RGM. 
+A similar specification could be provided by an UML activity diagram with activities as the leaf-tasks of the goal model. However, activity diagrams have an homogeneous abstraction level and do not clearly correlate behaviour to the requirements they are meant to satisfy. In contrast to the RGM, activity diagrams denote behaviour through graphical symbols, while the RGM mixes the original goal model notation with a runtime regex. This simple notation increases the utility of a goal model diagram. Figure~\ref{fig:MPERS_UMLAD} presents an activity diagram corresponding to the MPERS RGM. 
 
 \begin{figure*}[h!]
 \centering
@@ -148,7 +152,7 @@ A similar specification could be provided by an UML activity diagram with activi
 Among its limitations, RGM does not express that an emergency has to be confirmed after a time or signal event as the UML activity diagram does. Both necessary and sufficient conditions for the triggering and fulfilment of goals, tasks and dependencies are provided by Formal TROPOS language.  Still, sequential, parallel, alternative, optional and conditional execution flows as long as multiple executions of the same task can be expressed by the RGM, providing a rich behaviour specification that could be checked for non-functional requirements such as dependability attributes.
 
 The idea of a runtime goal model is not to replace UML activity diagrams, but to complement the static goal model with a clear runtime syntax that could be used for 
-communication and for conformance verification at both design time and during system execution - as the execution monitoring originally proposed by Dalpiaz et al~[RGM]. Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or a standard UML behaviour diagram such as activity and sequence diagrams would have to complement the goal model.
+communication and for conformance verification at both design time and during system execution - as the execution monitoring originally proposed by Dalpiaz et al~[RGM]. Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or complemented by UML behaviour diagrams.
 
 \subsection{Non-functional requirements verification}
 
@@ -161,26 +165,26 @@ This section describes the application of a PMC technique to verify the conforma
 
 %It is not always the case that multiple alternatives must be evaluated and compared. A goal model may be built with only mandatory goals, dependencies and tasks. Nonetheless, non-functional constraints may still have to be checked, i.e., a single alternative verification may have to be performed. 
 
-The state-based verification of meta-requirements or non-functional constraints that specifies how different functionalities should perform is a complex task that involves a representation of system states and their transitions. A goal model may define system requirements with variable abstraction levels. As such, the feasibility of the verification of a given metric depends on the information provided by the model.
+The state-based verification of non-functional constraints that specifies how different functionalities should perform is a complex task that involves a representation of system states and their transitions. A goal model may define system requirements with variable abstraction levels. As such, the feasibility of the verification of a given metric depends on the information provided by the model.
 
-The MPERS RGM in Figure~\ref{fig:MPERS_LR} expands its main goals in further subgoals that are ultimately satisfied by operational tasks. Tasks can also be expanded in more granular subtasks. Tasks without outgoing relations are named leaf-tasks. In our proposal, leaf-tasks are mapped to modules in a DTMC model in PRISM language. PRISM modules are containers for variables and commands, i.e., for states and behaviour. Figure~\ref{fig:PRISM_TASK_MODULE} presents a system task as a PRISM module.
+The MPERS RGM in Figure~\ref{fig:MPERS_LR} expands its main goals in further subgoals that are ultimately satisfied by operational tasks. Tasks can also be expanded in more granular subtasks. Tasks without outgoing relations are named leaf-tasks. In our proposal, leaf-tasks are mapped to modules in a DTMC model in PRISM language. PRISM modules are containers for variables and commands, i.e., for states and behaviour. Figure~\ref{fig:PRISM_TSK_MODULE} presents a system task as a PRISM module.
 
 %TODO: REMOVE THE RELIABILITY VALUE
 \begin{figure*}[ht]
 \centering
-\includegraphics[width=1\textwidth]{imgs/PRISM_TASK_MODULE.png}
-\caption{A PRISM DTMC module representing a system task.}
-\label{fig:PRISM_TASK_MODULE}
+\includegraphics[width=1\textwidth]{imgs/PRISM_TSK_MODULE.png}
+\caption{A PRISM DTMC module representing T15 (mandatory) task.}
+\label{fig:PRISM_TSK_MODULE}
 \end{figure*}
 
-In the DTMC model, leaf-tasks have their execution state mapped to a variable in the model (sTask variable in Figure~\ref{fig:PRISM_TASK_MODULE}). From the RGM original set of goal/tasks instance states, we considered the following values:
+In the DTMC model, leaf-tasks have their execution state mapped to a variable in the model (sT15 variable in Figure~\ref{fig:PRISM_TSK_MODULE}). From the RGM original set of goal/tasks instance states, we considered the following values:
 
 \begin{itemize}
 
 \item Init(sTask=0): corresponds to the initial state of a given leaf-task. From this state, a transition may occur to the running state, if this task is part of a system alternative that will be analysed, or directly to the final success state, if the opposite.
 \medskip
 
-\item Running(sTask=1): corresponds to the operational state of a given leaf-task. From this state, a transition to the final success or failure states may occur. A variable rTask ranging from 0 - 1 defines the task's reliability, i.e., the probability of a transition to the success state - and the complementary transition probability to the failure state.
+\item Running(sTask=1): corresponds to the operational state of a given leaf-task. From this state, a transition to the final success or failure states may occur. A variable ranging from 0 - 1 defines the task's reliability, i.e., the probability of a transition to the success state - and the complementary transition probability to the failure state (variable rTask15 in Figure~\ref{fig:PRISM_TSK_MODULE}).
 \medskip
 
 \item Success(sTask=2): corresponds to the absorbing final state of success of a singular task execution.
@@ -196,13 +200,13 @@ In the DTMC model, leaf-tasks have their execution state mapped to a variable in
 \subsubsection{Building the high-level DTMC model from a RGM}
 
 
-Given a set of leaf-tasks that fulfils a chain of subgoals until a certain goal G, a DTMC model composed of modules for each leaf-task states and transitions is build. This model must represent the same workflow of the corresponding RGM.  
+Given a set of leaf-tasks that fulfils a chain of subgoals until a certain goal G, a DTMC model composed of modules for each leaf-task states and transitions is build. This model must represent the same workflow of the corresponding RGM, i.e., it must preserve the behaviour semantic specified by the runtime regex.  
 
 In this work, we are not interested in checking system instance conformance to its runtime goal model through monitoring as the original RGM proposal. We focus on the estimation of non-functional metrics based on the high-level DTMC model. We call it a high-level DTMC model because leaf-tasks are similar to activities in a UML diagram whose behaviour could be further detailed, e.g., by sequence diagrams.
 
 Each leaf-task in the DTMC model starts at a discrete time slot. Time slots defines the sequence order of tasks executions. Sequential tasks (T1;T2) have subsequent time slots, meaning that T2's initial transition is synchronized to T1's final transition. Interleaved tasks (T1\#T2) have their initial state transition synchronized at the same time slot through labels, but occupy different time paths, i.e., following state transitions are interleaved.  Figure~\ref{fig:UML_SEQ_TSKS} and~\ref{fig:UML_PAR_TSKS} present sequence and interleaved execution cases in UML notation.
 
-\begin{figure}
+\begin{figure}[ht!]
         \centering
         \begin{subfigure}[b]{0.4\textwidth}
                 \includegraphics[width=\textwidth]{imgs/UML_SEQ_TSKS.png}
@@ -218,51 +222,67 @@ Each leaf-task in the DTMC model starts at a discrete time slot. Time slots defi
           
 \end{figure}
 
-Other supported behaviours are: alternative execution (E1|E2), optional execution (opt(E1)) and conditional execution (try(E)?E1:E2). For alternative execution, or XOR, a parameter in the model defines which alternative from a set of two or more is selected for analysis. Figures~\ref{fig:UML_ALT_TSKS} and~\ref{fig:PRISM_ALT_TSKS} illustrate the PRISM model and corresponding UML activities for alternative tasks T1 and T2.
+Other supported behaviours are: alternative execution (E1|E2), optional execution (opt(E1)) and conditional execution (try(E)?E1:E2). For alternative execution, or XOR, a parameter in the model defines which alternative from a set of two or more is selected for analysis. Figures~\ref{fig:UML_ALT_TSKS} and~\ref{fig:PRISM_ALT_TSKS} present the UML activities and corresponding PRISM model for alternative tasks T9.00 and T9.01.
 
-\begin{figure*}[ht]
+\begin{figure*}[ht!]
 \centering
-\includegraphics[width=0.4\textwidth]{imgs/UML_ALT_TSKS.png}
-\caption{\detokenize{Alternative tasks T1 and T2 can be selected for analysis.}}
+\includegraphics[width=0.35\textwidth]{imgs/UML_ALT_TSKS.png}
+\caption{\detokenize{Alternative tasks T9.00 and T9.01 can be selected for analysis.}}
 \label{fig:UML_ALT_TSKS}
 \end{figure*}
 
-\begin{figure*}[ht]
+\begin{figure*}[ht!]
 \centering
 \includegraphics[width=1\textwidth]{imgs/PRISM_ALT_TSKS.png}
-\caption{Alternative tasks T9.1 and T9.2 as DTMC modules with additional integer parameter used for selection.}
+\caption{Alternative tasks T9.00 and T9.01 as DTMC modules with additional integer parameter used for selection.}
 \label{fig:PRISM_ALT_TSKS}
 \end{figure*}
 
-Similarly to alternative execution, optional tasks are enabled by an additional parameter in the model. Figures~\ref{UML_OPT_TSK} and~\ref{fig:PRISM_OPT_TSK} illustrate the PRISM model and corresponding UML activity for optional task T17.2.
+Similarly to alternative execution, optional tasks are enabled by an additional parameter in the model. Figures~\ref{UML_OPT_TSK} and~\ref{fig:PRISM_OPT_TSK} illustrate the UML activity and corresponding PRISM model for optional task T17.2.
 
-\begin{figure*}[ht]
+\begin{figure*}[ht!]
 \centering
 \includegraphics[width=1\textwidth]{imgs/PRISM_OPT_TSK.png}
 \caption{An optional task T17.2 as a DTMC module with additional boolean parameter.}
 \label{fig:PRISM_OPT_TSK}
 \end{figure*}
 
-Finally, labels are used to condition the execution of tasks to the success and failure of a third task. Figures~\ref{UML_TRY_TSKS} and~\ref{fig:PRISM_ALT_TSKS} illustrate the PRISM model and corresponding UML activities for conditional tasks T9.00 and T9.01.
+Finally, labels are used to condition the execution of tasks to the success and failure of a third task. Figures~\ref{UML_TRY_TSKS} and~\ref{fig:PRISM_TRY_TSKS} present the UML activities and corresponding PRISM model for conditional tasks T9.00 and T9.1. In the case of task T9.00, it is, at the same time, alternative to task T9.01 (Figure~\ref{fig:PRISM_ALT_TSKS}) and a failure condition to task T9.1, i.e., task T9.1 will be executed if task T9.00 fails.
 
-\begin{figure*}[h!]
+\begin{figure*}[ht!]
 \centering
 \includegraphics[width=1\textwidth]{imgs/PRISM_TRY_TSKS.png}
 \caption{Conditional tasks T9.00 and T9.1 as DTMC modules.}
 \label{fig:PRISM_TRY_TSKS}
 \end{figure*}
 
-Cardinality is also supported by the runtime regex specification. In our proposal, execution cardinality is simply represented by n modules with subsequent time slots (E+n) or by modules with synchronized initial transitions and followed by interleaved transitions (E\#n). Figures~\ref{fig:CRGM_TO_DTMC} and \ref{fig:PRISM_TRY_TSKS} illustrate different tasks behaviours.
+Cardinality is also supported by the runtime regex specification. In our proposal, execution cardinality is simply represented by n modules with subsequent time slots (E+n) or by modules with synchronized initial transitions and followed by interleaved transitions (E\#n). Figures~\ref{fig:UML_MUL_SEQ_TSKS} and \ref{fig:UML_MUL_PAR_TSKS} respectively illustrate sequential and interleaved task behaviours.
+
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[b]{0.4\textwidth}
+                \includegraphics[width=0.8\textwidth]{imgs/UML_MUL_SEQ_TSKS.png}
+				\caption{Sequential tasks T1 and T2 are in different time slots.}
+				\label{fig:UML_MUL_SEQ_TSKS}
+        \end{subfigure}        
+        \quad %\quad, \qquad, \hfill
+        \begin{subfigure}[b]{0.4\textwidth}                
+                \includegraphics[width=0.8\textwidth]{imgs/UML_MUL_PAR_TSKS.png}
+				\caption{Interleaved tasks T1 and T2 are in different time paths.}
+				\label{fig:UML_MUL_PAR_TSKS}
+        \end{subfigure}%
+          
+\end{figure}
 
 %Listing~\ref{ls:MPERS_DTMC} presents the DTMC model for the MPERS.
 
 %To illustrate our proposal for NFR verification of a single alternative, we selected the local goal G5 that defines the state where emergency rules are updated without major system interruption. Table~\ref{tab:MPERS_NFR} has a non-functional constraint for this goal that specifies the minimum
 
-%Table~\ref{tab:MPERS_DTMC_SLOTS} presents the time slots, paths and other dynamic aspects of MPERS leaf-tasks.
+In Table~\ref{tab:MPERS_DTMC_SLOTS}, the final settings for the time slot, path and other dynamic aspects of leaf-tasks parsed from the RGM and used for the generation of a DTMC model are presents.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[h]\label{tab:MPERS_DTMC_SLOTS}
+\begin{table}[h]
 {\renewcommand{\arraystretch}{1.5}
 \begin{tabularx}{\textwidth}{@{}lllllll@{}}
 \toprule
@@ -287,27 +307,30 @@ Cardinality is also supported by the runtime regex specification. In our proposa
 \textbf{T13.3} & 4                  & 0                  & false             & false                & false                & 1           \\ \bottomrule
 \end{tabularx}
 \caption{Dynamic aspects of the MPERS leaf-tasks in the DTMC model.}
+\label{tab:MPERS_DTMC_SLOTS}
 }
 \end{table}
 
 
-\subsubsection{Gathering individual task metrics}
+\subsection{Gathering individual task metrics}
 
-Leaf-tasks are not necessarily atomic system operations and are generally described with a high abstraction level. For instance, the MPERS task `Find active sensors' could be further decomposed in more granular tasks. As it is, MPERS leaf-tasks are not coupled to any platform, architecture and language used for implementation.
+Leaf-tasks are not necessarily atomic system operations and are generally described with a high abstraction level. For instance, the MPERS task `Find active sensors' could be further decomposed in more granular tasks. As presented in Figure~\ref{fig:MPERS_LR}, MPERS leaf-tasks are not coupled to any platform, architecture and language used for implementation.
 
 %The idea is to leave to analysts the decision concerning the granularity and abstraction level represented by the tasks that will be verified. For instance, the abstract task `find active sensors' could be decomposed in more granular and concrete tasks related to the platform, architecture and language used for implementation. 
 
-The more abstract a task is, the more difficult is to obtain their individual metrics, as the trace between an abstract and the concrete system operation becomes less evident. Any NFR verification by the PMC technique requires further information about individual parts involved in the overall activity, e.g., the reliability, performance, power consumption, cost and other attributes for tasks in a workflow (high-level DTMC).
+The more abstract a task is, the more difficult is to obtain their individual metrics, as the trace between an abstract and the concrete system operation becomes less evident. Each NFR verified by the PMC technique requires corresponding information about individual parts involved in the overall activity, e.g., the reliability, performance, power consumption, cost and other metrics for tasks in a workflow.
 
-This is a key point in this approach, as it may seen too loose to couple a probabilistic verification to a goal model with a high-level operational representation of a system. But its feasibility becomes more clear if the metrics being verified are compatible with the abstraction level of the leaf-tasks in the goal model and individual task metrics are available or can be collected. 
+This is a key point in this approach, as it may seen too loose to couple a probabilistic verification to a goal model with a high-level operational representation of a system. But its feasibility becomes more clear if the metrics being verified are compatible with the abstraction level of the leaf-tasks in a specific goal model and individual task metrics are available or can be collected. 
 
-Depending on the purpose of the goal modelling - from early requirements elicitation to detailed design in TROPOS, more granular specification of tasks behaviour can be provided by decomposition and auxiliary UML diagrams. This internal task behaviour specification can be used for individual task analysis of metrics such as reliability and power consumption. In contrast, tasks execution instances could be monitored using the original RMG conformance algorithms. This hybrid verification requires a concrete system implementation besides the RGM system model. 
+\subsubsection{Pure model-based approach}
 
+Depending on the purpose of the goal modelling - from early requirements elicitation to detailed design in TROPOS - more granular specification of tasks behaviour can be provided by decomposition and auxiliary UML diagrams. This internal task behaviour specification can be used for individual task analysis of metrics such as reliability and power consumption. 
 
+\subsubsection{Hybrid monitoring approach}
+
+In contrast to a pure model-based verification approach, tasks execution instances could be monitored using the original RMG conformance algorithms. This hybrid verification requires a concrete system implementation besides the RGM system model. 
 
 %In Section~\ref{ssec:RGM-UML} we argued that the RGM could replace a corresponding high-level UML activity diagram for PMC verification. However, if internal task behaviour is to be evaluated for a given metric, a both activity and sequence diagrams could serve as input for the evaluation of individual task metrics using a similar PMC technique.
-
-
 
 \subsection{Reasoning with Ex-Tropos}
 

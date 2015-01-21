@@ -111,22 +111,33 @@ This section summarizes the contributions of this proposal.
 
 \begin{enumerate}
 
-\item A formal approach for the verification of non-functional requirements in TROPOS Goal-oriented software development methodology.
+\item A formal approach for the verification of non-functional requirements as an extension of the TROPOS Goal-oriented software development methodology.
+\begin{itemize}
+
+\item A new syntax for the specification of non-functional constraints as qualitative hard goals.
 \medskip
 
-\item Inclusion of context effects over goals, means and metrics in the probabilistic model using appropriate constructs and parameters for each case.
+\item Use of a probabilistic model checking technique for the estimation of non-functional metrics and for the conformance verification of a given system alternative to non-functional constraints.
 \medskip
 
-\item Conversion rules between different decomposition types and behaviours rules in a runtime goal model to a probabilistic model in PRISM language.
-\medskip
+\item Inclusion of context effects over goals, means and metrics in the verification model using appropriate constructs and parameters for each case.
+\end{itemize}
+\bigskip
+
+\item An automated generation of the PRISM probabilistic model representing activities from a runtime goal model annotated with the runtime regex and graphically modelled using the TAOM4E tool that supports TROPOS methodology.
+\begin{itemize}
 
 \item A parser implementation for the regular expression (regex) language used in runtime goal models with support for execution order, cardinality, alternative execution, optional execution, conditional execution and multiple executions of the same task. 
 \medskip
 
-\item An automatic generation of the PRISM probabilistic model representing activities from a runtime goal model annotated with the runtime regex and graphically modelled using the TAOM4E tool that supports TROPOS methodology.
+\item Definition of conversion rules between different decomposition types and behaviours rules in a runtime goal model to a probabilistic model in PRISM language.
+\medskip
+
+\item Implementation of a RGM-to-DTMC generator integrated to the TAOM4E Eclipse plugin that supports the TROPOS methodology with a graphical environment for goal modelling and analysis.
+\end{itemize}
 
 \end{enumerate}
 
 \section{Document Organization}
 
-This dissertation is organized as follows. Chapter~\ref{ch:baseline} presents the base concepts of this work. Chapter~\ref{ch:related_work} describe the most important related works. Chapter~\ref{ch:motivation} details the motivation for this work and the requirements for the proposed TROPOS extension. Chapter~\ref{ch:proposal} presents the proposed TROPOS extension with related TROPOS development phases for the MPERS. Chapter~\ref{ch:implementation} presents the rules for the automatic generation of a DTMC model in PRISM language from the contextual goal model with runtime regex. Chapter~\ref{ch:evaluation} evaluates the proposal and describes its benefits and limitations. Finally, Chapter~\ref{ch:conclusion} concludes this work with final considerations about the current proposal and our future work.
+This dissertation is organized as follows. Chapter~\ref{ch:baseline} presents the base concepts of this work. Chapter~\ref{ch:related_work} describes the most important related works. Chapter~\ref{ch:motivation} details the motivation for this work and the requirements for the proposed TROPOS extension. Chapter~\ref{ch:proposal} describes the  TROPOS extension for NFR verification using a PMC technique. Chapter~\ref{ch:implementation} presents the rules for the automatic generation of a DTMC model in PRISM language from the contextual goal model with runtime regex. Chapter~\ref{ch:validation} evaluates the proposal and describes its benefits and limitations. Finally, Chapter~\ref{ch:conclusion} concludes this work with final considerations about the current proposal and our future work.
