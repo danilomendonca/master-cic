@@ -1,12 +1,12 @@
-\chapter{Probabilistic NFR Verification for TROPOS Methodology}\label{ch:proposal}
+\chapter{Goal-oriented Contextual Dependability Analysis}\label{ch:proposal}
 
-This chapter describes the extended TROPOS methodology applied to the MPERS case study. Both TROPOS early and late requirements analysis phases are fully presented, as well as the verification process that requires a behaviour specification and the additional contextual notation regarding context effects. Further details about the TROPOS methodology may be found in the reference literature~[TROPOS]. 
+This chapter describes the proposed approach for dependability analysis applied to the MPERS case study. Both TROPOS early and late requirements analysis phases are fully presented, as well as the probabilistic verification process that requires a behaviour specification and the additional contextual notation regarding context effects. Further details about the TROPOS methodology may be found in the reference literature~\cite{Bresciani:2004}. 
 
 \section{TROPOS Requirements Engineering Phases}
 
 \subsection{TROPOS Early Requirements Phase}
 
-In Early Requirements phase, stakeholders are modelled as as well as their needs. Each actor may be a depender or a dependee of a goal, task or resource dependency. In this phase, only the main system actor and the application domain stakeholders are analysed, leaving the detailed system analysis to later development phases.
+In early requirements phase, stakeholders and their needs are modelled in a goal model diagram. Each actor may be a depender or a dependee of a goal, task or resource dependency. In this phase, only social dependencies to the system actor and between application domain stakeholders are analysed, leaving the detailed system analysis to later development phases.
 
 The MPERS sytem and its social dependencies are presented by the actor model in Figure~\ref{fig:MPERS_ER}. System actors and social actors are displayed in different colors. Among the stakeholders, the emergency center represents a private or public organization interested in providing an emergency response service to patients. Patient and doctor represent, respectively, the assisted person and the medical responsible for defining and evolving the emergency detection rules as part of an evolutionary approach for personal emergency response. Finally, sensors retailer should provide the vital signs sensors required for monitoring.
 
@@ -17,9 +17,9 @@ The MPERS sytem and its social dependencies are presented by the actor model in 
 \label{fig:MPERS_ER}
 \end{figure*}
 
-From the diagram in Figure~\ref{fig:MPERS_ER} it is possible to have a first view of the MPERS system-to-be. Main goals are divided in detecting, notifying and checking an emergency. Also, the ability to update the emergency rules at runtime (RT) is the fourth and last mandatory goal (AND-decomposition) that fulfils the `Patient is assisted' root goal. System goals are directly or indirectly related to stakeholders functional and non-functional needs.
+From the diagram in Figure~\ref{fig:MPERS_ER} it is possible to have a first view of the MPERS system-to-be. Main goals are divided in detecting, notifying and checking an emergency. Also, the ability to update the emergency rules at runtime (RT) is the fourth and last mandatory goal (AND-decomposition) that fulfils the `Patient is assisted' root goal. System goals and softgoals are directly or indirectly related to stakeholders needs.
 
-The yellow circle indicates that MPERS is a system actor. MPERS goals can be seen with a regex indicating its dynamic behaviour as part of the runtime goal model specification required by the proposal. This notation is a reflex of the late requirements phase, as the TAOM4E tool supporting TROPOS methodology shares unique entities and relations among different development phases. The regex syntax is enclosed by brackets to differentiate then from goal name. In future work, a specific modelling compartment should receive the values for the runtime regex.
+The distinguished yellow circle indicates that MPERS is a system actor. MPERS goals can be seen with a regex indicating its dynamic behaviour as part of the runtime goal model specification required by the proposal. This notation is a reflex of the late requirements phase, as the TAOM4E tool supporting TROPOS methodology shares unique entities and relations among different development phases. The regex syntax is enclosed by brackets to differentiate then from goal name. In future work, a specific modelling compartment should receive the values for the runtime regex.
 
 \subsection{TROPOS Late Requirements Phase}
 
@@ -34,13 +34,15 @@ Later requirements phase concentrates the analysis in the system-to-be and its o
 
 At this stage of the methodology, the system is represented as a monolithic actor and its goal model may be extended with the runtime specification. This extended model merges multiple views in the same diagram: goals and tasks represent the requirements view for the system-to-be as well as the intentionality behind then, while the runtime specification provides a dynamic representation in terms of goal achievement  and task execution.
 
-To evaluate our proposal, we have first explored the use of the PMC technique for the verification of dependability attributes in the system model of the TROPOS late requirements phase. The idea is to initially evaluate the approach in a monolithic representation without the additional complexity of a multi-agent architecture. The evaluation involving later TROPOS phases should be explored in future work. The remaining of this section will focus on the extended verification phase proposed by this work.
+To evaluate our proposal, we have explored the use of the PMC technique for the reliability verification of the system goal model resulting from the TROPOS late requirements phase. The idea is to initially evaluate the approach in a monolithic representation without the additional complexity of a multi-agent architecture. The evaluation involving later TROPOS phases should be explored in future work. The remaining of this section will focus on the proposed goal-oriented contextual dependability analysis.
 
-\section{TROPOS Extended Verification Phase}
+\section{Goal-oriented contextual dependability analysis}
 
 %To evaluate our verification approach with the MPERS case study, we have used a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of NFR related to dependability, i.e., NFR that are either direct attributes encompassed by dependability or that are related to one or more of these attributes.
 
-In this section, we present our proposed TROPOS extension for verification of NFRs. First, non-functional constraints are associated to the MPERS goal model. Then, the runtime regex is further detailed and compared to a UML activity diagram. After this, the high-level DTMC model is built and details about the conversion from a RGM to a DTMC are provided. Finally, we demonstrate how to estimate reliability of the RGM based on a high-level DTMC model composed of leaf-tasks selected for analysis. 
+In this section, we present our proposed approach for goal-oriented contextual dependability analysis. First, non-functional constraints are associated to the MPERS goal model. Then, the runtime regex is further detailed and compared to a UML activity diagram. After this, the high-level DTMC model is built and details about the conversion from a RGM to a DTMC are provided. Next, PCTL properties representing the reliability of fulfilling system goals are defined. Finally, we demonstrate how to estimate reliability of the RGM based on a high-level DTMC model composed of leaf-tasks.
+
+%from a goal model alternative selected for analysis of a given local or root goal 
 
 Figure~\ref{fig:CRGM_TO_DTMC} illustrates the extended TROPOS methodology that starts with original phases involving goal-oriented modelling and ends with the generation of a high-level DTMC model used for the verification of NFRs.
 
@@ -50,6 +52,125 @@ Figure~\ref{fig:CRGM_TO_DTMC} illustrates the extended TROPOS methodology that s
 \caption{Building a DTMC model from a contextual/runtime goal model.}
 \label{fig:CRGM_TO_DTMC}
 \end{figure*}
+
+\subsection{Behaviour specification}
+
+In this section, further details about the runtime regex syntax and semantic will be explained as they are a central part of this proposal. Table~\ref{tab:RGM_REGEX} provides a textual description of each RGM rule and the corresponding meaning in terms of what behaviour it specifies and also an example from the MPERS runtime goal model of Figure~\ref{fig:MPERS_LR}. A formal and detailed description can be found in the RGM reference publication~\cite{Dalpiaz:2013}.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{@{}l|X|X@{}}
+\toprule
+\textbf{Expression} & \textbf{Meaning}                                                                   & \textbf{Example (MPERS)} \\ 
+E1;E2               & A goal/task E1 must be fulfilled/executed before E2.                               & $G1\textbf{;}G2\textbf{;}G3\textbf{;}G4$                 \\ 
+E1\#E2              & Interleaved fulfillment/execution of goal/task E1 and E2.                          & $(G1;G2;G3;G4)\textbf{\#}G5$                   \\ 
+E+n                 & Goal/task E must be fulfilled/executed $n$ times, with $n \textgreater 0$.             & $G22+2$                    \\
+E\#n                & Interleaved fulfillment/execution of $n$ instances of E, with $n \textgreater 0$.      & -                        \\
+E1|E2               & Fulfillment/execution of goal/task E1 is alternative with respect to E2. & $T23.0|T23.1$                \\ 
+opt(E)              & Fulfillment/execution of goal/task E is not mandatory.                             & $opt(T17.2)$               \\  
+try(E)?E1:E2        & If goal/task E succeeds, E1 must be fulfilled/executed; otherwise, E2.             & $try(T9.0)?skip:T9.1$        \\ 
+skip                & No action. Useful for conditional ternary expressions involving two elements.      & $try(T9.0)?skip:T9.1$        \\  \bottomrule
+\end{tabularx}
+}
+\caption{Description of RGM behaviour rules used by the proposal.}
+\label{tab:RGM_REGEX}
+\end{table}
+
+The following sections further describe each of the RGM rules with additional UML activity diagrams to illustrate the resulting behaviour on the execution of system leaf-tasks that are later mapped to a probabilistic verification model. The \textit{slot} and \textit{path} notations refers to discrete time abstractions in a DTMC model as it will be explained in Section~\ref{ssec:RGM-UML}.
+
+\subsubsection{Temporal order}
+
+The most trivial behaviour rule consist of the temporal fulfilment and execution order of goals and tasks. In a RGM, the `;' and `\#' symbols represent sequential and parallel temporal orders, respectively. Figures~\ref{fig:UML_SEQ_TSKS} and~\ref{fig:UML_PAR_TSKS} illustrate this behaviours in UML activity diagrams.
+
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[b]{0.4\textwidth}
+                \includegraphics[width=\textwidth]{imgs/UML_SEQ_TSKS.png}
+				\caption{Sequential tasks T1;T2.}
+				\label{fig:UML_SEQ_TSKS}
+        \end{subfigure}        
+        \quad %\quad, \qquad, \hfill
+        \begin{subfigure}[b]{0.4\textwidth}                
+                \includegraphics[width=0.8\textwidth]{imgs/UML_PAR_TSKS.png}
+				\caption{Interleaved tasks T1\#T2.}
+				\label{fig:UML_PAR_TSKS}
+        \end{subfigure}%
+          
+\end{figure}
+
+\subsubsection{XOR-decomposition}
+
+In the case of OR-decomposition with additional `|' behaviour rule, a resulting XOR-decomposition specifies that only one goal/task among two or more may be selected, i.e., they are mutually exclusive. Figures~\ref{fig:UML_ALT_TSKS} illustrate the alternative OR-decomposition in an UML activity diagram.
+
+\begin{figure*}[ht!]
+\centering
+\includegraphics[width=0.35\textwidth]{imgs/UML_ALT_TSKS.png}
+\caption{\detokenize{Alternative tasks T1|T2.}}
+\label{fig:UML_ALT_TSKS}
+\end{figure*}
+
+\subsubsection{Optional decomposition}
+
+Given a decomposed goal or task, its fulfilment or execution may be optional, meaning that at least one other goal/task must necessarily be fulfilled/executed. It is trivial to realize that optional behaviour rules $opt(E)$ are only possible in OR-decompositions. Figure~\ref{fig:UML_OPT_TSK} illustrate an optional decomposition.
+
+\begin{figure*}[ht!]
+\centering
+\includegraphics[width=0.37\textwidth]{imgs/UML_OPT_TSK.png}
+\caption{\detokenize{Optional task T.}}
+\label{fig:UML_OPT_TSK}
+\end{figure*}
+
+\subsubsection{Conditional decomposition}
+
+Some goals/tasks are conditioned to the fulfilment/execution of another goal/task. In such cases, a AND/OR-decomposition have an additional ternary rule $try(E1)?E2:E3$ where E2 is conditioned to the success of E1, while E3 is conditioned to its failure. The skip term is used if no further behaviour is conditioned to either the success or the failure of E1, for instance, in $try(T1)?skip:T2$ where task T2 is only required for execution if T1 fails and no further behaviour is expected if T1 succeeds. Figure~\ref{fig:UML_TRY_TSKS} illustrate a conditional decomposition.
+
+\begin{figure*}[ht!]
+\centering
+\includegraphics[width=0.60\textwidth]{imgs/UML_TRY_TSKS.png}
+\caption{\detokenize{Optional task T.}}
+\label{fig:UML_TRY_TSKS}
+\end{figure*}
+
+\subsubsection{Cardinality}
+
+A small variation of the original RGM syntax was employed for the E+ and E\# rules. Instead of an undetermined number of goal/task instances, analyst should provide the exact number of instances for goals achievement and tasks execution. This information is required for the generation of the DTMC verification model from a runtime goal model. Figures~\ref{fig:UML_MUL_SEQ_TSKS} and \ref{fig:UML_MUL_PAR_TSKS} respectively illustrate sequential and interleaved task behaviours.
+
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[b]{0.4\textwidth}
+                \includegraphics[width=0.80\textwidth]{imgs/UML_MUL_SEQ_TSKS.png}
+				\caption{Sequential executions of task T.}
+				\label{fig:UML_MUL_SEQ_TSKS}
+        \end{subfigure}        
+        \quad %\quad, \qquad, \hfill
+        \begin{subfigure}[b]{0.4\textwidth}                
+                \includegraphics[width=0.80\textwidth]{imgs/UML_MUL_PAR_TSKS.png}
+				\caption{Interleaved executions of task T.}
+				\label{fig:UML_MUL_PAR_TSKS}
+        \end{subfigure}%
+          
+\end{figure}
+
+
+\subsection{RGM - UML activity diagram comparison}\label{ssec:RGM-UML}
+
+A similar behaviour specification achieved with the RGM in Figure~\ref{fig:MPERS_LR} could be provided by an UML activity diagram with activities as the leaf-tasks in the goal model. However, activity diagrams have an homogeneous abstraction level and do not clearly correlate behaviour to the requirements they are meant to satisfy. In contrast to the RGM, activity diagrams denote behaviour through graphical symbols, while the RGM mixes the original goal model notation with a runtime regex. This simple notation increases the utility of a goal model diagram. Figure~\ref{fig:MPERS_UMLAD} presents an activity diagram corresponding to the MPERS RGM. 
+
+\begin{figure*}[h!]
+\centering
+\includegraphics[width=1\textwidth]{imgs/MPERS_UMLAD.png}
+\caption{MPERS tasks represented by a UML activity diagram}
+\label{fig:MPERS_UMLAD}
+\end{figure*}
+
+Among its limitations, RGM does not express that an emergency has to be confirmed after a time (clock) or signal event as the UML activity diagram does. Both necessary and sufficient conditions for the triggering and fulfilment of goals, tasks and dependencies are provided by Formal TROPOS specification language.  Still, sequential, parallel, alternative, optional and conditional execution flows as well as multiple executions of the same task can be expressed by the RGM, providing a rich behaviour specification.
+
+%could be checked for non-functional requirements such as dependability attributes.
+
+The idea of a runtime goal model is not to replace UML activity diagrams, but to complement the static goal model with a clear runtime syntax that could be used for 
+documentation, team communication and for conformance verification at both design time - e.g., through model-based verification - and during system execution - as the execution monitoring originally proposed by Dalpiaz et al~[RGM]. Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or complemented by UML behaviour diagrams. In this work, RGM is used as input for our goal-oriented probabilistic verification.
 
 \subsection{Non-functional requirements specification}
 
@@ -65,17 +186,19 @@ TROPOS goal model also provides rationale for NFR analysis, as it originally inh
 \end{figure*}
 
 %Intersting for motivation!
-Similarly to the Awareness Requirements by Souza et al.~[AWREQ], some NFR define metrics over other requirements. These meta-requirements are not directly fulfilled by system functionalities like `emergency awareness' is fulfilled by `notify emergency' or `confidentiality' could be fulfilled by `user authentication', but by how these functionalities will perform. Reliability, for instance, is inversely proportional to the likelihood of failures. Hence, the reliability metric depends on the probability of system functionalities to fail. Conformity to these metrics is not implicit in the model, it requires some verification technique.
+Similarly to the Awareness Requirements by Souza et al.~[AWREQ], some NFR define metrics over other requirements. These meta-requirements are not directly fulfilled by system functionalities like `emergency awareness' is fulfilled by `notify emergency' or `confidentiality' could be fulfilled by `user authentication', but by how these functionalities will perform. Reliability, for instance, is inversely proportional to the likelihood of failures. Hence, the reliability metric depends on the probability of system functionalities to successfully meeting their goals. 
+
+%The conformity to these NFR is not implicit in the model, it requires some verification technique.
 
 %PUT a goal model with hard goal NFRs!
 
 %PUT SOME NFR CONCEPTUAL MODEL HERE!
 
-Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to stakeholder needs through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. Reliability was selected as metric over the system execution (meta-requirement), while availability and maintainability are partially satisfied by the `low power consumption' softgoal and MPERS ability to update emergency rules at runtime, respectively. This evaluation will focus on the reliability metric and, for the sake of simplicity, will omit other NFRs like availability as metric.
+Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to stakeholder needs through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. Reliability was selected as metric over the system execution (meta-requirement), while availability and maintainability are partially satisfied by the `low power consumption' softgoal and MPERS ability to update emergency rules at runtime, respectively. The proposal evaluation will focus on the reliability metric and, for the sake of simplicity, will omit the verification of other relevant NFRs.
 
 \subsubsection{Specifying non-functional constraints}
 
-The specification of non-functional constraints is a sensible task that depends on expertise and on domain knowledge. For instance, an analyst or a reliability engineer should be aware of what does it mean for a system to be 99.99\% reliable, as this level may not be achieved by any alternative solution and must be coherent to the system criticality - a catastrophic failure should be avoided by all means. In some cases, the system will have to comply to some industry standards or contract based constraints. Table~\ref{tab:MPERS_NFR} summarizes two possible non-functional constraints for the MPERS.
+The specification of non-functional constraints is a sensible task that depends on both expertise and domain knowledge. For instance, an analyst or a reliability engineer should be aware of what does it mean for a system to be 99.99\% reliable, as this level may not be achieved by any alternative solution and must be coherent to the system criticality - a minor failure consequence could be tolerable, but a catastrophic failure should be avoided by all means. In some cases, the system will have to comply to some industry standards or contract based constraints like in service-oriented computing. Table~\ref{tab:MPERS_NFR} summarizes two possible non-functional constraints for the MPERS.
 \medskip
 
 % Please add the following required packages to your document preamble:
@@ -99,10 +222,10 @@ As indicated by the \textit{Target} column, each NFR constraint may be associate
 
 \begin{itemize}
 
-\item \textit{Global}, if the activities set is a minimum set composed of the tasks that satisfies the chain of subgoals up to the root goal Groot. For instance, in Table~\ref{tab:MPERS_NFR} reliability is associated to root goal G1.
+\item \textit{Global}, if the activities set is a minimum set composed of the tasks that satisfies the chain of subgoals up to the root goal $Groot$. For instance, in Table~\ref{tab:MPERS_NFR} reliability is associated to root goal G1.
 \medskip
 
-\item \textit{Local}, if the activities set is a minimum set composed of tasks that satisfies the chain of subgoals up to a goal Gx, where Gx != Groot. For instance, in Table~\ref{tab:MPERS_NFR}, power consumption is (locally) associated to goal G2.
+\item \textit{Local}, if the activities set is a minimum set composed of tasks that satisfies the chain of subgoals up to a goal $Gx$, where $Gx != Groot$. For instance, in Table~\ref{tab:MPERS_NFR}, power consumption is (locally) associated to goal G2.
 \medskip
 
 \end{itemize}
@@ -111,55 +234,14 @@ As indicated by the \textit{Target} column, each NFR constraint may be associate
 
 Other MPERS NFR are `emergency awareness' and `resources optimization'. These softgoals are addressed by system functionalities. The former receives a full contribution (double positive sign) from goal `emergency is notified', meaning it is fully satisfied by this goal. The later is just assumed to be partially satisfied by the `emergency is checked' functional goal.
 
-\subsection{Behaviour specification}
-
-In this section, further details about the runtime regex syntax and semantic will be explained as they are a central part of this proposal. Table~\ref{tab:RGM_REGEX} provides a textual description of each RGM notation with corresponding meaning in terms of what behaviour it specifies and also an example from the MPERS RGM. A formal and detailed description can be found in the RGM reference publication~[RGM].
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[h]
-{\renewcommand{\arraystretch}{1.5}
-\begin{tabularx}{\textwidth}{@{}l|X|X@{}}
-\toprule
-\textbf{Expression} & \textbf{Meaning}                                                                   & \textbf{Example (MPERS)} \\ 
-skip                & No action. Useful for conditional ternary expressions involving two elements.      & try(G10)?skip:G11        \\ 
-E1;E2               & A goal/task E1 must be fulfilled/executed before E2.                               & G1;G2;G3                 \\ 
-E1|E2               & Fulfillment/execution of goal/task E1 is alternative with respect to E2. & T9.1|T9.2                \\ 
-opt(E)              & Fulfillment/execution of goal/task E is not mandatory.                             & opt(T17.2)               \\ 
-E+n                 & Goal/task E must be fulfilled/executed n times, with n \textgreater 0.             & G22+2                    \\ 
-try(E)?E1:E2        & If goal/task E succeeds, E1 must be fulfilled/executed; otherwise, E2.             & try(G10)?skip:G11        \\ 
-E1\#E2              & Interleaved fulfillment/execution of goal/task E1 and E2.                          & G8\#G9                   \\ 
-E\#n                & Interleaved fulfillment/execution of n instances of E, with n \textgreater 0.      & -                        \\ \bottomrule
-\end{tabularx}
-}
-\caption{Description of RGM textual notations used by the proposal.}
-\label{tab:RGM_REGEX}
-\end{table}
-
-A small variation of the original regex was employed for the E+ and E\# rules. Instead of an undetermined number of goal/task instances, analyst should provide the exact number of instances for goals achievement and tasks execution. This information is required for the generation of the verification model from a RGM.
-
-\subsubsection{RGM - UML activity diagram comparison}\label{ssec:RGM-UML}
-
-A similar specification could be provided by an UML activity diagram with activities as the leaf-tasks of the goal model. However, activity diagrams have an homogeneous abstraction level and do not clearly correlate behaviour to the requirements they are meant to satisfy. In contrast to the RGM, activity diagrams denote behaviour through graphical symbols, while the RGM mixes the original goal model notation with a runtime regex. This simple notation increases the utility of a goal model diagram. Figure~\ref{fig:MPERS_UMLAD} presents an activity diagram corresponding to the MPERS RGM. 
-
-\begin{figure*}[h!]
-\centering
-\includegraphics[width=1\textwidth]{imgs/MPERS_UMLAD.png}
-\caption{MPERS tasks represented by a UML activity diagram}
-\label{fig:MPERS_UMLAD}
-\end{figure*}
-
-Among its limitations, RGM does not express that an emergency has to be confirmed after a time or signal event as the UML activity diagram does. Both necessary and sufficient conditions for the triggering and fulfilment of goals, tasks and dependencies are provided by Formal TROPOS language.  Still, sequential, parallel, alternative, optional and conditional execution flows as long as multiple executions of the same task can be expressed by the RGM, providing a rich behaviour specification that could be checked for non-functional requirements such as dependability attributes.
-
-The idea of a runtime goal model is not to replace UML activity diagrams, but to complement the static goal model with a clear runtime syntax that could be used for 
-communication and for conformance verification at both design time and during system execution - as the execution monitoring originally proposed by Dalpiaz et al~[RGM]. Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or complemented by UML behaviour diagrams.
-
-\subsection{Non-functional requirements verification}\label{ssec:NFR-verification}
+\subsection{Reliability verification}\label{ssec:NFR-verification}
 
 %NOT HERE!
 %The probabilistic verification of systems with variability is not a novelty by itself. Many proposals have addressed this problem in the context of Dynamic Software Product Lines (DSPL), some of then using the PMC technique~[Vini, Paula, Who Else?]. In DSPL, optional and alternative features may be activated or deactivated at runtime. A family based verification of one or multiple NFRs, also called qualitative goals, indicates what combinations are valid or which combination is optimal.
 
-This section describes the application of a PMC technique to verify the conformance of the RGM to defined non-functional constraints and also to solve the variability problem at design time considering both cases explained in Section~\ref{sec:variability}, i.e., for static context and dynamic contexts.
+This section describes the application of a PMC technique for the reliability verification of a RGM. We call it a goal-oriented probabilistic verification or goal-oriented dependability analysis because the probabilistic model, in this case a DTMC model, is built directly from a runtime goal model with the purpose of evaluating PCTL properties related to the reliability of the system. 
+
+% to verify the conformance of the RGM to defined non-functional constraints and also to solve the variability problem at design time considering both cases explained in Section~\ref{sec:variability}, i.e., for static context and dynamic contexts.
 
 \subsubsection{Leaf-tasks as DTMC modules}
 
@@ -222,14 +304,7 @@ Each leaf-task in the DTMC model starts at a discrete time slot. Time slots defi
           
 \end{figure}
 
-Other supported behaviours are: alternative execution (E1|E2), optional execution (opt(E1)) and conditional execution (try(E)?E1:E2). For alternative execution, or XOR, a parameter in the model defines which alternative from a set of two or more is selected for analysis. Figures~\ref{fig:UML_ALT_TSKS} and~\ref{fig:PRISM_ALT_TSKS} present the UML activities and corresponding PRISM model for alternative tasks T9.00 and T9.01.
-
-\begin{figure*}[ht!]
-\centering
-\includegraphics[width=0.35\textwidth]{imgs/UML_ALT_TSKS.png}
-\caption{\detokenize{Alternative tasks T9.00 and T9.01 can be selected for analysis.}}
-\label{fig:UML_ALT_TSKS}
-\end{figure*}
+Other supported behaviours are: alternative execution (E1|E2), optional execution (opt(E1)) and conditional execution (try(E)?E1:E2). For alternative execution, or XOR, a parameter in the model defines which alternative from a set of two or more is selected for analysis. Figure~\ref{fig:PRISM_ALT_TSKS} presents the PRISM model for alternative tasks T9.00 and T9.01.
 
 \begin{figure*}[ht!]
 \centering
@@ -238,7 +313,7 @@ Other supported behaviours are: alternative execution (E1|E2), optional executio
 \label{fig:PRISM_ALT_TSKS}
 \end{figure*}
 
-Similarly to alternative execution, optional tasks are enabled by an additional parameter in the model. Figures~\ref{UML_OPT_TSK} and~\ref{fig:PRISM_OPT_TSK} illustrate the UML activity and corresponding PRISM model for optional task T17.2.
+Similarly to alternative execution, optional tasks are enabled by an additional parameter in the model. Figure~\ref{fig:PRISM_OPT_TSK} illustrates the PRISM model for optional task T17.2.
 
 \begin{figure*}[ht!]
 \centering
@@ -256,23 +331,7 @@ Finally, labels are used to condition the execution of tasks to the success and 
 \label{fig:PRISM_TRY_TSKS}
 \end{figure*}
 
-Cardinality is also supported by the runtime regex specification. In our proposal, execution cardinality is simply represented by n modules with subsequent time slots (E+n) or by modules with synchronized initial transitions and followed by interleaved transitions (E\#n). Figures~\ref{fig:UML_MUL_SEQ_TSKS} and \ref{fig:UML_MUL_PAR_TSKS} respectively illustrate sequential and interleaved task behaviours.
-
-\begin{figure}[ht!]
-        \centering
-        \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=0.8\textwidth]{imgs/UML_MUL_SEQ_TSKS.png}
-				\caption{Sequential tasks T1 and T2 are in different time slots.}
-				\label{fig:UML_MUL_SEQ_TSKS}
-        \end{subfigure}        
-        \quad %\quad, \qquad, \hfill
-        \begin{subfigure}[b]{0.4\textwidth}                
-                \includegraphics[width=0.8\textwidth]{imgs/UML_MUL_PAR_TSKS.png}
-				\caption{Interleaved tasks T1 and T2 are in different time paths.}
-				\label{fig:UML_MUL_PAR_TSKS}
-        \end{subfigure}%
-          
-\end{figure}
+Cardinality is also supported by the runtime regex specification. In our proposal, execution cardinality is simply represented by n modules with subsequent time slots (E+n) or by modules with synchronized initial transitions and followed by interleaved transitions (E\#n). 
 
 %Listing~\ref{ls:MPERS_DTMC} presents the DTMC model for the MPERS.
 
