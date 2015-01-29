@@ -9,8 +9,11 @@ The main purpose of a goal model is to support the early process of RE, includin
 Frameworks and methodologies like the i*, KAOS and TROPOS represent the foundations for the goal model analysis used by a variety of other proposals~\cite{Yu1996, Dardenne1993, Bresciani:2004}. Despite some syntax differences, most goal-oriented approaches share a set of common and more important concepts:
 \bigskip
 
-\Large{\underline{Intentional entities}}
-\normalsize
+%\Large{\underline{Intentional entities}}
+%\normalsize
+
+\subsection{Intentional Entities}
+
 \begin{itemize}
 
 \item \textbf{Actor:} an entity that has goals and can decide autonomously how to achieve them. They represent a physical, social or software agent. E.g.: A patient, an emergency center, a doctor and a Mobile Personal Emergency System running in patient's smartphone.
@@ -25,10 +28,12 @@ Frameworks and methodologies like the i*, KAOS and TROPOS represent the foundati
 \item \textbf{Resource:} an information data or a physical resource that is generated or required by an actor.
 
 \end{itemize}
-\medskip
 
-\Large{\underline{Relations}}
-\normalsize
+%\Large{\underline{Relations}}
+%\normalsize
+
+\subsection{Relations}
+
 \begin{itemize}
 
 \item \textbf{AND/OR Decomposition:} AND-decomposition (OR-decomposition) is a link that decomposes an actor's goal/task into actor's sub-goals/tasks, meaning that all (at least one) decomposed goals/tasks must be fulfilled/executed in order to satisfy its parent entity. 
@@ -44,7 +49,7 @@ Frameworks and methodologies like the i*, KAOS and TROPOS represent the foundati
 
 \end{itemize}
 
-\section{TROPOS Goal-oriented Software Development Methodology}
+\section{TROPOS Methodology}
 
 TROPOS is a GORE methodology based on the i* framework~\cite{Bresciani:2004}. Its main improvement is the addition of new phases of requirements engineering, architecture and system design, namely:
 
@@ -64,37 +69,35 @@ TROPOS is a GORE methodology based on the i* framework~\cite{Bresciani:2004}. It
 
 \section{Goals, Means and Contexts}
 
-Context may be defined as the reification of the environment that surrounds the system operation~[FINKElSTEIN]. Contexts, as already stated, may not be static, but dynamic, and a system has no control over the context variation. Accordingly, a system must be able to support different contexts of operation without violating its functional and non-functional goals. To achieve this, systems must be able to monitor the state of its surrounding environment and take adaptive actions regarding the means used for fulfilling its goals.
+Context may be defined as the reification of the environment that surrounds the system operation~\cite{Andrea01aframework}. Contexts, as already stated, may not be static, but dynamic, and a system has no control over the context variation. Accordingly, a system must be able to support different contexts of operation without violating its functional and non-functional goals. To achieve this, systems must be able to monitor the state of its surrounding environment and take adaptive actions regarding the alternatives used for fulfilling its goals.
 
 %decide which alternative will be used regarding both the availability of that alternative and the optimization of non-functional requirements.
 
-In GORE, dynamic contexts may affect what goals a system have to reach, the means available to meet them and also the quality achieved by each alternative[CGM]. Root goal and higher-level strategical goals are not contextualized as they represent the main purpose of a system [Finkelstein]. As these goals are decomposed in more granular sub-goals, a context condition may dictate:
+In a contextual goal model (CGM), dynamic contexts may affect what goals a system have to reach, the means available to meet them and also the quality achieved by each alternative~\cite{Ali:2010}. Root goals and higher-level strategical goals are generally not contextualized as they represent the main purpose of a system~\cite{Andrea01aframework}. As these goals are decomposed in more granular sub-goals, a context condition may affect:
 
 \begin{enumerate}
 
-\item If the goal is required for that context, limiting `what' a system should do;
+\item If one or more goals are required for that context, limiting `what' a system should do. For instance, the goal `track person's location' ceases to be required in the context `patient is at home'.
 \medskip
 
-\item If a sub-goal or task is adoptable, limiting the `means' to fulfil a required goal;
+\item If a sub-goal or task is adoptable, limiting the `means' to fulfil a required goal. For instance, `track by GPS' may not be used in the context `battery is low' (stakeholder preference) or `no GPS signal' (technical impediment).
 \medskip
 
-\item The positive, neutral or negative contribution of using some goal or task to another goal, usually a qualitative softgoal;
+\item The positive, neutral or negative contribution of one alternative to a qualitative softgoal or to a non-functional metric. For instance, the precision of each geolocation method - voice call, mobile triangulation and GPS variate according to contexts like the health condition of the person and the strength of mobile and GPS signals.
 
 \end{enumerate}
 
-The third effect is the main focus of this work, as it is related to non-functional metrics such as dependability attributes. Also, the other effects must also be considered by the verification model, including the variability at what goals are required at each context and what means are adoptable.
+The third effect is the main focus of this work, as it is related to non-functional requirements such as dependability attributes. Also, the other effects must also be considered by the verification model, including the variability at what goals are required at each context and what means are adoptable, resulting in a more realistic and precise verification of corresponding metrics.
 
 %the GORE contribution analysis that we aim to improve. In our proposal, we extend the concept of the context variation effect to non-functional metrics of goals and tasks - as the components used for concrete task execution may also be affected by context variations, e.g., the reliability of a sensor in different temperatures. 
 
 \section{Variability in GORE}\label{sec:variability}
 
-Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal,  which subtask should be executed to satisfy its upper task or which task should be executed to satisfy its upper goal. Accordingly, multiple paths may lead to the satisfaction of the root goal. They are called alternative behaviours, or alternatives. 
+Given the possibility of an OR-decomposition in a goal model, more than one alternative can exist in terms of which subgoal should be achieved to satisfy its upper goal,  which subtask should be executed to satisfy its upper task or which task should be executed to satisfy its upper goal. Accordingly, multiple paths may lead to the satisfaction of the root goal. They are called alternative behaviours, or alternatives. Solving the variability problem in goal models have different meanings according to the development phase it takes place. 
 
-Solving the variability problem in goal models have different meanings according to the development phase it takes place. 
+\subsection{Design-time analysis}
 
-\subsection{Design-time alternative selection}
-
-At design time, multiple alternatives are elicited trough goal-oriented analysis, but not all are selected to be part of the system-to-be. In traditional GORE, contribution analysis is used for the the comparison of how each alternative contributes for one or more softgoals. Usually, only one alternative with the more positive contribution sum is selected for the system-to-be. Or, as in the simplistic example of Figure~\ref{fig:GORE_CA}, the decision should rely on the softgoals priority~\cite{Yu:2013}.
+At design time, multiple alternatives are elicited trough goal-oriented analysis, but not all are selected to be part of the system-to-be. In traditional GORE, contribution analysis is used for the the comparison of how each alternative contributes for one or more softgoals. Usually, only one alternative with the more positive contribution sum is selected for the system-to-be. Or, as in the simplistic example of Figure~\ref{fig:GORE_CA}, the decision relies on the softgoals priorities~\cite{Yu:2013}.
 
 \begin{figure*}[h!]
 \centering
@@ -105,10 +108,22 @@ At design time, multiple alternatives are elicited trough goal-oriented analysis
 
 \subsection{Runtime analysis}
 
-In contrast to the design-time variability in goal models, runtime variability depends on runtime input and must be preserved at runtime, i.e., variability is inherited by the solution design~\cite{Yu:2008}. Ali et al. investigates the influence of the context of operation on the decision of which alternative should be selected~\cite{Ali:2010}. For instance, if the traffic is jammed and the patient's condition is critical, an emergency chopper is selected for assistance in place of an ambulance.
+In contrast to the design-time variability in goal models, runtime variability depends on runtime input and must be preserved at runtime, i.e., variability is inherited by the solution design~\cite{Yu:2008}. The purpose is to select the valid alternative according to stakeholders preferences and the current context of operation.
 
-In other cases, alternatives should be monitored and analysed in terms of non-functional metrics to decide which one is suitable or optimal for selection. Here, the context of operation does not directly defines the adoptable alternative, but its effect on the quality of each alternative is considered as a decision criteria. For instance, instead of only monitoring the traffic condition, a more complex analysis must estimate the probability of the ambulance to reach the patient in a restricted time unit as part of the analysis in a self-adaptation loop. 
+The contextual goal model tackles the influence of the context on the autonomous decision of which alternative should be selected~\cite{Ali:2010}. For instance, if the monitored traffic condition is `jammed' and the patient's condition is `critical', an emergency chopper is selected for assistance in the place of an ambulance. We call this  `direct context implication'.
 
+In other cases, alternatives should be monitored and analysed in terms of non-functional metrics to decide which one is suitable or for selection. Here, the context of operation does not directly defines the adoptable alternative, but its effect on the quality of each alternative is considered as a decision criteria. For instance, a more complex analysis must estimate the probability of the ambulance to reach the patient in less than X time units given a traffic condition. We call this `indirect context implication'. 
+
+%Both cases - the direct and indirect context effect over the selection - may integrate the analysis of a self-adaptation feedback loop.
+
+\begin{figure*}[h!]
+\centering
+\includegraphics[width=1\textwidth]{imgs/RUNTIME_ANALYSIS.png}
+\caption{Contribution analysis in TROPOS GORE.}
+\label{fig:RUNTIME_ANALYSIS}
+\end{figure*}
+
+In Figure~\ref{fig:RUNTIME_ANALYSIS}, the availability of the emergency resources are contexts that directly restricts the adoption of corresponding means to reach a patient. In contrast, the traffic condition affects the time to reach the patient, i.e., this context indirectly affects the selection of an ambulance and requires further analysis to estimate the assistance time in different traffic conditions. Also, the context `patient health' affects the time restriction in the `fast assistance' quality goal. This scenario leads to the following question: Among the available functional alternatives, which also fulfils the quality goal in the current context?
 
 
 %Our proposal aims to solve the variability in goal models at runtime through a probabilistic verification of system alternatives in multiple contexts of operation following both direct and indirect context effects over alternatives.
@@ -138,7 +153,7 @@ In other cases, alternatives should be monitored and analysed in terms of non-fu
 
 \section{Dependability Analysis}
 
-The concept of dependability is related to dependence and trust as well as the ability of a system to avoid failures that are more frequent and more severe than certain threshold~\cite{Laprie2004}. According to Avizienis et al., dependability encompasses the following attributes: 
+The concept of dependability is related to dependence and trust as well as to the ability of a system to avoid failures that are more frequent and more severe than certain threshold~\cite{Laprie2004}. According to Avizienis et al., dependability encompasses the following attributes: 
 
 \begin{itemize}
 
@@ -161,13 +176,14 @@ The concept of dependability is related to dependence and trust as well as the a
 
 %Correctness is opposed to failures. 
 
-A holistic dependability specification has to include not only the software operation, but also the NFR for which that operation is meant. Non-functional requirements are an important factor to decide the acceptable frequency and severity of a software or hardware failure.
+%MAY BE USEFULL IN OTHER SECTION
+%A holistic dependability specification has to include not only the software operation, but also the NFRs for which that operation is meant. Non-functional requirements are an important factor to decide the acceptable frequency and severity of a software or hardware failure.
 
-A failure is a perceived deviation from system expected behaviour that may have variable degrees of consequence on the user(s) and the environment. These failures are caused by specification faults or specification violations. In the first case, requirements and behaviour models fails to describe the system: either the goals or the means to fulfil then are incorrect, inappropriate or incomplete. In the second case, software or hardware behaviour did not follow its specification due to a natural phenomena, a human-made fault, a malicious fault or an interaction fault~[AVIZIENIS].
+A failure is a perceived deviation from system expected behaviour that may have variable degrees of consequence on the user(s) and the environment. These failures are caused by specification faults or specification violations. In the first case, requirements and behaviour models fails to describe the system: either the goals or the means to fulfil then are incorrect, inappropriate or incomplete. In the second case, software or hardware behaviour did not follow its specification due to a natural phenomena, a human-made fault, a malicious fault or an interaction fault~\cite{Laprie2004}.
 
 %Avizienis et al. also characterizes a failure according to four viewpoints. For this work, failure domain and failure consequence are important as they define .
 
-The scope of this work is restricted to specification violations, i.e., we assume that a system specification is complete and consistent. Failures are restricted to anomalous behaviour of the components participating in the execution of system tasks, including technical components and human actors. Regarding the different means to attain dependability, our proposal consists of a fault forecasting as part of the analysis in a self-adaptation feedback loop.
+The scope of this work is restricted to specification violations, i.e., we assume that a system specification is complete and consistent. Failures are limited to anomalous behaviour of the components participating in the execution of system tasks, including technical components and human actors. Regarding the different means to attain dependability, our proposal consists of a fault forecasting as part of the analysis in a self-adaptation feedback loop.
 
 %, i.e., we focus on the dependability analysis and the estimating metrics related to dependability and assuring their conformance to the dependability constraints associated to the goal model. 
 
@@ -197,9 +213,11 @@ The scope of this work is restricted to specification violations, i.e., we assum
 %
 %More details on the complete failure classification can be found in \cite{Laprie2004}. In our approach, a part of this taxonomy is used to guide the definition of the classes of failures severities and therefore the required level of dependability for different system goals. It also takes part in the identification of which dependability attribute is related to each contextual failure occurrence.  
 
-\section{Probabilistic Model Checking and PRISM tool}
+\section{Self-adaptation}
 
-A model checking is a formal method that aims to automatically verify if a system model meets its specification for defined properties. Probabilistic model checking supports the verification of finite-state probabilistic models such as discrete-time Markov chain (DTMC), continuous-time Markov chain (CTMC) and Markov decision process (MDP). Different types of properties enables the verification of a vast range of non-functional metrics.
+\section{Probabilistic Model Checking}
+
+A model checking is a formal method that aims to automatically verify the correctness of a system model. Probabilistic model checking supports the verification of finite-state probabilistic models such as discrete-time Markov chain (DTMC), continuous-time Markov chain (CTMC) and Markov decision process (MDP). Different types of properties enables the verification of a vast range of non-functional metrics.
 
 \subsection{PRISM tool}
 
@@ -212,6 +230,10 @@ PRISM is suitable for different kinds of model evaluations depending on the abst
 \subsection{PRISM language}
 
 PRISM language offers a rich set of constructs that may represent system modules, components and others architectural and design abstractions. Modules are the main structure in a PRISM model. Modules are composed of variable and commands. The first describe the finite states a module can be in. The former describe the behaviour of a module, i.e., the actions that may result in state transitions and are guarded by predicates which in turn can be composed of any variable in the model. Finally, labels are used for command naming and synchronization. A DTMC command in PRISM takes the following form: $$[action/label]<guard>\to<probability>:<update>;$$
+
+\subsection{PARAM}
+
+More recent PRISM versions also supports a parametric model checking, that is, instead of constant variables whose values must be initialized before verification, parameters replace these variables and a parametric formula is generated. Nonetheless, a previous PRISM extension tool named PARAM also provides parametric verification and has been further evaluated in case studies. For this reason, in this work have used PARAM for the generation of parametric formulas corresponding to a given probabilistic model and a PCTL property.
 
 \subsection{Dependability analysis with PMC}
 
@@ -230,10 +252,6 @@ As it will be explained in later sections, goal models may be extended with the 
 
 \end{itemize}
 
-\subsection{PARAM}
-
-More recent PRISM versions also supports a parametric model checking, that is, instead of constant variables whose values must be initialized before verification, parameters replace these variables and a parametric formula is generated. Nonetheless, a previous PRISM extension tool named PARAM also provides parametric verification and has been further evaluated in case studies. For this reason, in this work have used PARAM for the generation of parametric formulas corresponding to a given probabilistic model and a PCTL property.
-
 %That is, instead of providing the final evaluation for a given property, models may use parameters instead of initialized variables and the verification will output a parametric formula whose evaluation will estimate or verify the model for any valid combination of parameters values.
 
 \section{Antlr Language Recognition Tool}
@@ -244,7 +262,7 @@ As a result, any domain-specific language may be specified and then parsed using
 
 \section{Mobile Personal Emergency Response System}
 
-The MPERS case study will be further detailed in later chapter as the proposed TROPOS extension is described with the MPERS goal models of requirements engineering development phases. As such, this section will cover some relevant aspects of this system that justify the use of our formal verification approach.
+The MPERS case study will be further detailed in later chapter as the proposed goal-oriented reliability analysis based on PMC is described with the MPERS goal models of requirements engineering phases of TROPOS methodology. As such, this section will be limited to cover some relevant aspects of this system that justify the use of our formal verification approach.
 
 An emergency response system is a mission-critical system for which failures in achieving its main goals by the time they are required may lead to catastrophic consequences on users, i.e., on patients monitored by the system expecting to be promptly assisted in case of a medical emergency. Accordingly, any stakeholder that wishes to offer a service based on this system will have both ethical and contractual obligations regarding the safety of its product, that is, it must employ all means to prevent system failures.
 
@@ -259,6 +277,8 @@ Environment changes is an important factor for MPERS, as the following condition
 
 \item The battery of vital signs sensors;
 \medskip
+
+\item The disc memory used for storing the vital signs history;
 
 \item The mobile signal used for data communication and for geolocation triangulation;
 \medskip

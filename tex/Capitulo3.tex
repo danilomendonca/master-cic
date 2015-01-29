@@ -1,16 +1,14 @@
 \chapter{Related Work}\label{ch:related_work}
 
+%\section{Goal-oriented modelling and analysis}
+
 \section{Contextual Goal Model}
 
-The Contextual Goal Model (CGM)~[CGM] proposes the contextualization of required goals, adoptable means (goals/tasks) and contribution links values. The main benefit of this work is to enrich the original goal model with the contextualization of entities and relations affected by context variations and to provide a rationale for context analysis. In contrast, the main problem tackled by the our work is the verification of non-functional attributes such as dependability attributes that needs a more precise and less biased approach instead of the existing contribution analysis that is based on analysts direct evaluation of the forward impact between goals/tasks and softgoals. 
+The Contextual Goal Model (CGM)~[CGM] proposes the contextualization of required goals, adoptable means (goals/tasks) and contribution links values. The main benefit of this work is to enrich the original goal model with the contextualization of entities and relations affected by context variations and to provide a rationale for context analysis. CGM provides a more realistic and precise contribution analysis contextualized by environment conditions, but does not change the nature of the contribution analysis process. 
 
-In this regard, the CGM provided more realistic and precise contribution analysis contextualized by environment conditions, but did not change the nature of the contribution analysis process. Our work has benefited from the CGM conceptual model and has extended the non-functional GORE analysis with a context-dependent formal verification, i.e., that includes different context effects in the probabilistic model used by the PMC to contextually estimate the values of required non-functional attributes of the system and provide a reliable decision criteria for the selection of concurring alternatives in the goal model given different contexts.
+In contrast to CGM, the main contribution of our work is the goal-oriented probabilistic verification of reliability related metrics that needs a more robust and less biased approach instead of the existing contribution analysis that is based on the direct evaluation of the forward impact between goals/tasks and softgoals. Our work has also benefited from the CGM conceptual model and has extended the non-functional GORE analysis with a context-dependent formal verification, i.e., that includes different context effects in the probabilistic model to contextually estimate the probability of different system goals in being fulfilled as part of a more precise analysis.
 
-\section{Awareness Requirements}
-
-Souza et al.~[AwaReq] proposed the Awareness Requirements (AwReq) as a meta-requirement in a goal model, i.e., AwReq specify the success/failure rate and temporal constraints for other requirements in the model, including goals, tasks, domain assumptions and other AwReqs (*-meta-requirement). The objective is to enrich the original goal model and provide constraints for system behaviour and to support self-adaptation, as runtime AwReq violations should be addressed by corrective actions. AwReq are formalized by a temporal logic formula, namely the Object Constraints Logic with Temporal Message (OCLtm).
-
-Despite its contribution to the specification of meta-requirements in goal models, AwReq do not provide an approach to analyse and validate its meta-requirements before system implementation and monitoring. Original GORE contribution analysis could be used to define the impact of a given alternative to some attribute or value composing one or more AwReqs. However, the paper have only mentioned the formalization and monitoring through code instrumentation. In contrast, our approach relies on model based verification of meta-requirements similar to AwReq through probabilistic model checking technique that can be performed at design time and provide alternative design decision criteria and anticipate violations that must be treated before implementation. 
+%values of required non-functional attributes of the system and provide a reliable decision criteria for the selection of concurring alternatives in the goal model given different contexts.
 
 \section{Runtime Goal Model}
 
@@ -28,6 +26,12 @@ In DCGM, a failure classification scheme was used to classify the consequence le
 
 The main drawback of this proposal was the lack of scalability, as declarative rules must be provided for different goals, attributes and contexts, proving to be a time-consuming task for the analysts. A second problem was the subjectivity of the rules, as they were based in domain knowledge that was also used to shape membership functions. This problem, as much as in GORE contribution analysis, lead to the idea of coupling a more precise and reliable verification approach such as the PMC technique. Still, the idea of a failure classification and the specification of contextual non-functional requirements were kept.
 
+\section{Awareness Requirements}
+
+Souza et al.~[AwaReq] proposed the Awareness Requirements (AwReq) as a meta-requirements class in a goal model, i.e., AwReqs specify the success/failure rate and other constraints for requirements in the model, including goals, tasks, domain assumptions and even other AwReqs (*-meta-requirement). The objective is to enrich the original goal model with constraints for the system behaviour and to enable self-adaptation, as runtime AwReq violations should be addressed by corrective actions. AwReq are formalized by a temporal logic formula, namely the Object Constraints Logic with Temporal Message (OCLtm).
+
+Despite its contribution to the specification of meta-requirements in goal models, AwReq do not provide an approach to analyse and validate its meta-requirements before system implementation and monitoring. Original GORE contribution analysis could be used to define the impact of a given alternative to some attribute or value composing one or more AwReqs. However, the paper have only mentioned the formalization and monitoring through code instrumentation. In contrast, our approach relies on model based verification of meta-requirements similar to AwReq through probabilistic model checking technique that can be performed at design time and provide alternative design decision criteria and anticipate violations that must be treated before implementation. 
+
 \section{Formal TROPOS}
 
 The idea behind the formalization of a goal model, as proposed by Formal TROPOS~[FTROPOS], is to provide a verifiable specification of sufficient and necessary conditions to create and achieve intentional elements like goals, tasks and dependencies in the model and invariants for each of these elements. In addition to this, new \textit{prior-to} links describe the temporal order of intentional elements. Also, cardinality constraints may be added to any link in the model. Finally, Formal TROPOS uses a first-order linear-time temporal logic as a specification language.
@@ -37,3 +41,8 @@ The nature of the verification proposed by Formal TROPOS is different from the P
 %build a probabilistic model representation of the goal model enriched by RGM behaviour specification and enable the
 
 In contrast to Formal TROPOS, our proposal uses a probabilistic model checking technique for the verification of properties that depend on how activities in the model are organized in terms of time, cardinality, combination, non-determinism and how each activity individually contributes to the property being evaluated. For instance, if power consumption is to be checked, each activity has to be associated to a power consumption unit and the global consumption value is evaluated considering any non-determinism specified in the execution workflow. Thus, even if the Formal TROPOS language also provides behaviour specification in a goal model, it is tailored for consistency checking of requirements and not for the probabilistic verification of dependability and other non-functional requirements.
+
+%\section{Software Product Lines}
+%
+%\subsection{Dependability Analysis in Ambient Assisted Living}
+

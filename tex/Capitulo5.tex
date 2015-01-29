@@ -17,7 +17,9 @@ Figure~\ref{fig:CRGM_TO_DTMC} illustrates the goal-oriented verification process
 \label{fig:CRGM_TO_DTMC}
 \end{figure*}
 
-\section{TROPOS Early Requirements Phase}
+\section{Preliminary goal modelling and analysis}
+
+\subsection{TROPOS Early Requirements Phase}
 
 In early requirements phase, stakeholders and their needs are modelled in a goal model diagram. Each actor may be a depender or a dependee of a goal, task or resource dependency. In this phase, only social dependencies to the system actor and between application domain stakeholders are analysed, leaving the detailed system analysis to later development phases.
 
@@ -34,7 +36,7 @@ From the diagram in Figure~\ref{fig:MPERS_ER} it is possible to have a first vie
 
 The distinguished yellow circle indicates that MPERS is a system actor. MPERS goals can be seen with a regex indicating its dynamic behaviour as part of the runtime goal model specification required by the proposal. This notation is a reflex of the late requirements phase, as the TAOM4E tool supporting TROPOS methodology shares unique entities and relations among different development phases. The regex syntax is enclosed by brackets to differentiate then from goal name. In future work, a specific modelling compartment should receive the values for the runtime regex.
 
-\section{TROPOS Late Requirements Phase}
+\subsection{TROPOS Late Requirements Phase}
 
 Later requirements phase concentrates the analysis in the system-to-be and its operational environment. The MPERS goal model occupies the most part of the diagram and each of its main goals are further decomposed through AND/OR decomposition. Also, means-end tasks defines how leaf-goals are fulfilled and the runtime regex across goals and tasks specifies dynamic properties of the system-to-be behaviour. Figure~\ref{fig:MPERS_LR} illustrates the late requirements diagram for the MPERS.
 
@@ -53,8 +55,39 @@ To evaluate our proposal, we have explored the use of the PMC technique for the 
 
 %To evaluate our verification approach with the MPERS case study, we have used a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of NFR related to dependability, i.e., NFR that are either direct attributes encompassed by dependability or that are related to one or more of these attributes.
 
+\subsection{Non-functional requirements analysis}
 
-\section{Behaviour specification}\label{sec:behaviour_specification}
+%\subsubsection{NFR framework with quantitative constraints}
+
+TROPOS goal model also provides rationale for NFR analysis, as it originally inherited the softgoal analysis from the NFR framework~[NFR]. In our approach, non-functional constraints are modelled as qualitative hard goals with a clear cut value for its satisfaction, complementing the other NFRs modelled as softgoals. As a benefit of a goal-oriented modelling for NFRs, the elicitation of a given NFR may be justified by its relation to other elements in the model. Figure~\ref{fig:MPERS_NFR} presents the NFRs for the MPERS system actor.
+
+\begin{figure*}[h!]
+\centering
+\includegraphics[width=1\textwidth]{imgs/MPERS_NFR.png}
+\caption{MPERS non-functional requirements.}
+\label{fig:MPERS_NFR}
+\end{figure*}
+
+%Intersting for motivation!
+Similarly to the Awareness Requirements by Souza et al.~\cite{Souza:2011}, some NFR define metrics over other requirements. These meta-requirements are not directly fulfilled by system functionalities like `emergency awareness' is fulfilled by `notify emergency' or `confidentiality' could be fulfilled by `user authentication', but by how these functionalities will perform. Reliability, for instance, is inversely proportional to the likelihood of failures. Hence, the reliability metric depends on the probability of system functionalities to successfully meeting their goals. 
+
+Other MPERS NFR are `emergency awareness' and `resources optimization'. These softgoals are addressed by system functionalities. The former receives a full contribution (double positive sign) from goal `emergency is notified', meaning it is fully satisfied by this goal. The later is just assumed to be partially satisfied by the `emergency is checked' functional goal.
+
+
+%The conformity to these NFR is not implicit in the model, it requires some verification technique.
+
+%PUT a goal model with hard goal NFRs!
+
+%PUT SOME NFR CONCEPTUAL MODEL HERE!
+
+Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to stakeholder needs through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. 
+
+Reliability was selected as metric over the system execution (meta-requirement), while availability and maintainability are partially satisfied by the `low power consumption' softgoal and MPERS ability to update emergency rules at runtime, respectively. This proposal focus on reliability analysis and will not discuss the verification of other relevant NFRs.
+
+%evaluation will focus on the reliability metric and, for the sake of simplicity, will omit the verification of other relevant NFRs.
+
+
+\section{RGM Behaviour Analysis}\label{sec:behaviour_specification}
 
 In this section, further details about the runtime regex syntax and semantic will be explained as they are a central part of this proposal. Table~\ref{tab:RGM_REGEX} provides a textual description of each RGM rule and the corresponding meaning in terms of what behaviour it specifies and also an example from the MPERS runtime goal model of Figure~\ref{fig:MPERS_LR}. A formal and detailed description can be found in the RGM reference publication~\cite{Dalpiaz:2013}.
 
@@ -155,7 +188,7 @@ A small variation of the original RGM syntax was employed for the E+ and E\# rul
 \end{figure}
 
 
-\section{RGM - UML activity diagram comparison}\label{ssec:RGM-UML}
+\subsection{RGM - UML activity diagram comparison}\label{ssec:RGM-UML}
 
 A similar behaviour specification achieved with the RGM in Figure~\ref{fig:MPERS_LR} could be provided by an UML activity diagram with activities as the leaf-tasks in the goal model. However, activity diagrams have an homogeneous abstraction level and do not clearly correlate behaviour to the requirements they are meant to satisfy. In contrast to the RGM, activity diagrams denote behaviour through graphical symbols, while the RGM mixes the original goal model notation with a runtime regex. This simple notation increases the utility of a goal model diagram. Figure~\ref{fig:MPERS_UMLAD} presents an activity diagram corresponding to the MPERS RGM. 
 
@@ -173,74 +206,18 @@ Among its limitations, RGM does not express that an emergency has to be confirme
 The idea of a runtime goal model is not to replace UML activity diagrams, but to complement the static goal model with a clear runtime syntax that could be used for 
 documentation, team communication and for conformance verification at both design time - e.g., through model-based verification - and during system execution - as the execution monitoring originally proposed by Dalpiaz et al~[RGM]. Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or complemented by UML behaviour diagrams. In this work, RGM is used as input for our goal-oriented probabilistic verification.
 
-\section{Non-functional requirements specification}
+\section{CGM Context Analysis}
 
-%\subsubsection{NFR framework with quantitative constraints}
+In a contextual goal model, an analysis of the environment in which the system will operate is performed. Domain knowledge and a careful investigation of what is static and what may change during operation should list the contexts facts and variables that may potentially affect goals, operational means and qualitative metrics.
 
-TROPOS goal model also provides rationale for NFR analysis, as it originally inherited the softgoal analysis from the NFR framework~[NFR]. In our approach, non-functional constraints are modelled as qualitative hard goals with a clear cut value for its satisfaction, complementing the other NFRs modelled as softgoals. As a benefit of a goal-oriented modelling for NFRs, the elicitation of a given NFR may be justified by its relation to other elements in the model. Figure~\ref{fig:MPERS_NFR} presents some NFRs for the MPERS system actor.
-
-\begin{figure*}[h!]
-\centering
-\includegraphics[width=0.7\textwidth]{imgs/MPERS_NFR.png}
-\caption{MPERS non-functional requirements.}
-\label{fig:MPERS_NFR}
-\end{figure*}
-
-%Intersting for motivation!
-Similarly to the Awareness Requirements by Souza et al.~[AWREQ], some NFR define metrics over other requirements. These meta-requirements are not directly fulfilled by system functionalities like `emergency awareness' is fulfilled by `notify emergency' or `confidentiality' could be fulfilled by `user authentication', but by how these functionalities will perform. Reliability, for instance, is inversely proportional to the likelihood of failures. Hence, the reliability metric depends on the probability of system functionalities to successfully meeting their goals. 
-
-%The conformity to these NFR is not implicit in the model, it requires some verification technique.
-
-%PUT a goal model with hard goal NFRs!
-
-%PUT SOME NFR CONCEPTUAL MODEL HERE!
-
-Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to stakeholder needs through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. Reliability was selected as metric over the system execution (meta-requirement), while availability and maintainability are partially satisfied by the `low power consumption' softgoal and MPERS ability to update emergency rules at runtime, respectively. The proposal evaluation will focus on the reliability metric and, for the sake of simplicity, will omit the verification of other relevant NFRs.
-
-\subsection{Specifying non-functional constraints}
-
-The specification of non-functional constraints is a sensible task that depends on both expertise and domain knowledge. For instance, an analyst or a reliability engineer should be aware of what does it mean for a system to be 99.99\% reliable, as this level may not be achieved by any alternative solution and must be coherent to the system criticality - a minor failure consequence could be tolerable, but a catastrophic failure should be avoided by all means. In some cases, the system will have to comply to some industry standards or contract based constraints like in service-oriented computing. Table~\ref{tab:MPERS_NFR} summarizes two possible non-functional constraints for the MPERS.
-\medskip
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[h]
-{\renewcommand{\arraystretch}{1.5}
-\begin{tabularx}{\textwidth}{@{}XXX@{}}
-\toprule
-\textbf{NFR}               & \textbf{Constraint} & \textbf{Target}        \\ \midrule
-\textbf{Reliability}       & 99.8\%            & \textbf{G1} \\
-\textbf{Power consumption} & 100 p.u.            & \textbf{G2}          \\ \bottomrule
-\end{tabularx}
-}
-\caption{Non-functional metrics for the MPERS system.}
-\label{tab:MPERS_NFR}
-\end{table}
-
-%softgoals of `continuous assistance' and `correct assistance'
-
-As indicated by the \textit{Target} column, each NFR constraint may be associated to a root level goal or to any of its subgoals. The corresponding probabilistic verification based on the execution of a set of leaf-tasks in the RGM is defined as:
-
-\begin{itemize}
-
-\item \textit{Global}, if the activities set is a minimum set composed of the tasks that satisfies the chain of subgoals up to the root goal $Groot$. For instance, in Table~\ref{tab:MPERS_NFR} reliability is associated to root goal G1.
-\medskip
-
-\item \textit{Local}, if the activities set is a minimum set composed of tasks that satisfies the chain of subgoals up to a goal $Gx$, where $Gx != Groot$. For instance, in Table~\ref{tab:MPERS_NFR}, power consumption is (locally) associated to goal G2.
-\medskip
-
-\end{itemize}
-
-%put here the formal definition of the root goal, subgoals, activity set, turple, etc
-
-Other MPERS NFR are `emergency awareness' and `resources optimization'. These softgoals are addressed by system functionalities. The former receives a full contribution (double positive sign) from goal `emergency is notified', meaning it is fully satisfied by this goal. The later is just assumed to be partially satisfied by the `emergency is checked' functional goal.
+Context implications are not restricted to 
 
 \section{Goal-oriented probabilistic verification}\label{ssec:NFR-verification}
 
 %NOT HERE!
 %The probabilistic verification of systems with variability is not a novelty by itself. Many proposals have addressed this problem in the context of Dynamic Software Product Lines (DSPL), some of then using the PMC technique~[Vini, Paula, Who Else?]. In DSPL, optional and alternative features may be activated or deactivated at runtime. A family based verification of one or multiple NFRs, also called qualitative goals, indicates what combinations are valid or which combination is optimal.
 
-This section describes the application of a PMC technique for the reliability verification of a RGM. We call it a goal-oriented probabilistic verification or goal-oriented dependability analysis because the probabilistic model, in this case a DTMC model, is built directly from a runtime goal model with the purpose of evaluating PCTL properties related to the reliability of the system, i.e., to the success probability of different goals in being fulfilled.
+This section describes the application of a goal-oriented PMC technique for the reliability verification of a runtime goal model with additional context effect notations. We call it a goal-oriented probabilistic verification or goal-oriented dependability analysis because the probabilistic model, in this case a DTMC model, is built directly from a runtime goal model with the purpose of evaluating PCTL properties related to the reliability of the system, i.e., to the success probability of different goals in being fulfilled.
 
 % to verify the conformance of the RGM to defined non-functional constraints and also to solve the variability problem at design time considering both cases explained in Section~\ref{sec:variability}, i.e., for static context and dynamic contexts.
 
@@ -275,7 +252,7 @@ In the DTMC model, leaf-tasks have their execution state mapped to a variable in
 
 \end{itemize}
 
-Figure~\ref{UML_TSK_STATES} illustrate leaf-tasks' states in a UML state diagram.
+Figure~\ref{fig:UML_TSK_STATES} illustrate leaf-tasks' states in a UML state diagram.
 
 \begin{figure*}[ht]
 \centering
@@ -295,7 +272,7 @@ The first step in building a DTMC from a RGM is parsing the behaviour rules. All
 
 %In the DTMC models for PMC verification of system behaviour, activities have their execution time mapped to discrete values. For instance, in a system workflow, initial activities start at a given time slot, e.g., zero. Considering the the following activities to only start after all previous activities are finished, 
 
-Given a set of leaf-tasks that fulfils a chain of subgoals until a certain goal G, a high-level DTMC model composed of modules for each leaf-task states and transitions is build. This model must abstract the same behavioural of the corresponding RGM, i.e., it must preserve activities temporal order and other semantics specified by the runtime regex. We call the resulting verification model of a high-level DTMC because leaf-tasks are similar to activities in a UML diagram whose behaviour could be further detailed, e.g., by sequence diagrams. 
+Given a set of leaf-tasks that fulfils a chain of subgoals until a certain goal G, a high-level DTMC model composed of modules for each leaf-task states and transitions is build. This model must abstract the same behavioural of the corresponding RGM, i.e., it must preserve activities temporal order and other semantics specified by the runtime regex. We call the resulting verification model of a high-level DTMC because leaf-tasks are similar to activities in a UML diagram whose behaviours could be further detailed, e.g., by sequence diagrams. 
 
 %We are not interested in checking system instance conformance to its runtime goal model through monitoring as the original RGM proposal. We focus on the estimation of non-functional metrics based on the high-level DTMC model. 
 
@@ -460,6 +437,42 @@ As our proposal focus on the runtime reliability analysis for self-adaptive syst
 %In contrast to a pure model-based verification approach, the hybrid verification requires a concrete system implementation besides the RGM system model. Tasks execution instances could be monitored by instrumented code and the original RMG monitoring algorithms that are able to differentiate one task instance from the other. 
 %
 %In terms of reliability metric, this approach should be used to collect the frequencies of success and failure of task executions and to calculate their corresponding reliability values used in the high-level DTMC.
+
+\subsection{Specifying non-functional constraints}
+
+The specification of non-functional constraints is a sensible task that depends on both expertise and domain knowledge. For instance, an analyst or a reliability engineer should be aware of what does it mean for a system to be 99.99\% reliable, as this level may not be achieved by any alternative solution and must be coherent to the system criticality - a minor failure consequence could be tolerable, but a catastrophic failure should be avoided by all means. In some cases, the system will have to comply to some industry standards or contract based constraints like in service-oriented computing. Table~\ref{tab:MPERS_NFR} summarizes two possible non-functional constraints for the MPERS.
+\medskip
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{@{}XXX@{}}
+\toprule
+\textbf{NFR}               & \textbf{Constraint} & \textbf{Target}        \\ \midrule
+\textbf{Reliability}       & 99.8\%            & \textbf{G1} \\
+\textbf{Power consumption} & 100 p.u.            & \textbf{G2}          \\ \bottomrule
+\end{tabularx}
+}
+\caption{Non-functional metrics for the MPERS system.}
+\label{tab:MPERS_NFR}
+\end{table}
+
+%softgoals of `continuous assistance' and `correct assistance'
+
+As indicated by the \textit{Target} column, each NFR constraint may be associated to a root level goal or to any of its subgoals. The corresponding probabilistic verification based on the execution of a set of leaf-tasks in the RGM is defined as:
+
+\begin{itemize}
+
+\item \textit{Global}, if the activities set is a minimum set composed of the tasks that satisfies the chain of subgoals up to the root goal $Groot$. For instance, in Table~\ref{tab:MPERS_NFR} reliability is associated to root goal G1.
+\medskip
+
+\item \textit{Local}, if the activities set is a minimum set composed of tasks that satisfies the chain of subgoals up to a goal $Gx$, where $Gx != Groot$. For instance, in Table~\ref{tab:MPERS_NFR}, power consumption is (locally) associated to goal G2.
+\medskip
+
+\end{itemize}
+
+%put here the formal definition of the root goal, subgoals, activity set, turple, etc
 
 \subsection{From NFR to PCTL properties}
 

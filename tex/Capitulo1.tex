@@ -33,7 +33,7 @@ Given the fact that for many systems the ability to avoid failures before they t
 
 \setlength{\fboxsep}{10pt}
 \noindent\fbox{%
-    \parbox{\textwidth}{%
+    \parbox{0.95\textwidth}{%
         \textbf{Research question 1 (RQ1):}	Given a correct and consistent goal model for which goals are ultimately satisfied by system tasks, is it possible to analyse the probability of different goals in being fulfilled?
     }%
 }\bigskip
@@ -112,14 +112,14 @@ Model checking is a formal technique to automatically verifying properties over 
 
 In specific, the probabilistic model checking (PMC) has been largely explored and is supported by tools such as PRISM model checker. As long as the verification model built from a behaviour specification is precise, this method provides a trusted estimation for metrics as those related to dependability attributes. For instance, PMC can estimate the probability of a system to reach its final success state in a DTMC model based on the reliability of the components involved in the execution, which defines the global reliability of this system or for the analysed activity~\cite{Baier:2008, Nunes:2012}.
 
-Following a similar principle of the component-based verification, the investigation focus has been narrowed to the feasibility of a goal-oriented PMC approach for which the leaf-tasks representing high-level system activities are mapped to a probabilistic model to provide both qualitative and quantitative analysis for the probability of successfully fulfilling different system goals. Accordingly, a second and more specific research question arises:
+Following a similar principle of the component-based verification, the investigation focus has been narrowed to the feasibility of a goal-oriented PMC approach for which the leaf-tasks representing high-level system activities are mapped to a probabilistic model to provide both qualitative and quantitative analysis for the probability of successfully fulfilling different system goals. Accordingly, our first research question was refactored to:
 
 \bigskip
 
 \setlength{\fboxsep}{10pt}
 \noindent\fbox{%
-    \parbox{\textwidth}{%
-        \textbf{Research Question 2 (RQ2):}	Given a correct and consistent goal model for which goals are ultimately satisfied by system tasks and a set of leaf-tasks that fulfils some specific system goal, is it possible to analyse the probability of achieving this goal through a probabilistic model checking technique?
+    \parbox{0.95\textwidth}{%
+        \textbf{Research Question 1 (RQ1\textquotesingle):}	Given a correct and consistent goal model for which goals are ultimately satisfied by system tasks and a set of leaf-tasks that fulfils some specific system goal, is it possible to analyse the probability of achieving this goal through a probabilistic model checking technique?
     }%
 }\bigskip
 
@@ -127,13 +127,13 @@ Following a similar principle of the component-based verification, the investiga
 
 %The context in which systems operate may not be static. Mobile and pervasive computing, among others, are examples of new computer paradigms for which the context of operation is dynamic. Battery, signals strength, components availability and the quality of physical resources and relevant information such as the user geographic location may vary through time, posing a new challenge to system development.
 
-As described by the contextual goal model~\cite{Ali:2010}, the contextualization of the informations gathered at RE and at design phases becomes imperative once its validity may be threatened by changing environment conditions. Context variation may relativize the need for a goal, restrain the adoptability of alternative means and also affect the quality of available means in fulfilling their goals. Hence, a goal-oriented verification must consider these effects in the analysis results. From this, our third research question arises:
+As described by the contextual goal model~\cite{Ali:2010}, the contextualization of the informations gathered at RE and at design phases becomes imperative once its validity may be threatened by changing environment conditions. Context variation may relativize the need for a goal, restrain the adoptability of alternative means and also affect the quality of available means in fulfilling their goals. Hence, a goal-oriented verification must consider these effects in the analysis results. From this, our second research question arises:
 
 \bigskip
 
 \noindent\fbox{%
     \parbox{\textwidth}{%
-        \textbf{Research Question 3 (RQ3):}		Is it possible to consider the context effects over what goals are required, what alternatives are adoptable and the quality of each alternative in the probabilistic verification process?
+        \textbf{Research Question 2 (RQ2):}		Is it possible to consider the context effects over what goals are required, what alternatives are adoptable and the quality of each alternative in the probabilistic verification process?
     }%
 }\bigskip
 
@@ -144,7 +144,18 @@ As discussed earlier, self-adaptation must rely on an adequate analysis that con
 \setlength{\fboxsep}{10pt}
 \noindent\fbox{%
     \parbox{\textwidth}{%
-        \textbf{Research Question 4 (RQ4):}	Is it feasible to employ a goal-oriented reliability verification based on PMC at runtime as part of a self-adaptation analysis for solving variability?
+        \textbf{Research Question 3 (RQ3):}	Is it feasible to employ a goal-oriented reliability verification based on parametric PMC as part of a self-adaptation analysis for solving variability?
+    }%
+}\bigskip
+
+Finally, considering the complexity and the analysis overhead caused by the manual generation of a probabilistic verification model from a goal model as required by our previous research questions, a fourth and final research question arises:
+
+\bigskip
+
+\setlength{\fboxsep}{10pt}
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+        \textbf{Research Question 4 (RQ4):}	Is it possible to automatically generate the probabilistic verification model for the reliability analysis defined in RQ1-3 from a system goal model modelled and stored by some GORE tool?
     }%
 }\bigskip
 
@@ -167,9 +178,11 @@ As discussed earlier, self-adaptation must rely on an adequate analysis that con
 
 To the best of our knowledge, a goal-oriented approach for dependability analysis based on a formal verification method have not yet been proposed. In order to achieve the probability estimation of the fulfilment of different system goals, it is important to realize that the primitive goal models as proposed in~\cite{Dardenne1993, Yu1996, Bresciani:2004} are designs artefacts and, as argued by Dalpiaz et al., not tailored for runtime analysis. Nonetheless, the RGM filled this gap by adding a behavioural specification to the static goal model~\cite{Dalpiaz:2013}.
 
-In contrast to previous approaches for dependability analysis through PMC, this work proposes a verification that is directly mapped to a system runtime goal model. Instead of building the probabilistic verification model from behaviour models like UML activity and sequence diagrams, we benefit from the RGM syntax that specifies the behaviour for goals and tasks to build a high-level DTMC model for reliability verification of different system goals (RQ2). This model, comparable to a high-level UML activity diagram, should also include the context effects over goals, means and qualitative metrics as defined by additional context notations in the goal model (RQ3).
+In contrast to previous approaches for dependability analysis through PMC, this work proposes a verification that is directly mapped to a system runtime goal model. Instead of building the probabilistic verification model from behaviour models like UML activity and sequence diagrams, we benefit from the RGM syntax that specifies the behaviour for goals and tasks to build a high-level DTMC model for reliability verification of different system goals (RQ1). This model, comparable to a high-level UML activity diagram, should also include the context effects over goals, means and qualitative metrics as defined by the contextual goal model~\cite{Ali:2010} (RQ2).
 
-PRISM tool provides a rich analysis environment for PMC. However, a runtime self-adaptation analysis must be automatic, i.e., based on computable processes without human intervention. The parametric PMC answers this requirement by generating a parametric formula for a given probabilistic model and property to be analysed with parameters in the place of constant variables. Thus, different runtime analysis may be performed by just initializing the parameters with values corresponding, e.g., to a specific context of operation, and evaluating the resulting formula. In our proposal, we investigate the feasibility of a parametric PMC as the formal method for the goal-oriented reliability analysis in self-adaptive systems (RQ4).
+PRISM tool provides a rich analysis environment for PMC. However, a runtime self-adaptation analysis must be automatic, i.e., based on computable processes without human intervention. The parametric PMC answers this requirement by generating a parametric formula for a given probabilistic model and property to be analysed with parameters in the place of constant variables. Thus, different runtime analysis may be performed by just initializing the parameters with values corresponding, e.g., to a specific context of operation, and evaluating the resulting formula. In our proposal, we investigate the feasibility of a parametric PMC as the formal method for the goal-oriented reliability analysis in self-adaptive systems (RQ3).
+
+Finally, to reduce the analysis overhead and to improve the scalability and the feasibility of our goal-oriented reliability analysis, a JAVA implementation was integrated to a tool that supports TROPOS goal modelling and analysis, namely TAOM4E. This extension provides automatic generation of a DTMC model in PRISM language from a RGM with or without additional context effect notations (RQ4).
 
 %for a goal-oriented reliability verification of self-adaptive systems, we aim to extend an existing GORE methodology that was originally restricted to the development of systems with no support for self-adaptation. The idea is to benefit from the goal modelling rationale and environment for requirements engineering, detailed architecture and design of the TROPOS methodology and contribute with an integrated approach for the dependability analysis as part of the self-adaptation loop based on a probabilistic model checking technique.
 
@@ -210,9 +223,9 @@ PRISM tool provides a rich analysis environment for PMC. However, a runtime self
 
 \section{Evaluation}
 
-The proposal has been evaluated with the application of the extended TROPOS methodology for context-aware, self-adaptive systems to the development of a Mobile Personal Emergency Response System (MPERS). This system may be seen as a body area network (BAN) with extended functionalities related to ubiquitous emergency response running in a mobile device [BAD]. Instead of static environment, the MPERS is conceived to allow patients with different health risk degrees to preserve their mobility while they are monitored and assisted. For being a mobile system, MPERS is affected by context variations and self-adaptation becomes a mandatory feature to avoid failures, as safety is of paramount importance for this system.
+The proposal has been evaluated with the application of the goal-oriented reliability analysis for self-adaptive systems to the development of a Mobile Personal Emergency Response System (MPERS). This system may be seen as a body area network (BAN) with extended functionalities related to ubiquitous emergency response running in a mobile device~\cite{Lorincz2004, MPERS:GoSafe}. Instead of a static environment, the MPERS is conceived to allow patients with different health risk degrees to preserve their mobility while they are monitored and assisted. For being a mobile system, MPERS is affected by context variations and self-adaptation becomes a mandatory feature to avoid failures, as safety is of paramount importance for this system.
 
-The MPERS features were based on real emergency response systems available at the industry and also at the BAN explored in previews works~\cite{Lorincz2004, Nunes:2012, MPERS:GoSafe}. In this evaluation, we focus on the development process of the MPERS and demonstrate the feasibility of the goal-oriented approach for the dependability analysis with a probabilistic model checking technique. In specific, our main goal is to provide reliability analysis capability for the MPERS system with a verification model mapped to the contextual/runtime goal model of the system-to-be, empowering both the analysts (design-time) and the system itself (runtime self-adaptation) with a precise method for reliability verification coped to the goal model specification.
+The MPERS features were based on real emergency response systems available at the industry and also at the BAN explored in previews works~\cite{Nunes:2012, MPERS:GoSafe}. In this evaluation, we focus on the development process of the MPERS and demonstrate the feasibility of the goal-oriented approach for the dependability analysis with a probabilistic model checking technique. In specific, our main goal is to provide reliability analysis capability for the MPERS system with a verification model mapped to the contextual/runtime goal model of the system-to-be, empowering both the analysts (design-time) and the system itself (runtime self-adaptation) with a precise method for reliability verification coped to the goal model specification.
 
 %If a medical emergency is detected, a geolocation feature should point out the location where the emergency response team must be addressed to. 
 
