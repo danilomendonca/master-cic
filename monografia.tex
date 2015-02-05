@@ -17,7 +17,7 @@
 % Pacotes importados
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage[british,UKenglish,USenglish,english,american]{babel}
+\usepackage[UKenglish]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{indentfirst}
 \usepackage{natbib}
@@ -27,7 +27,46 @@
 \usepackage{footnote}
 %\usepackage{minipage}
 \usepackage{tablefootnote} 
+\usepackage{color}
+\definecolor{darkgreen}{rgb}{0,1,0}
 \usepackage{listings}
+\lstset{% This applies to ALL lstlisting
+    backgroundcolor=\color{yellow!10},%
+    numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt%
+    }%
+% Add your keywords here, and have this in a separate file
+% and include it in your preamble
+% Applies only when you use it
+\lstdefinestyle{ANTLR}{
+    basicstyle=\small\ttfamily\color{magenta},%
+    breaklines=true,%                                      allow line breaks
+    moredelim=[s][\color{green!50!black}\ttfamily]{`}{'},% single quotes in green
+    moredelim=*[s][\color{black}\ttfamily]{options}{\}},%  options in black (until trailing })
+    commentstyle={\color{gray}\itshape},%                  gray italics for comments
+    morecomment=[l]{//},%                                  define // comment
+    emph={%
+        STRING, color, icon, meta, name, private, var, grammar%                                            literal strings listed here
+        },emphstyle={\color{blue}\ttfamily},%              and formatted in blue
+    alsoletter={:,|,;},%
+    morekeywords={:,|,;},%                                 define the special characters
+    keywordstyle={\color{black}},%                         and format them in black
+}
+\definecolor{prismgreen}{rgb}{0, 0.5, 0} 
+\lstdefinelanguage{Prism}{ % syntax highlight via font 
+        basicstyle=\color{red}\scriptsize\ttfamily, % small true type font (like courier)
+        breaklines=true,%                                      allow line breaks
+        keywords={bool,C,ceil,const,ctmc,double,dtmc,endinit,endmodule,endrewards, endsystem,F,false,floor,formula,G,global,I,init,int,label,max,mdp,min, module,nondeterministic,P,Pmin,Pmax,prob,probabilistic,R,rate,rewards, Rmin,Rmax,S,stochastic,system,true,U,X},% 
+        keywordstyle={\bfseries\color{black}},%
+        numberstyle=\tiny\color{black},%
+        comment=[l] {//}, morecomment=[s]{/*}{*/}, % single and multi-line 
+        commentstyle= \color{prismgreen}, % dark green 
+        tabsize=2, % tab treatment (going to be fixed in Prism) 
+        captionpos=b, % put captions at the bottom 
+        escapechar=@ % write LaTeX comments escaped by @ symbol 
+} 
+
+%define command \prism with one argument for inline printing of \prism code 
+\newcommand{\prism}[1]{\lstinline[language=Prism,basicstyle=\small\ttfamily]|#1|}
 \usepackage{enumerate}
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -104,11 +143,9 @@
   
   \end{resumo}
 
-  %\selectlanguage{american}
   \begin{abstract}
   	
   \end{abstract}
-  %\selectlanguage{american}
 \hyphenation{a-tri-bu-tos}
   \tableofcontents
   \listoffigures
