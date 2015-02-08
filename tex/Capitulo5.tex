@@ -1,6 +1,6 @@
-\chapter{Goal-oriented PMC for Reliability Analysis of Self-adaptive Systems}\label{ch:proposal}
+\chapter{Goal-oriented Dependability Analysis}\label{ch:proposal}
 
-This chapter presents our proposal for goal-oriented dependability analysis applied to the MPERS case study. Both TROPOS early and late requirements analysis phases are presented, as well as the goal-oriented probabilistic verification that requires a goal model with additional runtime regex for behaviour specification (RGM) and the context notations specifying context effects (CGM).
+This chapter presents our proposed goal-oriented dependability analysis based on PMC applied to the MPERS case study. TROPOS early and late requirements phases are shortly presented - as TROPOS is the reference methodology for goal modelling and analysis, as well as the dependability verification that requires a behaviour specification - provided by the runtime goal model -  and the context effects specification - provided by the contextual goal model.
 
 %Further details about the TROPOS methodology may be found in the reference literature~\cite{Bresciani:2004}. 
 
@@ -53,20 +53,17 @@ Environment changes is an important factor for MPERS, as the following condition
 \end{itemize}
 
 
-
-%TODO: IN CONTEXT SECTION
-%For all these environment variables, a context analysis as proposed by Ali et al. may be employed for the creation of the rationale for context monitoring, i.e., for how each context condition may be asserted as true or false through the monitoring of environment information. Some contexts are mapped to single monitorable facts, like `GPS signal' and `battery life'. Other like `patient health risk' are composed of multiple facts in a propositional formula.
-
-
 %Reliability verification of an Ambient Assisted Living System also based on body-area networks though PCM technique was explored by Fernandes~[Fernandes, 2012]. Reliability estimation demonstrates the non-determinism in the verification model that will result in an non-deterministic evaluation result. Moreover, PRISM cost/reward structures could be used for the verification of non-functional metrics such as power consumption. In this work, we limit the analysis to the reliability verification as part of a dependability analysis.
 
 %It will be up to the analyst and stakeholders to define which type of probabilistic model and which PCTL properties must be analysed for each different system. Dependability attributes may be relevant for any sort of system, but are certainly important for systems with some criticality degree, i.e., for those whose failure could have severe or catastrophic consequences for the user(s) and for the environment.
 
 
 
-\section{Goal Modelling and Analysis}
+\section{Goal-oriented Modelling and Analysis}
 
-The goal modelling and analysis of both early and late requirements phases in TROPOS methodology are applied to our MPERS case study. Next subsections briefly describe these two phases and present the resulting models.
+Goal modelling is the initial and fundamental step of the proposed approach. From the social environment in which stakeholders needs and dependencies are analysed to the high-level requirements elicitation for the system-to-be, the conventional goal-oriented modelling and analysis used by this work follows the TROPOS methodology. Despite the \textit{waterfall} presentation structure of this section, a iterative approach mixes the conventional goal modelling with the specification of both behaviour and context effects until the final contextual/runtime goal model can be transformed into a DTMC verification model for dependability analysis.
+
+%The goal modelling and analysis of both early and late requirements phases in TROPOS methodology are applied to our MPERS case study. Next subsections briefly describe these two phases and present the resulting models.
 
 \subsection{TROPOS Early Requirements Phase}
 
@@ -96,17 +93,27 @@ The distinguished yellow circle indicates that MPERS is a system actor. MPERS go
 \label{fig:MPERS_LR}
 \end{figure*}
 
+Later requirements phase concentrates the analysis in the system-to-be and its operational environment. The MPERS goal model occupies the most part of the diagram and each of its main goals are further decomposed through AND/OR decomposition. Also, means-end decomposition specifies how leaf-goals can be fulfilled by tasks performed by the system actor. Figure~\ref{fig:MPERS_LR} illustrates the late requirements diagram for the MPERS.
 
-Later requirements phase concentrates the analysis in the system-to-be and its operational environment. The MPERS goal model occupies the most part of the diagram and each of its main goals are further decomposed through AND/OR decomposition. Also, means-end tasks specifies how leaf-goals can/must be fulfilled and the runtime regex across goals and tasks specifies dynamic properties of the system-to-be behaviour. Figure~\ref{fig:MPERS_LR} illustrates the late requirements diagram for the MPERS.
+To evaluate our proposal, we have explored the PMC technique for the reliability analysis of a system goal model resulting from the TROPOS late requirements phase with additional behaviour and contextual specifications described in the next subsections. The idea is to initially evaluate the approach in a monolithic representation without the additional complexity of a multi-agent architecture. Hence, the evaluation involving later TROPOS phases should be explored in future work. 
 
-At this stage of the methodology, the system is represented as a monolithic actor and its goal model may be extended with the runtime specification. This extended model merges multiple views in the same diagram: goals, tasks and relations represent the requirements view for the system-to-be as well as the intentionality behind then, while the runtime specification provides the behaviour specification required for our goal-oriented dependability analysis. 
+%The remaining of this section will focus on the proposed goal-oriented contextual dependability analysis.
+
+%and the runtime regex across goals and tasks specifies dynamic properties of the system-to-be behaviour. 
+
+\subsection{Runtime Goal Modelling}
+
+%stage of the methodology
+At this point, the system is modelled as a monolithic actor and its goal model may be extended with the behaviour specification to compose a RGM. This extended model merges multiple views in the same diagram: goals, tasks and relations represent the requirements view for the system-to-be as well as the intentionality behind then, while the runtime specification provides the behaviour specification required for our goal-oriented dependability analysis based on PMC. 
+
+The late requirements diagram in Figure~\ref{fig:MPERS_LR} already presents the runtime regex. Goals and tasks in the model have been notated with an unique identifier (ID). Numeric IDs are prefixed with an `G', in the case of goals, and `T', in the case of tasks. For each decomposed element, a corresponding runtime regex consisting of IDs and rules specifies the behaviour of all immediately underlying goals and tasks. Parenthesis are used for grouping related goals/tasks and for clarification purpose only, as temporal order is parsed from the type of the rule and its position in the regex.
+
+RGM behaviour specification rules have been described in Chapter~\ref{ch:baseline}. The following subsection compares the MPERS RGM presented in Figure~\ref{fig:MPERS_LR} to a UML activity diagram for better understanding of the model and its specified behaviour.
 
 %in terms of goal achievement  and task execution.
 
-%REVISE
-To evaluate our proposal, we have explored the use of the PMC technique for the reliability verification of the system goal model resulting from the TROPOS late requirements phase. The idea is to initially evaluate the approach in a monolithic representation without the additional complexity of a multi-agent architecture. The evaluation involving later TROPOS phases should be explored in future work. The remaining of this section will focus on the proposed goal-oriented contextual dependability analysis.
 
-\subsection{RGM - UML activity diagram comparison}\label{ssec:RGM-UML}
+\subsubsection{RGM - UML activity diagram comparison}\label{ssec:RGM-UML}
 
 A similar behaviour specification achieved with the RGM in Figure~\ref{fig:MPERS_LR} could be provided by an UML activity diagram with activities representing the leaf-tasks in the model. However, activity diagrams have an homogeneous abstraction level and do not clearly correlate behaviour to the requirements they are meant to satisfy. In contrast to the RGM, activity diagrams denote behaviour through graphical symbols, while the RGM mixes the original goal model notation with a runtime regex. This simple notation increases the utility of a goal model diagram. Figure~\ref{fig:MPERS_UMLAD} presents an activity diagram corresponding to the MPERS leaf-tasks. 
 
@@ -122,50 +129,108 @@ Among its limitations, RGM does not express that an emergency has to be confirme
 %could be checked for non-functional requirements such as dependability attributes.
 
 The idea of a runtime goal model is not to replace UML activity diagrams, but to complement the static goal model with a clear runtime syntax that could be used for 
-documentation, team communication and for conformance verification at both design time - e.g., through model-based verification - and during system execution - as the execution monitoring originally proposed by Dalpiaz et al~[RGM]. Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or complemented by traditional UML behaviour models. In this work, RGM is used as input for our goal-oriented dependability analysis based on PMC.
+documentation, team communication and for conformance verification at both design time - e.g., through model-based verification - and during system execution - as the execution monitoring originally proposed by Dalpiaz et al~\cite{Dalpiaz:2013}. Depending on the complexity of the behaviour specification, a more robust runtime syntax would have to be employed or complemented by traditional UML behaviour models. In this work, RGM is used as input for our goal-oriented dependability analysis based on PMC.
+
+\subsection{Contextual Goal Modelling}
+
+At this phase, the analysis of the environment in which the system will operate is performed. A careful investigation of what is static and what may change during operation should list the contexts facts and variables that may potentially affect goals, operational means (tasks) and the quality of different means (alternatives). In CGM, contexts are be described by statements and facts. Statements must be supported by facts, while facts can be monitored by the system. In our work, we simplify the analysis by just considering context facts. Facts are specified as boolean expressions composed of variables and operators. Variables can hold boolean or real numbers. The following operators can be used in the modelling environment:
+%TODO: CHECK THE CGM CONTEXT ANALYSIS TO SEE IF FACTS ARE RESTRICTED TO TRUE OR FALSE
+
+\begin{itemize}
+
+\item $<$, $<=$, $>=$, $>$ (relational operators)
+\item $=$,\ $!=$ (equality operators)
+\item $!$ (negation)
+\item $\&$ (conjunction)
+\item $|$ (disjunction)
+%\item $-$ (unary minus)
+%\item $*$, $/$ (multiplication, division)
+%\item $+$, $-$ (addition, subtraction)
+
+\end{itemize} 
+
+Table~\ref{tab:MPERS_CTXS} presents the contexts affecting the MPERS system. Each context has an unique identifier (CID), a textual description and the corresponding boolean expression that later will be parsed into a PRISM language formula and compose a guard condition in leaf-tasks modules, as detailed in Section~\ref{ssec:ctx_effects_dtmc}.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+{\renewcommand{\arraystretch}{1.5}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}lllX@{}}
+\toprule
+\textbf{CID} & \textbf{Description} & \textbf{Boolean expression}                          	&\textbf{A.E.}\\ \midrule
+\textbf{C1}  & User is at home      & $HOME\_WIFI\quad \&\quad LOCATION\_AGE\ <=\ 10$ 	&G6\\
+\textbf{!C1}  & User is out         & $!HOME\_WIFI\quad |\quad LOCATION\_AGE\ >\ 10$	&G7\\
+\textbf{C2}  & Mobile signal        & $SERVICE\ !=\ false$                           	&T8.1\\
+\textbf{C3}  & WI-FI is on          & $WIFI\ !=\ false$                              	&T6.0. T7.01\\
+\textbf{C4}  & GPS signal           & $GPS\ !=\ false$                               	&T7.10\\
+\textbf{C5}  & Internet             & $INTERNET\ !=\ false$                          	&T8.0, T12.0\newline T23.0, G5\\
+\textbf{C6}  & Disk space available & $DISK\_SPACE\ >=\ 5$                           	&T17.1\\
+\textbf{C7}  & Low health risk      & $HR\ =\ 1$                                     	&G13\\
+\textbf{C8}  & Moderate health risk & $HR\ =\ 2$                                     	&-\\
+\textbf{C9}  & Severe health risk   & $HR\ =\ 3$                                     	&-\\
+\textbf{C10} & Emergency            & $EMERGENCY\ !=\ false$                                         	&G5\\ \bottomrule
+\end{tabularx}
+\caption{Contexts affecting the MPERS system.}
+\label{tab:MPERS_CTXS}
+}
+\end{table}
+\normalsize
+
+Column A.F. (Affected element) indicates one or more goals/tasks that are activated/restricted by the context. Isolated boolean facts have been explicitly specified using the \textit{false} term just for clarification. In order to specify the context effects in the modelling environment, we have used the formal specification area for each affected element provided by the TAOM4E GORE tool, as presented by Figure~\ref{fig:TAOM4E_CTX_CREATION}.
+
+\begin{figure*}
+\centering
+\includegraphics[width=1\textwidth]{imgs/TAOM4E_CTX_CREATION.png}
+\caption{Context effect associated in the TAOM4E formal specification area.}
+\label{fig:TAOM4E_CTX_CREATION}
+\end{figure*}
+
+%TODO: IN CONTEXT SECTION
+%For all these environment variables, a context analysis as proposed by Ali et al. may be employed for the creation of the rationale for context monitoring, i.e., for how each context condition may be asserted as true or false through the monitoring of environment information. Some contexts are mapped to single monitorable facts, like `GPS signal' and `battery life'. Other like `patient health risk' are composed of multiple facts in a propositional formula.
 
 
-%\section{Goal-oriented contextual dependability analysis}
+%The multiple context effects described in 
 
 %To evaluate our verification approach with the MPERS case study, we have used a discrete-time Markov chain (DTMC) probabilistic model and focused on the verification of NFR related to dependability, i.e., NFR that are either direct attributes encompassed by dependability or that are related to one or more of these attributes.
 
-\subsection{Non-functional requirements analysis}
-
-%\subsubsection{NFR framework with quantitative constraints}
-
-TROPOS goal model also provides rationale for NFR analysis, as it originally inherited the softgoal analysis from the NFR framework~[NFR]. In our approach, non-functional constraints are modelled as qualitative hard goals with a clear cut value for its satisfaction, complementing the other NFRs modelled as softgoals. As a benefit of a goal-oriented modelling for NFRs, the elicitation of a given NFR may be justified by its relation to other elements in the model. Figure~\ref{fig:MPERS_NFR} presents the NFRs for the MPERS system actor.
-
-\begin{figure*}[h!]
-\centering
-\includegraphics[width=1\textwidth]{imgs/MPERS_NFR.png}
-\caption{MPERS non-functional requirements.}
-\label{fig:MPERS_NFR}
-\end{figure*}
-
-%Intersting for motivation!
-Similarly to the Awareness Requirements by Souza et al.~\cite{Souza:2011}, some NFR define metrics over other requirements. These meta-requirements are not directly fulfilled by system functionalities like `emergency awareness' is fulfilled by `notify emergency' or `confidentiality' could be fulfilled by `user authentication', but by how these functionalities will perform. Reliability, for instance, is inversely proportional to the likelihood of failures. Hence, the reliability metric depends on the probability of system functionalities to successfully meeting their goals. 
-
-Other MPERS NFR are `emergency awareness' and `resources optimization'. These softgoals are addressed by system functionalities. The former receives a full contribution (double positive sign) from goal `emergency is notified', meaning it is fully satisfied by this goal. The later is just assumed to be partially satisfied by the `emergency is checked' functional goal.
-
-
-%The conformity to these NFR is not implicit in the model, it requires some verification technique.
-
-%PUT a goal model with hard goal NFRs!
-
-%PUT SOME NFR CONCEPTUAL MODEL HERE!
-
-Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to stakeholder needs through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. 
-
-Reliability was selected as metric over the system execution (meta-requirement), while availability and maintainability are partially satisfied by the `low power consumption' softgoal and MPERS ability to update emergency rules at runtime, respectively. This proposal focus on reliability analysis and will not discuss the verification of other relevant NFRs.
-
-%evaluation will focus on the reliability metric and, for the sake of simplicity, will omit the verification of other relevant NFRs.
+%\subsection{Non-functional requirements analysis}
+%
+%%\subsubsection{NFR framework with quantitative constraints}
+%
+%TROPOS goal model also provides rationale for NFR analysis, as it originally inherited the softgoal analysis from the NFR framework~[NFR]. In our approach, non-functional constraints are modelled as qualitative hard goals with a clear cut value for its satisfaction, complementing the other NFRs modelled as softgoals. As a benefit of a goal-oriented modelling for NFRs, the elicitation of a given NFR may be justified by its relation to other elements in the model. Figure~\ref{fig:MPERS_NFR} presents the NFRs for the MPERS system actor.
+%
+%\begin{figure*}[h!]
+%\centering
+%\includegraphics[width=1\textwidth]{imgs/MPERS_NFR.png}
+%\caption{MPERS non-functional requirements.}
+%\label{fig:MPERS_NFR}
+%\end{figure*}
+%
+%%Intersting for motivation!
+%Similarly to the Awareness Requirements by Souza et al.~\cite{Souza:2011}, some NFR define metrics over other requirements. These meta-requirements are not directly fulfilled by system functionalities like `emergency awareness' is fulfilled by `notify emergency' or `confidentiality' could be fulfilled by `user authentication', but by how these functionalities will perform. Reliability, for instance, is inversely proportional to the likelihood of failures. Hence, the reliability metric depends on the probability of system functionalities to successfully meeting their goals. 
+%
+%Other MPERS NFR are `emergency awareness' and `resources optimization'. These softgoals are addressed by system functionalities. The former receives a full contribution (double positive sign) from goal `emergency is notified', meaning it is fully satisfied by this goal. The later is just assumed to be partially satisfied by the `emergency is checked' functional goal.
+%
+%
+%%The conformity to these NFR is not implicit in the model, it requires some verification technique.
+%
+%%PUT a goal model with hard goal NFRs!
+%
+%%PUT SOME NFR CONCEPTUAL MODEL HERE!
+%
+%Each requirement in a goal model must come from another requirement through decomposition, means-end or contribution links, or it must be directly mapped to stakeholder needs through dependency links. Emergency center attended the patient's needs by providing and maintaining the MPERS system itself and by assuring other NFR for the system. 
+%
+%Reliability was selected as metric over the system execution (meta-requirement), while availability and maintainability are partially satisfied by the `low power consumption' softgoal and MPERS ability to update emergency rules at runtime, respectively. This proposal focus on reliability analysis and will not discuss the verification of other relevant NFRs.
+%
+%%evaluation will focus on the reliability metric and, for the sake of simplicity, will omit the verification of other relevant NFRs.
 
 \section{Goal-oriented Probabilistic Verification Model}\label{ssec:NFR-verification}
 
 %NOT HERE!
 %The probabilistic verification of systems with variability is not a novelty by itself. Many proposals have addressed this problem in the context of Dynamic Software Product Lines (DSPL), some of then using the PMC technique~[Vini, Paula, Who Else?]. In DSPL, optional and alternative features may be activated or deactivated at runtime. A family based verification of one or multiple NFRs, also called qualitative goals, indicates what combinations are valid or which combination is optimal.
 
-This section describes the application of a goal-oriented PMC technique for the reliability verification of a runtime goal model with additional context effect notations. We call it a goal-oriented probabilistic verification or goal-oriented dependability analysis because the probabilistic model, in this case a DTMC model, is built directly from a runtime goal model with the purpose of evaluating PCTL properties related to the reliability of the system, i.e., to the success probability of different goals in being fulfilled.
+This section describes the application of a goal-oriented PMC technique for the reliability verification of a runtime goal model with additional context effect notations. We call it a goal-oriented probabilistic verification or goal-oriented dependability analysis because the probabilistic model, in this case a DTMC model, is built directly from a runtime goal model with the purpose of evaluating PCTL properties related to the probability of different goals in being fulfilled, i.e., to the reliability of the system.
 
 % to verify the conformance of the RGM to defined non-functional constraints and also to solve the variability problem at design time considering both cases explained in Section~\ref{sec:variability}, i.e., for static context and dynamic contexts.
 
@@ -251,11 +316,45 @@ The most trivial behaviour rule consist of the temporal fulfilment and execution
           
 \end{figure}
 
-Sequential tasks ($T1;T2$) have subsequent time slots, meaning that T2's initial transition is synchronized to T1's final transition through PRISM labels. In contrast, interleaved tasks ($T1\#T2$) have their initial state transition synchronized at the same time slot through labels, but occupy different time paths, i.e., following state transitions of these tasks are interleaved.  Listings~\ref{lst:PRISM_SEQ_TSKS} and~\ref{lst:PRISM_INT_TSKS} present the DTMC modules for each case.
+Sequential tasks ($T1;T2$) have subsequent time slots, meaning that T2's initial transition is synchronized to T1's final transition through PRISM labels. Considering the transition systems $TS_1$ and $TS_2$ corresponding to T1 and T2, respectively: $TS_i\ =\ (S_i, Act_i, \rightarrow_i, I_i, AP_i, L_i),\quad i\ =\ 1,2$, the transition system resulting from $TS_1;TS_2$ is defined by: 
+
+$$Act_1 \cap Act_2\ =\ \{\alpha\},\quad \frac{s_1\ \xrightarrow{\alpha}\ s\textquotesingle_1\ \wedge\ s_2\ \xrightarrow{\alpha}\ s\textquotesingle_2}{<s_1,s_2>\ \xrightarrow{\alpha}\ <s_1\textquotesingle, s_2\textquotesingle>}$$
+
+Where $s_1 = running$, $s\textquotesingle_1 = success$, $s_2 = initial$, $s\textquotesingle_2 = running$ and $\alpha = success_1$.
+
+%$$Post(s_{running},\alpha)\ =\ \{s_{success}\},\ s \in S_1,\quad Post(s_{initial},\alpha)\ =\ \{s_{running}\},\  s \in S_2.,$$
+
+In contrast, interleaved tasks ($T1\#T2$) have their initial state transition synchronized at the same time slot through labels, but occupy different time paths, i.e., following state transitions of these tasks are interleaved. In this case, the transition system resulting from $TS_1\#TS_2$ following a previous transition system $TS_p$ is defined by:
+
+$$Act_p\ \cap\ Act_1 \cap Act_2\ =\ \{\alpha\},\quad \frac{s_1\ \xrightarrow{\alpha}\ s\textquotesingle_1\ \wedge\ s_2\ \xrightarrow{\alpha}\ s\textquotesingle_2}{<s_1,s_2>\ \xrightarrow{\alpha}\ <s_1\textquotesingle, s_2\textquotesingle>}$$
+
+\noindent
+where $s_1 = initial$, $s_2 = initial$, $s\textquotesingle_1 = running$, $s\textquotesingle_2 = running$ and $\alpha = success_p$, and:
+
+$$\beta_1 \in Act_1,\ \beta_2 \in Act_2,\quad \frac{s_1\ \xrightarrow{\beta_1}\ s\textquotesingle_1}{<s_1,s_2>\ \xrightarrow{\beta_1}\ <s\textquotesingle_1, s_2>},\quad \frac{s_2\ \xrightarrow{\beta_2}\ s\textquotesingle_2}{<s_1,s_2>\ \xrightarrow{\beta_2}\ <s_1, s\textquotesingle_2>}$$
+
+\noindent
+where $s_1 = running$, $s_2 = running$, $ s\textquotesingle_1 = success$, $s\textquotesingle_2 = success$ and $\beta_i = success_i$.
+\bigskip
+
+Generically, for any finite number of interleaved tasks succeeding a task $T_0$, a resulting transition system $TS_0;TS_1\#..\#TS_i\#..\#TS_N$, where $0 < i \leq N$ is defined as:
+
+%General interleaving
+$$\bigcap_{0 \leq i \leq N} Act_i\ =\ \{\alpha\},\quad \frac{s_0\ \xrightarrow{\alpha}\ s\textquotesingle_0\ \wedge\ ...\ \wedge\ s_i\ \xrightarrow{\alpha}\ s\textquotesingle_i\ \wedge\ ...\ \wedge\ s_N\ \xrightarrow{\alpha}\ s\textquotesingle_N}{<s_0,...,s_i,...,s_N>\ \xrightarrow{\alpha}\ <s_0\textquotesingle, ...,s_i\textquotesingle,...,s_N\textquotesingle>}$$
 \medskip
 
-\begin{lstlisting}[language=Prism, caption={Sequential tasks T15 and T16 as DTMC modules with final transitions of the first module synchronized to the initial transition of the former.},label={lst:PRISM_SEQ_TSKS}] 
-const double rTaskT15=0.999;
+\noindent
+where $s_i = initial$, $s\textquotesingle_i = running$ and $\alpha = success_0$, and:
+
+$$\bigcup_{0 < i \leq N} \frac{s_i\ \xrightarrow{\beta_i}\ s\textquotesingle_i}{<s_1,...,s_i,...s_N>\ \xrightarrow{\beta_1}\ <s_1, ..., s\textquotesingle_i, ..., s_N>}$$
+\medskip
+
+\noindent
+where $s_i = running$, $ s\textquotesingle_i = success$, $\beta_1 \in Act_i$  and $\beta_i = success_i$. Listings~\ref{lst:PRISM_SEQ_TSKS} and~\ref{lst:PRISM_INT_TSKS} present the PRISM DTMC modules for $T15;T16$ and $T21.0\#T21.1$, respectively.
+\medskip
+
+\begin{lstlisting}[language=Prism, caption={Sequential tasks T15 and T16 as DTMC modules with final transitions of the first module synchronized to the initial transition of the second.},label={lst:PRISM_SEQ_TSKS}] 
+const double rTaskT15;
 module T15_LookupActiveSensors
 	sT15 :[0..4] init 0;
 	
@@ -266,7 +365,7 @@ module T15_LookupActiveSensors
 	[failT15] sT15 = 4 -> (sT15'=4);//final state failure
 endmodule
 
-const double rTaskT16=0.999;
+const double rTaskT16;
 
 module T16_ReadActiveSensors
 	sT16 :[0..4] init 0;
@@ -279,8 +378,8 @@ module T16_ReadActiveSensors
 endmodule
 \end{lstlisting}
 
-\begin{lstlisting}[language=Prism, caption={Interleaved tasks T21.0 and T21.1 as DTMC modules with initial transition synchronized.},label={lst:PRISM_INT_TSKS}] 
-const double rTaskT21_0=0.999;
+\begin{lstlisting}[language=Prism, caption={Interleaved tasks T21.0 and T21.1 as DTMC modules with initial transition synchronize and running transition interleaved.},label={lst:PRISM_INT_TSKS}] 
+const double rTaskT21_0;
 module T21_0_DisplayEmergencyScreen
 	sT21_0 :[0..4] init 0;
 	
@@ -291,7 +390,7 @@ module T21_0_DisplayEmergencyScreen
 	[failT21_0] sT21_0 = 4 -> (sT21_0'=4);//final state failure
 endmodule
 
-const double rTaskT21_1=0.999;
+const double rTaskT21_1;
 
 module T21_1_CreatePlatformNotification
 	sT21_1 :[0..4] init 0;
@@ -306,7 +405,7 @@ endmodule
 
 %Other supported behaviours are: alternative execution ($E1|E2$), optional execution (opt(E1)) and conditional execution (try(E)?E1:E2). For alternative execution,
 
-\subsubsection{XOR-decomposition}
+\subsubsection{Alternative execution}
 
 In the case of OR-decomposition with additional `|' behaviour rule, a resulting XOR-decomposition specifies that only one goal/task among two or more may be selected, i.e., they are mutually exclusive. Figures~\ref{fig:UML_ALT_TSKS} illustrate the alternative OR-decomposition in an UML activity diagram.
 
@@ -317,7 +416,29 @@ In the case of OR-decomposition with additional `|' behaviour rule, a resulting 
 \label{fig:UML_ALT_TSKS}
 \end{figure*}
 
-To represent this rule in a DTMC model, an additional parameter  defines which alternative from a set of two or more is selected for analysis. Listing~\ref{lst:PRISM_ALT_TSKS} presents the DTMC modules for alternative tasks T9.00 and T9.01. For this behaviour rule, both time slot and time path are equal for the alternatives, as only one task may be selected. The increment is defined by surrounding `;' or `\#' rule. 
+Alternative execution is conditioned to some input data provided by the analyst, at design time, or by the system, at runtime. Considering the transition systems $TS_1$ and $TS_2$ corresponding to alternative tasks T1 and T2: $TS_i\ =\ (S_i, Act_i, \rightarrow_i, I_i, AP_i, L_i),\quad i\ =\ 1,2$, the transition system resulting from $TS_1|TS_2$ is defined by the same sequential/interleaved rules and by additional rules for the transitions from the initial state to the running or to the skipped states: 
+
+$$\{\gamma_1, \gamma_2\}\ \subset\ (Act_1\ \cap\ Act_2)$$
+
+$$\frac{s_1\ \xrightarrow{\gamma_1}\ s\textquotesingle_1\ \wedge\ s_2\ \xrightarrow{\gamma_1}\ s\textquotesingle_2}{<s_1,s_2>\ \xrightarrow{\gamma_1}\ <s\textquotesingle_1, s\textquotesingle_2>},\quad \frac{s_1\ \xrightarrow{\gamma_2}\ s\textquotesingle\textquotesingle_1\ \wedge\ s_2\ \xrightarrow{\gamma_2}\ s\textquotesingle\textquotesingle_2}{<s_1,s_2>\ \xrightarrow{\gamma_2}\ <s\textquotesingle\textquotesingle_1, s\textquotesingle\textquotesingle_2>}$$
+\medskip
+
+\noindent
+where $s_1 = initial$, $s_2 = initial$, $s\textquotesingle_1 = running$, $s\textquotesingle_2 = skipped$, $s\textquotesingle\textquotesingle_1 = skipped$, $s\textquotesingle\textquotesingle_2 = running$, $\gamma_1 = select_1$ and $\gamma_2 = select_2$. 
+\medskip
+
+Generically, for any finite number of alternative tasks, a resulting transition system $TS_1|..|TS_i|..|TS_N$, for $0 < i \leq N$, is defined as:
+
+$$\{\gamma_1,..,\gamma_i,..,\gamma_N\}\ \subset\ \bigcap_{0 < i \leq N} Act_i$$
+
+$$\bigcup_{0 < i \leq N} \frac{s_1\ \xrightarrow{\gamma_i}\ s\textquotesingle_1\ \wedge\ ...\ \wedge\ s_i\ \xrightarrow{\gamma_i}\ s\textquotesingle_i\ \wedge\ ...\ \wedge\ s_N\ \xrightarrow{\gamma_i}\ s\textquotesingle_N}{<s_1,...,s_i,...s_N>\ \xrightarrow{\gamma_i}\ <s\textquotesingle_1, ..., s\textquotesingle_1, ..., s\textquotesingle_N>}$$
+\medskip
+
+\noindent
+where $s_i\ =\ initial,$ for $0\ <\ i\ \leq\ N$, $s\textquotesingle_j\ =\ skipped$ and $\gamma_j\ =\ skip$ for $0\ <\ j\ \leq\ N$, $j\ \neq\ i$, $s_i\ =\ running$ and $\gamma_i\ = select$.
+\bigskip
+
+To represent this rule in a DTMC model, an additional parameter  defines which alternative from a set of two or more is selected for analysis. Instead of different actions selecting/skipping different alternatives, alternative selection is achieved by guard conditions on the transitions to the running/skipped states of each module. Listing~\ref{lst:PRISM_ALT_TSKS} presents the DTMC modules for alternative tasks T9.00 and T9.01. For this behaviour rule, both time slot and time path are equal for the alternatives, as only one task may be selected.
 \medskip
 
 \begin{lstlisting}[language=Prism, caption={Alternative tasks T9.00 and T9.01 as DTMC modules with additional integer parameter used for selection.},label={lst:PRISM_ALT_TSKS}] 
@@ -325,8 +446,8 @@ const double rTaskT9_0=0.999;
 module T9_0_RESTRequisition
 	sT9_0 :[0..4] init 0;
 	
-	[success0_2] (CONNECTION != 0) & sT9_0 = 0 -> (sT9_0'=1);//init to running
-	[success0_2] !(CONNECTION != 0) & sT9_0 = 0 -> (sT9_0'=4);//init to failure
+	[success0_2] sT9_0 = 0 -> (sT9_0'=1);//init to running
+	[success0_2] sT9_0 = 0 -> (sT9_0'=4);//init to failure
 	[] sT9_0 =  1 -> rTaskT9_0 : (sT9_0'=2) + (1 - rTaskT9_0) : (sT9_0'=4);//running to final state
 	[success2_3] sT9_0 = 2 -> (sT9_0'=2);//final state success
 	[success2_3] sT9_0 = 3 -> (sT9_0'=3);//final state skipped
@@ -349,7 +470,7 @@ endmodule
 
 \subsubsection{Optional execution}
 
-Given a decomposed goal or task, its fulfilment or execution may be optional, meaning that at least one other goal/task must necessarily be fulfilled/executed. It is trivial to realize that optional behaviour rules $opt(E)$ are only possible in OR-decompositions. Figure~\ref{fig:UML_OPT_TSK} illustrate an optional decomposition.
+Given a decomposed goal or task, its fulfilment or execution may be optional, meaning that at least one other goal/task must necessarily be fulfilled/executed. It is trivial to realize that optional behaviour rules $opt(E)$ are only possible in OR-decompositions. While in pure OR-decomposition of goals/tasks at least one must be selected, in optional decomposition at least $|optional\ tasks| + 1$ are required. Figure~\ref{fig:UML_OPT_TSK} illustrate an optional task T.
 
 \begin{figure*}[ht!]
 \centering
@@ -358,7 +479,18 @@ Given a decomposed goal or task, its fulfilment or execution may be optional, me
 \label{fig:UML_OPT_TSK}
 \end{figure*}
 
-Similarly to alternative execution, optional tasks are enabled for analysis by an additional parameter in the model. Listing~\ref{lst:PRISM_OPT_TSK} illustrates the DTMC module for optional task T17.2. Time slot or path increment is also defined by surrounding `;' or `\#' rule. 
+Given the transition systems $TS_o$ corresponding to an optional tasks T: $TS_o\ =\ (S_o, Act_o, \rightarrow_o, I_o, AP_o, L_o)$, defined by the same sequential/interleaved rules and an additional rules for the transitions between the initial state and the running/skipped states:
+
+$$\{\gamma_1,\gamma_2\}\ \subset\ Act_o$$
+
+$$\frac{s_o\ \xrightarrow{\gamma_1}\ s\textquotesingle_o}{<s_1>\ \xrightarrow{\gamma_1}\ <s\textquotesingle_o>},\quad \frac{s_o\ \xrightarrow{\gamma_2}\ s\textquotesingle\textquotesingle_o}{<s_o>\ \xrightarrow{\gamma_2}\ <s\textquotesingle\textquotesingle_o>}$$
+\medskip
+
+\noindent
+where $s_o = initial$, $s\textquotesingle_o = running$, $s\textquotesingle\textquotesingle_o = skipped$, $\gamma_1 = select$ and $\gamma_2 = skip$.
+\medskip
+
+Similarly to alternative execution, optional tasks are enabled for analysis by an additional variable in the model. Instead of different actions, as described by the transition system $TS_o$, the select variable ($OPT\_17\_1$ in Listing~\ref{lst:PRISM_OPT_TSK}) determines in a single action (run) which state will follow the initial state: running, if $OPT\_T\_ID=1$, or skipped, if $OPT\_T\_ID=0$. Listing~\ref{lst:PRISM_OPT_TSK} illustrates the DTMC module for optional task T17.1. 
 \medskip
 
 \begin{lstlisting}[language=Prism, caption={An optional task T17.1 as a DTMC module with additional boolean parameter.},label={lst:PRISM_OPT_TSK}] 
@@ -368,9 +500,9 @@ const int OPT_T17_1;
 module T17_1_PersistInDatabase
 	sT17_1 :[0..4] init 0;
 	
-	[success1_3] (DISK <= 90) & sT17_1 = 0 -> (OPT_T17_1) : (sT17_1'=1) + (1 - OPT_T17_1) : (sT17_1'=3);//init to running or skip to final success
+	[success1_3] (DISK <= 90) & sT17_1 = 0 -> (OPT_T17_1) : (sT17_1'=1) + (1 - OPT_T17_1) : (sT17_1'=3);//init to running or to final skipped
 	[success1_3] !(DISK <= 90) & sT17_1 = 0 -> (sT17_1'=4);//init to fail
-	[] sT17_1 =  1 -> rTaskT17_1 : (sT17_1'=2) + (1 - rTaskT17_1) : (sT17_1'=4);//running to final state
+	[runT17_1] sT17_1 =  1 -> rTaskT17_1 : (sT17_1'=2) + (1 - rTaskT17_1) : (sT17_1'=4);//running to final state
 	[success1_4] sT17_1 = 2 -> (sT17_1'=2);//final state success
 	[success1_4] sT17_1 = 3 -> (sT17_1'=3);//final state skipped
 	[failT17_1] sT17_1 = 4 -> (sT17_1'=4);//final state failure
@@ -379,7 +511,7 @@ endmodule
 
 \subsubsection{Conditional execution}
 
-Some goals/tasks are conditioned to the fulfilment/execution of another goal/task. In such cases, a AND/OR-decomposition have an additional ternary rule $try(E1)?E2:E3$ where E2 is conditioned to the success of E1, while E3 is conditioned to its failure. The skip term is used if no further behaviour is conditioned to either the success or the failure of E1, for instance, in $try(T1)?skip:T2$ where task T2 is only required for execution if T1 fails and no further behaviour is expected if T1 succeeds. Figure~\ref{fig:UML_TRY_TSKS} illustrate a conditional decomposition.
+Some goals/tasks are conditioned to the fulfilment/execution of another goal/task. In such cases, an AND/OR-decomposition have an additional ternary rule $try(E1)\ ?\ E2:E3$ where $E2$ is conditioned to the success of $E1$, while $E3$ is conditioned to its failure. The $skip$ term is used if no further behaviour is conditioned to either the success or the failure of $E1$, for instance, in $try(T1)?skip:T2$, where task $T2$ is only required for execution if $T1$ fails and no further behaviour is expected if $T1$ succeeds, which specifies a fault tolerant behaviour. Figure~\ref{fig:UML_TRY_TSKS} illustrate a conditional decomposition.
 
 \begin{figure*}[ht!]
 \centering
@@ -388,7 +520,18 @@ Some goals/tasks are conditioned to the fulfilment/execution of another goal/tas
 \label{fig:UML_TRY_TSKS}
 \end{figure*}
 
-In conditional execution, labels are used to condition the execution of tasks to the success and failure of a third task. Figure~\ref{lst:PRISM_TRY_TSKS} present the DTMC module for conditional tasks T9.0 and T9.1. 
+Considering the transition systems $TS_1$, $TS_2$ and $TS_3$ corresponding to alternative tasks T1, T2 and T3: $TS_i\ =\ (S_i, Act_i, \rightarrow_i, I_i, AP_i, L_i),\quad i\ \in\ \{1,2,3\}$, the transition system resulting from $try(TS_1)\ ?\ TS_2:TS_3$ is defined by the same sequential/interleaved rules and the additional rules for conditional transitions from the initial state to the running/skipped states: 
+
+$$\{\delta_1, \delta_2\}\ \subset\ (Act_1\ \cap\ Act_2 \cap\ Act_3)$$
+
+$$\frac{s_1\ \xrightarrow{\delta_1}\ s\textquotesingle_1\ \wedge\ s_2\ \xrightarrow{\delta_1}\ s\textquotesingle_2\ \wedge\ s_3\ \xrightarrow{\delta_1}\ s\textquotesingle_3}{<s_1,s_2, s_3>\ \xrightarrow{\delta_1}\ <s\textquotesingle_1, s\textquotesingle_2, s\textquotesingle_3>},\quad \frac{s_1\ \xrightarrow{\delta_2}\ s\squote\squote_1\ \wedge\ s_2\ \xrightarrow{\delta_2}\ s\squote\squote_2\ \wedge\ s_3\ \xrightarrow{\delta_2}\ s\squote\squote_3}{<s_1, s_2, s_3>\ \xrightarrow{\delta_2}\ <s\squote\squote_1, s\squote\squote_2, s\squote\squote_3>}$$
+\medskip
+
+\noindent
+where $s_1 = initial$, $s_2 = initial$, $s_3 = initial$, $s\textquotesingle_1 = success$, $s\textquotesingle_2 = running$, $s\textquotesingle_3 = skipped$, $s\squote\squote_1 = failure$, $s\squote\squote_2 = skipped$, $s\squote\squote_3 = running$, $\delta_1 = success_1$ and $\delta_2 = failure_1$. 
+\medskip
+
+In the DTMC model, shared actions synchronize the execution of conditional tasks to the success and failure of a third task. Figure~\ref{lst:PRISM_TRY_TSKS} present the DTMC module for conditional tasks T9.0 and T9.1. 
 \medskip
 
 \begin{lstlisting}[language=Prism, caption={Conditional tasks T9.00 and T9.1 as DTMC modules.},label={lst:PRISM_TRY_TSKS}] 
@@ -419,21 +562,22 @@ module T9_1_SMSNotification
 endmodule
 \end{lstlisting}
 
+For alternative, optional and conditional execution of leaf-tasks, the final skipped state ($s_i\squote=skipped=3$) has a deterministic loop triggered by the same action form the final success state ($s_i\squote=success=2$), namely $success2\_4$ in Listing~\ref{lst:PRISM_TRY_TSKS}. This is justified by the fact that a skipped task is not not a failed task. Hence, it must not block the execution of subsequent task(s) whose initial transition(s) is(are) synchronized to the success action of previous task(s).
 
 \subsubsection{Cardinality}
 
-A small variation of the original RGM syntax was employed for the E+ and E\# rules. Instead of an undetermined number of goal/task instances, analyst should provide the exact number of instances for goals achievement and tasks execution. This information is required for the generation of the DTMC verification model from a runtime goal model. Figures~\ref{fig:UML_MUL_SEQ_TSKS} and \ref{fig:UML_MUL_PAR_TSKS} respectively illustrate sequential and interleaved task behaviours.
+A small variation of the original RGM syntax was employed for the E+ and E\# rules. Instead of an infinite/undetermined number of goal/task instances, analyst should provide the exact number of instances for goals achievements and tasks executions. This information is required for the generation of the DTMC verification model from a runtime goal model. Figures~\ref{fig:UML_MUL_SEQ_TSKS} and \ref{fig:UML_MUL_PAR_TSKS} respectively illustrate sequential and interleaved task behaviours.
 
 \begin{figure}[ht!]
         \centering
-        \begin{subfigure}[b]{0.4\textwidth}
-                \includegraphics[width=0.80\textwidth]{imgs/UML_MUL_SEQ_TSKS.png}
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=1\textwidth]{imgs/UML_MUL_SEQ_TSKS.png}
 				\caption{Sequential executions of task T.}
 				\label{fig:UML_MUL_SEQ_TSKS}
         \end{subfigure}        
         \quad %\quad, \qquad, \hfill
         \begin{subfigure}[b]{0.4\textwidth}                
-                \includegraphics[width=0.80\textwidth]{imgs/UML_MUL_PAR_TSKS.png}
+                \includegraphics[width=1\textwidth]{imgs/UML_MUL_PAR_TSKS.png}
 				\caption{Interleaved executions of task T.}
 				\label{fig:UML_MUL_PAR_TSKS}
         \end{subfigure}%
@@ -518,22 +662,7 @@ In Table~\ref{tab:MPERS_DTMC_SLOTS}, the final settings for the time slot, path 
 }
 \end{table}
 
-\subsection{Context effects in the DTMC model}
-
-In a CGM, the analysis of the environment in which the system will operate is performed. A careful investigation of what is static and what may change during operation should list the contexts facts and variables that may potentially affect goals, operational means (tasks) and the quality of alternatives. In contrast to the world predicates in the primitive CGM, in our proposal contexts are specified as boolean formulas composed of context variables and operators. Variables can hold boolean or real numbers values. The following operators can be used in the modelling environment:
-
-\begin{itemize}
-
-\item $<$, $<=$, $>=$, $>$ (relational operators)
-\item $=$,\ $!=$ (equality operators)
-\item $!$ (negation)
-\item $\&$ (conjunction)
-\item $|$ (disjunction)
-%\item $-$ (unary minus)
-%\item $*$, $/$ (multiplication, division)
-%\item $+$, $-$ (addition, subtraction)
-
-\end{itemize} 
+\subsection{Context effects in the DTMC model}\label{ssec:ctx_effects_dtmc}
 
 Regarding a goal-oriented dependability analysis based on PMC, context variation may change the scope of the verification and consequently limiting the operational leaf-tasks that must be part of the analysis - either because they do not have a goal to satisfy in that context or because they are restricted by that context and cannot be selected for execution. Besides the effects over goals and tasks, we have not considered the direct context effect over qualitative softgoals, but only the indirect effect over the probability of fulfilling different system tasks, as softgoals are not part of the formal analysis.
 
@@ -560,7 +689,7 @@ For instance, the goals `stationary geolocation is checked' and `moving geolocat
 Home WI-FI BSSID is configured once and stored by the application. If its signal is not in reach for the last 10 minutes, patient is considered to be out. To map these restrictions into the DTMC model, only one PRISM formula were declared and all leaf-tasks related to the affected goals must include C1 (or its negation) as a condition to the inclusion of these tasks in the analysis. A false evaluation of the context formula (or its negation) automatically excludes these leaf-tasks from the analysis results by forcing a deterministic transition to the skipped final state (sTask=3). Listing~\ref{lst:PRISM_CTX_GOAL} presents the DTMC module of a MPERS leaf-task whose goal is restricted by a context formula.
 \medskip
 
-\begin{lstlisting}[language=Prism, caption={Variable declaration and corresponding module with a context activation formula.},label={lst:PRISM_CTX_GOAL}]
+\begin{lstlisting}[language=Prism, caption={Variable declaration and module representing a leaf-task from a restricted goal.},label={lst:PRISM_CTX_GOAL}]
 const double HOME_WIFI;
 const double LOCATION_AGE;
 const double rTaskT6_0=0.999;
@@ -604,7 +733,7 @@ These formulas follow the same principle from the previous goal restriction form
 In the DTMC model, restricted leaf-tasks have an additional deterministic transition to the failure state guarded by the negation of the corresponding context formula. Consequently, if the formula is evaluated as false, the leaf-task will certainly fail (sTask=4). Listing~\ref{lst:PRISM_CTX_TASK} presents a DTMC model with one restricted MPERS leaf-task.
 \medskip
 
-\begin{lstlisting}[language=Prism, caption={Variable declaration and corresponding module with a context restriction formula.},label={lst:PRISM_CTX_TASK}] 
+\begin{lstlisting}[language=Prism, caption={Variable declaration and module representing a leaf-task restricted by a context.},label={lst:PRISM_CTX_TASK}] 
 const double CONNECTION;//context variable declaration
 const double rTaskT9_0=0.999;
 
@@ -622,9 +751,31 @@ module T9_0_RESTRequisition
 endmodule
 \end{lstlisting}
 
-\section{Goal-oriented Reliability Analysis}
+\section{Reliability Analysis}
 
-Once a probabilistic verification model is built from a system RGM with additional context effects, both qualitative and quantitative analysis may be performed. 
+Once a probabilistic verification model is built from a system RGM with additional context effects, PCTL properties may be specified for different metrics. As part of our goal-oriented dependability analysis, we focus on the reachability property that can be specified by the $\textbf{F}$ temporal operator, indicating that eventually $\varphi$ has to hold:
+
+\begin{equation}\label{eq:PROB_EXISTANCE}
+P=?\ [\ F\ (\varphi)\ ]
+\end{equation}
+
+The reachability of a final and successful system state defines the reliability of that system, i.e., the probability in fulfilling its root or ultimate goal. Accordingly, the reachability of a partial success state indicates the partial reliability of the system, i.e., the probability in fulfilling one or more of its subgoals. Given a system goal model, the scope of the probabilistic verification is defined as:
+
+\begin{itemize}
+
+\item \textit{Global}, if the activities set is a minimum set composed of the leaf-tasks that satisfies the chain of subgoals up to the root goal $G_{root}$. 
+%For instance, in Table~\ref{tab:MPERS_NFR} reliability is associated to root goal G1.
+\medskip
+
+\item \textit{Local}, if the activities set is a minimum set composed of leaf-tasks that satisfies the chain of subgoals up to a goal $G_x$, where $G_x\ !=\ G_{root}$. 
+%For instance, in Table~\ref{tab:MPERS_NFR}, power consumption is (locally) associated to goal G2.
+\medskip
+
+\end{itemize}
+
+
+
+%both qualitative and quantitative analysis may be performed. 
 
 \subsection{Offline analysis}
 
@@ -639,14 +790,14 @@ G_{success}\ =\ (sT15=2)\ \&\ (sT16=2)\ \&\ (sT17\_0=2\ \&\ sT17\_1=2)
 And a PCTL property defining the probabilistic existence of a system behaviour that eventually leads the leaf-tasks T16, T17 and T17\_1 to reach their final success state, i.e., specifying the reachability of the success system state in which G is satisfied:
 
 \begin{equation}\label{eq:PCTLx}
-P > 0.99 [ F (G_{success})]
+G_{reliability}=P > 0.99 [ F (G_{success})]
 \end{equation}
 
-Once the reliabilities of the involved leaf-tasks have been collected, the verification of this PCTL property through PRISM verification feature reveals the probability in eventually fulfilling the analysed goal. To illustrate this, for a fixed reliability of $0.98$ for rT15-17\_1, the reliability of $G$ is evaluated as $0.929199$. 
+Once the reliabilities of the involved leaf-tasks have been collected, the verification of this PCTL property through PRISM \textit{verification feature} reveals the probability in eventually fulfilling the analysed goal. To illustrate this, for a fixed reliability of $0.98$ for rT15-17\_1, the probability of fulfilling $G$ is evaluated as:
 
-PRISM also provides the \textit{experiment} feature that automates multiple instances of a model checking. Instead of fixing the value of all variables in the model, one or more variables may range from a 
+$$G_{reliability}=0.929199$$ 
 
-enables the evaluation of a given property considering fixed values and a range of values for different variables in the model. For instance, considering the same PCTL property~\eqref{eq:PCTLx}, an experiment  
+PRISM also provides the \textit{experiment feature} that automates multiple instances of a model checking. Instead of fixing the value of all constants in the model, one or more constants may range from an initial value to a final value in fixed steps. The experiment creates a series graph and reveals the trend for the analysed property in respect to the input range. For example, by ranging the reliability of task T15 from 0 to 1 and considering the same PCTL property~\eqref{eq:PCTLx}, an experiment produces the graph in Figure~\ref{OFFLINE_EXPERIMENT}.
 
 %$G_{success}$ corresponds to MPERS goal `vital signs are monitored'. 
 
@@ -747,7 +898,7 @@ As indicated by the \textit{Target} column, each NFR constraint may be associate
 
 %put here the formal definition of the root goal, subgoals, activity set, turple, etc
 
-\subsection{From NFR to PCTL properties}
+\subsection{PCTL properties}
 
 The estimation of attributes through PMC technique is limited to those that a probabilistic model may evaluate. Dependability attributes have an abstract definition that must be associated to a concrete and verifiable PCTL property. In this evaluation, we focus on the dependability attribute of reliability. 
 
